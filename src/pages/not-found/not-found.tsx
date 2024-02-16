@@ -3,9 +3,17 @@ import Logo from '../../components/Logo/logo';
 
 function NotFound(): JSX.Element{
   return (
-    <div>
-      <Logo/>
-      <div>
+    <div >
+      <header className='header'>
+        <div className='container'>
+          <div className='header__wrapper'>
+            <div className='header__left'>
+              <Logo/>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div className='container'>
         <svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" fill="#000000" preserveAspectRatio="xMidYMid meet" role="img" aria-hidden="true">
           <g>
             <title>Layer 1</title>
