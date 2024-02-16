@@ -1,7 +1,7 @@
 
 import { JSX } from 'react';
-import { CurrencyTypes } from '../../shared/CurrencyTypes';
-import { OfferTypes } from '../../shared/OfferTypes';
+import Currency from '../../shared/Currency';
+import OfferTypes from '../../shared/OfferTypes';
 import CityOfferCard from '../../components/offer-card/offer-card';
 import Logo from '../../components/Logo/logo';
 
@@ -114,7 +114,7 @@ function Main({offerCount}: MainProps): JSX.Element{
               <div className='cities__places-list places__list tabs__content'>
                 <CityOfferCard
                   price={120}
-                  currencyType={CurrencyTypes.Euro}
+                  currencyType={Currency.EU}
                   isPremium
                   title={'Beautiful & luxurious apartment at great location'}
                   offerType={OfferTypes.Apartment}
@@ -123,7 +123,7 @@ function Main({offerCount}: MainProps): JSX.Element{
                 />
                 <CityOfferCard
                   price={80}
-                  currencyType={CurrencyTypes.Euro}
+                  currencyType={Currency.EU}
                   title={'Wood and stone place'}
                   offerType={OfferTypes.Room}
                   isBookmark
@@ -132,7 +132,7 @@ function Main({offerCount}: MainProps): JSX.Element{
                 />
                 <CityOfferCard
                   price={132}
-                  currencyType={CurrencyTypes.Euro}
+                  currencyType={Currency.EU}
                   title={'Canal View Prinsengracht'}
                   offerType={OfferTypes.Apartment}
                   imageName="apartment-02.jpg"
@@ -140,7 +140,7 @@ function Main({offerCount}: MainProps): JSX.Element{
                 />
                 <CityOfferCard
                   price={180}
-                  currencyType={CurrencyTypes.Euro}
+                  currencyType={Currency.EU}
                   isPremium
                   title={'Nice, cozy, warm big bed apartment'}
                   offerType={OfferTypes.Apartment}
@@ -149,7 +149,7 @@ function Main({offerCount}: MainProps): JSX.Element{
                 />
                 <CityOfferCard
                   price={80}
-                  currencyType={CurrencyTypes.Euro}
+                  currencyType={Currency.EU}
                   isBookmark
                   title={'Wood and stone place'}
                   offerType={OfferTypes.Room}

@@ -1,6 +1,6 @@
 import { JSX } from 'react';
-import { CurrencyTypes } from '../../shared/CurrencyTypes';
-import { OfferTypes } from '../../shared/OfferTypes';
+import Currency from '../../shared/Currency';
+import OfferTypes from '../../shared/OfferTypes';
 import FavoriteOfferCard from '../../components/favorite-offer-card/farovite-offer-card';
 import Logo from '../../components/Logo/logo';
 
@@ -53,7 +53,7 @@ function Favorites(): JSX.Element{
                 <div className='favorites__places'>
                   <FavoriteOfferCard
                     price={180}
-                    currencyType={CurrencyTypes.Euro}
+                    currencyType={Currency.EU}
                     isPremium
                     title={'Nice, cozy, warm big bed apartment'}
                     offerType={OfferTypes.Apartment}
@@ -62,7 +62,7 @@ function Favorites(): JSX.Element{
                   />
                   <FavoriteOfferCard
                     price={80}
-                    currencyType={CurrencyTypes.Euro}
+                    currencyType={Currency.EU}
                     title={'Wood and stone place'}
                     offerType={OfferTypes.Room}
                     ratingPercent={80}
@@ -81,7 +81,7 @@ function Favorites(): JSX.Element{
                 <div className='favorites__places'>
                   <FavoriteOfferCard
                     price={180}
-                    currencyType={CurrencyTypes.Euro}
+                    currencyType={Currency.EU}
                     title={'White castle'}
                     offerType={OfferTypes.Apartment}
                     ratingPercent={100}

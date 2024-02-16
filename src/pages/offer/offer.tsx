@@ -1,8 +1,8 @@
 
 import { JSX } from 'react';
 import NearOfferCard from '../../components/near-offer-card/near-offer-card';
-import { CurrencyTypes } from '../../shared/CurrencyTypes';
-import { OfferTypes } from '../../shared/OfferTypes';
+import Currency from '../../shared/Currency';
+import OfferTypes from '../../shared/OfferTypes';
 import Logo from '../../components/Logo/logo';
 
 function Offer(): JSX.Element{
@@ -323,7 +323,7 @@ function Offer(): JSX.Element{
             <div className='near-places__list places__list'>
               <NearOfferCard
                 price={80}
-                currencyType={CurrencyTypes.Euro}
+                currencyType={Currency.EU}
                 isBookmark
                 title={'Wood and stone place'}
                 offerType={OfferTypes.Room}
@@ -332,7 +332,7 @@ function Offer(): JSX.Element{
               />
               <NearOfferCard
                 price={132}
-                currencyType={CurrencyTypes.Euro}
+                currencyType={Currency.EU}
                 title={'Canal View Prinsengracht'}
                 offerType={OfferTypes.Apartment}
                 ratingPercent={80}
@@ -341,7 +341,7 @@ function Offer(): JSX.Element{
               <NearOfferCard
                 price={180}
                 isPremium
-                currencyType={CurrencyTypes.Euro}
+                currencyType={Currency.EU}
                 title={'Nice, cozy, warm big bed apartment'}
                 offerType={OfferTypes.Apartment}
                 ratingPercent={100}
