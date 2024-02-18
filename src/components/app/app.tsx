@@ -9,6 +9,7 @@ import AuthorizationStatus from '../../shared/AuthorizationStatus';
 import Offer from '../../pages/offer/offer';
 import Favorites from '../../pages/favorites/favorites';
 import NotFound from '../../pages/not-found/not-found';
+import Layout from '../Layout/layout';
 
 type AppProps = {
   offerCount: number;
@@ -22,30 +23,21 @@ function App({offerCount} :AppProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<Main offerCount={offerCount} />}
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<Login/>}
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                <Favorites/>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Offer}
-            element={<Offer/>}
-          />
-          <Route
-            path="*"
-            element={<NotFound/>}
-          />
+            element={<Layout authorizationStatus={AuthorizationStatus.NoAuth} showUserInfo/>}
+          >
+            <Route index element={<Main offerCount={offerCount} />}/>
+            <Route
+              path={AppRoute.Favorites}
+              element={
+                <PrivateRoute authorizationStatus={authorizationStatus}>
+                  <Favorites/>
+                </PrivateRoute>
+              }
+            />
+            <Route path={AppRoute.Offer} element={<Offer/>}/>
+            <Route path={AppRoute.Login} element={<Login/>}/>
+          </Route>
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
