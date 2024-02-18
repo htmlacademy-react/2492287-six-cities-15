@@ -1,6 +1,6 @@
 import { JSX } from 'react';
-import { Currency } from '../../shared/Currency';
-import { OfferTypes } from '../../shared/OfferTypes';
+import Currency from '../../shared/Currency';
+import OfferTypes from '../../shared/OfferTypes';
 
 type CityOfferCardProps = {
   price: number;
