@@ -1,4 +1,4 @@
-enum OfferTypes{
+enum OfferTypes {
   Room = 'Room',
   Apartment = 'Apartment'
 }

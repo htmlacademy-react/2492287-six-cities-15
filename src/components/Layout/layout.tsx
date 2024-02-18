@@ -2,26 +2,20 @@ import {JSX} from 'react';
 import Logo from '../Logo/logo';
 import AuthorizationStatus from '../../shared/AuthorizationStatus';
 import { Outlet, useLocation } from 'react-router-dom';
+import { getClassName, getIsLoginPath } from './lib';
 
 type LayoutProps = {
   authorizationStatus: AuthorizationStatus;
 }
 
 function Layout({authorizationStatus} :LayoutProps): JSX.Element {
-  const username = authorizationStatus === AuthorizationStatus.Auth ? 'Oliver.conner@gmail.com' : '';
-  const favoriteCount = authorizationStatus === AuthorizationStatus.Auth ? 3 : 0;
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const username = isAuth ? 'Oliver.conner@gmail.com' : '';
+  const favoriteCount = isAuth ? 3 : 0;
   const location = useLocation();
-  const getClassName = (pathname: string) => {
-    switch(pathname){
-      case '/login': return ' page--gray page--login';
-      case '/': return ' page--gray page--main';
-      default: return '';
-    }
-  };
-  const getShowUserInfo = (pathname: string) => pathname !== '/login';
-
+  
   return (
-    <div className={`page${getClassName(location.pathname)}`}>
+    <div className={`page ${getClassName(location.pathname)}`}>
       <header className='header'>
         <div className='container'>
           <div className='header__wrapper'>
@@ -29,7 +23,7 @@ function Layout({authorizationStatus} :LayoutProps): JSX.Element {
               <Logo/>
             </div>
             {
-              getShowUserInfo(location.pathname) &&
+              getIsLoginPath(location.pathname) &&
               <nav className='header__nav'>
                 <ul className='header__nav-list'>
                   <li className='header__nav-item user'>
@@ -46,7 +40,7 @@ function Layout({authorizationStatus} :LayoutProps): JSX.Element {
                   </li>
                   <li className='header__nav-item'>
                     <a className='header__nav-link' href='#'>
-                      <span className='header__signout'>{authorizationStatus === AuthorizationStatus.Auth ? 'Sign out' : 'Sign in'}</span>
+                      <span className='header__signout'>{isAuth ? 'Sign out' : 'Sign in'}</span>
                     </a>
                   </li>
                 </ul>
