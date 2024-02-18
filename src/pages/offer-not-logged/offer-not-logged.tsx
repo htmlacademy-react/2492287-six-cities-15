@@ -2,7 +2,6 @@ import { JSX } from 'react';
 import NearOfferCard from '../../components/near-offer-card/near-offer-card';
 import Currency from '../../shared/Currency';
 import OfferTypes from '../../shared/OfferTypes';
-import Logo from '../../components/Logo/logo';
 import { Helmet } from 'react-helmet-async';
 
 function OfferNotLogged(): JSX.Element{

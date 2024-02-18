@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 function MainEmpty(): JSX.Element{
   return (
     <main className='page__main page__main--index page__main--index-empty'>
-        <Helmet>
+      <Helmet>
         <title>6 cities</title>
       </Helmet>
       <h1 className='visually-hidden'>Cities</h1>
