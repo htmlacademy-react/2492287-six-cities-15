@@ -23,7 +23,7 @@ function App({offerCount} :AppProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<Layout authorizationStatus={AuthorizationStatus.NoAuth} showUserInfo/>}
+            element={<Layout authorizationStatus={AuthorizationStatus.NoAuth}/>}
           >
             <Route index element={<Main offerCount={offerCount} />}/>
             <Route

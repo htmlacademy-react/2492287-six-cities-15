@@ -3,6 +3,7 @@ import { JSX } from 'react';
 import Currency from '../../shared/Currency';
 import OfferTypes from '../../shared/OfferTypes';
 import CityOfferCard from '../../components/offer-card/offer-card';
+import { Helmet } from 'react-helmet-async';
 
 type MainProps = {
   offerCount: number;
@@ -11,6 +12,9 @@ type MainProps = {
 function Main({offerCount}: MainProps): JSX.Element{
   return (
     <main className='page__main page__main--index'>
+      <Helmet>
+        <title>6 cities</title>
+      </Helmet>
       <h1 className='visually-hidden'>Cities</h1>
       <div className='tabs'>
         <section className='locations container'>

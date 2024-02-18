@@ -2,10 +2,14 @@ import { JSX } from 'react';
 import Currency from '../../shared/Currency';
 import OfferTypes from '../../shared/OfferTypes';
 import FavoriteOfferCard from '../../components/favorite-offer-card/farovite-offer-card';
+import { Helmet } from 'react-helmet-async';
 
 function Favorites(): JSX.Element{
   return (
     <>
+      <Helmet>
+        <title>Saved listing</title>
+      </Helmet>
       <main className='page__main page__main--favorites'>
         <div className='page__favorites-container container'>
           <section className='favorites'>

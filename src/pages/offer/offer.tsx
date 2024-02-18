@@ -3,10 +3,14 @@ import { JSX } from 'react';
 import NearOfferCard from '../../components/near-offer-card/near-offer-card';
 import Currency from '../../shared/Currency';
 import OfferTypes from '../../shared/OfferTypes';
+import { Helmet } from 'react-helmet-async';
 
 function Offer(): JSX.Element{
   return (
     <main className='page__main page__main--offer'>
+      <Helmet>
+        <title>Beautiful & luxurious studio at great location</title>
+      </Helmet>
       <section className='offer'>
         <div className='offer__gallery-container container'>
           <div className='offer__gallery'>
