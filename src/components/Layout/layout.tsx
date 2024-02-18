@@ -13,7 +13,7 @@ function Layout({authorizationStatus} :LayoutProps): JSX.Element {
   const username = isAuth ? 'Oliver.conner@gmail.com' : '';
   const favoriteCount = isAuth ? 3 : 0;
   const location = useLocation();
-  
+
   return (
     <div className={`page ${getClassName(location.pathname)}`}>
       <header className='header'>
@@ -23,7 +23,7 @@ function Layout({authorizationStatus} :LayoutProps): JSX.Element {
               <Logo/>
             </div>
             {
-              getIsLoginPath(location.pathname) &&
+              !getIsLoginPath(location.pathname) &&
               <nav className='header__nav'>
                 <ul className='header__nav-list'>
                   <li className='header__nav-item user'>

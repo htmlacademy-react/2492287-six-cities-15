@@ -6,4 +6,4 @@ export const getClassName = (pathname: string): string => {
   }
 };
 
-export const getIsLoginPath: (pathname: string) => boolean = (pathname) => pathname ==='/login';
+export const getIsLoginPath: (pathname: string) => boolean = (pathname) => pathname === '/login';
