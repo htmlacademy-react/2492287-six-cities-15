@@ -1,41 +1,15 @@
 import { JSX } from 'react';
 import NearOfferCard from '../../components/near-offer-card/near-offer-card';
-import { CurrencyTypes } from '../../shared/CurrencyTypes';
-import { OfferTypes } from '../../shared/OfferTypes';
+import Currency from '../../shared/Currency';
+import OfferTypes from '../../shared/OfferTypes';
+import { Helmet } from 'react-helmet-async';
 
 function OfferNotLogged(): JSX.Element{
   return (
     <div className='page'>
-      <header className='header'>
-        <div className='container'>
-          <div className='header__wrapper'>
-            <div className='header__left'>
-              <a className='header__logo-link' href='main.html'>
-                <img
-                  className='header__logo'
-                  src='img/logo.svg'
-                  alt='6 cities logo'
-                  width={81}
-                  height={41}
-                />
-              </a>
-            </div>
-            <nav className='header__nav'>
-              <ul className='header__nav-list'>
-                <li className='header__nav-item user'>
-                  <a
-                    className='header__nav-link header__nav-link--profile'
-                    href='#'
-                  >
-                    <div className='header__avatar-wrapper user__avatar-wrapper'></div>
-                    <span className='header__login'>Sign in</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Helmet>
+        <title>Beautiful & luxurious studio at great location</title>
+      </Helmet>
       <main className='page__main page__main--offer'>
         <section className='offer'>
           <div className='offer__gallery-container container'>
@@ -212,7 +186,7 @@ function OfferNotLogged(): JSX.Element{
             <div className='near-places__list places__list'>
               <NearOfferCard
                 price={80}
-                currencyType={CurrencyTypes.Euro}
+                currencyType={Currency.EU}
                 isBookmark
                 title={'Wood and stone place'}
                 offerType={OfferTypes.Room}
@@ -221,7 +195,7 @@ function OfferNotLogged(): JSX.Element{
               />
               <NearOfferCard
                 price={132}
-                currencyType={CurrencyTypes.Euro}
+                currencyType={Currency.EU}
                 title={'Canal View Prinsengracht'}
                 offerType={OfferTypes.Apartment}
                 ratingPercent={80}
@@ -230,7 +204,7 @@ function OfferNotLogged(): JSX.Element{
               <NearOfferCard
                 price={180}
                 isPremium
-                currencyType={CurrencyTypes.Euro}
+                currencyType={Currency.EU}
                 title={'Nice, cozy, warm big bed apartment'}
                 offerType={OfferTypes.Apartment}
                 ratingPercent={100}
