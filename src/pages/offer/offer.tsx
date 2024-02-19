@@ -1,12 +1,12 @@
 
-import { JSX } from 'react';
-import NearOfferCard from '../../components/near-offer-card/near-offer-card';
-import Currency from '../../shared/Currency';
-import OfferTypes from '../../shared/OfferTypes';
+import { FC } from 'react';
+import Currency from '../../shared/currency';
+import OfferTypes from '../../shared/offer-types';
 import { Helmet } from 'react-helmet-async';
+import { NearOfferCard } from '../../components/near-offer-card';
 
-function Offer(): JSX.Element{
-  return (
+export const Offer: FC = () =>
+  (
     <main className='page__main page__main--offer'>
       <Helmet>
         <title>Beautiful & luxurious studio at great location</title>
@@ -324,6 +324,3 @@ function Offer(): JSX.Element{
       </div>
     </main>
   );
-}
-
-export default Offer;

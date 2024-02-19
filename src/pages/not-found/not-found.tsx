@@ -1,8 +1,8 @@
-import { JSX } from 'react';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-function NotFound(): JSX.Element{
-  return (
+export const NotFound: FC = () =>
+  (
     <div className='container'>
       <Helmet>
         <title>6 cities. Address not found</title>
@@ -66,6 +66,3 @@ function NotFound(): JSX.Element{
       </svg>
     </div>
   );
-}
-
-export default NotFound;

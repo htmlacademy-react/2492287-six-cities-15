@@ -1,16 +1,16 @@
 
-import { JSX } from 'react';
-import Currency from '../../shared/Currency';
-import OfferTypes from '../../shared/OfferTypes';
-import CityOfferCard from '../../components/offer-card/offer-card';
+import { FC } from 'react';
+import Currency from '../../shared/currency';
+import OfferTypes from '../../shared/offer-types';
 import { Helmet } from 'react-helmet-async';
+import { CityOfferCard } from '../../components/city-offer-card';
 
-type MainProps = {
+export type TMainProps = {
   offerCount: number;
 }
 
-function Main({offerCount}: MainProps): JSX.Element{
-  return (
+export const Main: FC<TMainProps> = ({offerCount}) =>
+  (
     <main className='page__main page__main--index'>
       <Helmet>
         <title>6 cities</title>
@@ -137,6 +137,3 @@ function Main({offerCount}: MainProps): JSX.Element{
       </div>
     </main>
   );
-}
-
-export default Main;

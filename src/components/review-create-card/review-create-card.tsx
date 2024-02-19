@@ -1,7 +1,7 @@
-import { JSX } from 'react';
+import { FC } from 'react';
 
-function CityOfferCard(): JSX.Element{
-  return (
+export const ReviewOfferCard: FC = () =>
+  (
     <form className='reviews__form form' action='#' method='post'>
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
@@ -112,6 +112,3 @@ function CityOfferCard(): JSX.Element{
       </div>
     </form>
   );
-}
-
-export default CityOfferCard;

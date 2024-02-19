@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Currency from '../../shared/currency';
 import OfferTypes from '../../shared/offer-types';
 
-export type TNearOfferCardProps = {
+export type TCityOfferCardProps = {
   price: number;
   currencyType: Currency;
   title: string;
@@ -13,13 +13,13 @@ export type TNearOfferCardProps = {
   isPremium?: boolean;
 }
 
-export const NearOfferCard: FC<TNearOfferCardProps> = ({price, currencyType, title, offerType, ratingPercent, imageName, isBookmark, isPremium}) => {
+export const CityOfferCard: FC<TCityOfferCardProps> = ({price, currencyType, title, offerType, ratingPercent, imageName, isBookmark, isPremium}: TCityOfferCardProps) => {
   const bookmarkClass = isBookmark ? ' place-card__bookmark-button--active' : '';
 
   return (
-    <article className='near-places__card place-card'>
+    <article className='cities__card place-card'>
       {isPremium && <div className='place-card__mark'> <span>Premium</span> </div>}
-      <div className='near-places__image-wrapper place-card__image-wrapper'>
+      <div className='cities__image-wrapper place-card__image-wrapper'>
         <a href='#'>
           <img
             className='place-card__image'
@@ -33,8 +33,10 @@ export const NearOfferCard: FC<TNearOfferCardProps> = ({price, currencyType, tit
       <div className='place-card__info'>
         <div className='place-card__price-wrapper'>
           <div className='place-card__price'>
-            <b className='place-card__price-value'>{`${currencyType}${price} `}</b>
-            <span className='place-card__price-text'>/&nbsp;night</span>
+            <b className='place-card__price-value'>{`${currencyType}${price}`}</b>
+            <span className='place-card__price-text'>
+              /&nbsp;night
+            </span>
           </div>
           <button
             className={`place-card__bookmark-button button${bookmarkClass}`}

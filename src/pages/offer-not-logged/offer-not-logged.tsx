@@ -1,11 +1,11 @@
-import { JSX } from 'react';
-import NearOfferCard from '../../components/near-offer-card/near-offer-card';
-import Currency from '../../shared/Currency';
-import OfferTypes from '../../shared/OfferTypes';
+import { FC } from 'react';
+import Currency from '../../shared/currency';
+import OfferTypes from '../../shared/offer-types';
 import { Helmet } from 'react-helmet-async';
+import { NearOfferCard } from '../../components/near-offer-card';
 
-function OfferNotLogged(): JSX.Element{
-  return (
+export const OfferNotLogged: FC = () =>
+  (
     <div className='page'>
       <Helmet>
         <title>Beautiful & luxurious studio at great location</title>
@@ -215,8 +215,4 @@ function OfferNotLogged(): JSX.Element{
         </div>
       </main>
     </div>
-
   );
-}
-
-export default OfferNotLogged;

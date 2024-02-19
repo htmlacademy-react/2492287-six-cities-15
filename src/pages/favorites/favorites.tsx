@@ -1,11 +1,11 @@
-import { JSX } from 'react';
-import Currency from '../../shared/Currency';
-import OfferTypes from '../../shared/OfferTypes';
-import FavoriteOfferCard from '../../components/favorite-offer-card/farovite-offer-card';
+import { FC } from 'react';
+import Currency from '../../shared/currency';
+import OfferTypes from '../../shared/offer-types';
 import { Helmet } from 'react-helmet-async';
+import { FavoriteOfferCard } from '../../components/favorite-offer-card';
 
-function Favorites(): JSX.Element{
-  return (
+export const Favorites: FC = () =>
+  (
     <>
       <Helmet>
         <title>Saved listing</title>
@@ -79,6 +79,3 @@ function Favorites(): JSX.Element{
       </footer>
     </>
   );
-}
-
-export default Favorites;

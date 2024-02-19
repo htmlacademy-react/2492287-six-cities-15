@@ -1,7 +1,7 @@
-import { JSX } from 'react';
+import { FC } from 'react';
 
-function Logo(): JSX.Element{
-  return (
+export const Logo: FC = () =>
+  (
     <a className='header__logo-link header__logo-link--active' href='/'>
       <img
         className='header__logo'
@@ -12,6 +12,3 @@ function Logo(): JSX.Element{
       />
     </a>
   );
-}
-
-export default Logo;

@@ -1,8 +1,8 @@
-import { JSX } from 'react';
-import Currency from '../../shared/Currency';
-import OfferTypes from '../../shared/OfferTypes';
+import { FC } from 'react';
+import OfferTypes from '../../shared/offer-types';
+import Currency from '../../shared/currency';
 
-type FavoriteOfferCardProps = {
+export type TFavoriteOfferCardProps = {
   price: number;
   currencyType: Currency;
   title: string;
@@ -12,8 +12,8 @@ type FavoriteOfferCardProps = {
   isPremium?: boolean;
 }
 
-function FavoriteOfferCard({price, currencyType, title, offerType, ratingPercent, imageName, isPremium}: FavoriteOfferCardProps): JSX.Element{
-  return (
+export const FavoriteOfferCard: FC<TFavoriteOfferCardProps> = ({price, currencyType, title, offerType, ratingPercent, imageName, isPremium}) =>
+  (
     <article className='favorites__card place-card'>
       {isPremium && <div className='place-card__mark'><span>Premium</span></div>}
       <div className='favorites__image-wrapper place-card__image-wrapper'>
@@ -62,7 +62,3 @@ function FavoriteOfferCard({price, currencyType, title, offerType, ratingPercent
       </div>
     </article>
   );
-}
-
-export default FavoriteOfferCard;
-

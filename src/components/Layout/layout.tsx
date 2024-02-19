@@ -1,14 +1,14 @@
-import {JSX} from 'react';
-import Logo from '../Logo/logo';
-import AuthorizationStatus from '../../shared/AuthorizationStatus';
+import {FC} from 'react';
+import AuthorizationStatus from '../../shared/authorization-status';
 import { Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
+import { Logo } from '../logo';
 
-type LayoutProps = {
+export type TLayoutProps = {
   authorizationStatus: AuthorizationStatus;
 }
 
-function Layout({authorizationStatus} :LayoutProps): JSX.Element {
+export const Layout: FC<TLayoutProps> = ({authorizationStatus} :TLayoutProps) => {
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const username = isAuth ? 'Oliver.conner@gmail.com' : '';
   const favoriteCount = isAuth ? 3 : 0;
@@ -52,6 +52,4 @@ function Layout({authorizationStatus} :LayoutProps): JSX.Element {
       <Outlet />
     </div>
   );
-}
-
-export default Layout;
+};
