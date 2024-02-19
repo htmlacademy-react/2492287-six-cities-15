@@ -4,7 +4,7 @@ import OfferTypes from '../../shared/offer-types';
 
 export type TCityOfferCardProps = {
   price: number;
-  currencyType: Currency;
+  currency: Currency;
   title: string;
   offerType: OfferTypes;
   ratingPercent: number;
@@ -13,7 +13,7 @@ export type TCityOfferCardProps = {
   isPremium?: boolean;
 }
 
-export const CityOfferCard: FC<TCityOfferCardProps> = ({price, currencyType, title, offerType, ratingPercent, imageName, isBookmark, isPremium}: TCityOfferCardProps) => {
+export const CityOfferCard: FC<TCityOfferCardProps> = ({price, currency: currencyType, title, offerType, ratingPercent, imageName, isBookmark, isPremium}) => {
   const bookmarkClass = isBookmark ? ' place-card__bookmark-button--active' : '';
 
   return (

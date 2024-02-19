@@ -86,7 +86,7 @@ export const Main: FC<TMainProps> = ({offerCount}) =>
             <div className='cities__places-list places__list tabs__content'>
               <CityOfferCard
                 price={120}
-                currencyType={Currency.EU}
+                currency={Currency.EU}
                 isPremium
                 title={'Beautiful & luxurious apartment at great location'}
                 offerType={OfferTypes.Apartment}
@@ -95,7 +95,7 @@ export const Main: FC<TMainProps> = ({offerCount}) =>
               />
               <CityOfferCard
                 price={80}
-                currencyType={Currency.EU}
+                currency={Currency.EU}
                 title={'Wood and stone place'}
                 offerType={OfferTypes.Room}
                 isBookmark
@@ -104,7 +104,7 @@ export const Main: FC<TMainProps> = ({offerCount}) =>
               />
               <CityOfferCard
                 price={132}
-                currencyType={Currency.EU}
+                currency={Currency.EU}
                 title={'Canal View Prinsengracht'}
                 offerType={OfferTypes.Apartment}
                 imageName="apartment-02.jpg"
@@ -112,7 +112,7 @@ export const Main: FC<TMainProps> = ({offerCount}) =>
               />
               <CityOfferCard
                 price={180}
-                currencyType={Currency.EU}
+                currency={Currency.EU}
                 isPremium
                 title={'Nice, cozy, warm big bed apartment'}
                 offerType={OfferTypes.Apartment}
@@ -121,7 +121,7 @@ export const Main: FC<TMainProps> = ({offerCount}) =>
               />
               <CityOfferCard
                 price={80}
-                currencyType={Currency.EU}
+                currency={Currency.EU}
                 isBookmark
                 title={'Wood and stone place'}
                 offerType={OfferTypes.Room}
