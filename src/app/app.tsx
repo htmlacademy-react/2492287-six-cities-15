@@ -3,7 +3,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from './';
 import AuthorizationStatus from '../shared/authorization-status';
-import { Layout } from '../components/layout';
 import { PrivateRoute } from '../components/private-route';
 import { Favorites } from '../pages/favorites';
 import { NotFound } from '../pages/not-found';
@@ -13,6 +12,7 @@ import { Main } from '../pages/main';
 import { TOffer } from '../shared/offer';
 import { OfferCardType } from '../components/offer-card/lib';
 import { TReview } from '../shared/review';
+import { Layout } from '../components/layout';
 
 export type TAppProps = {
   offers: TOffer[];
