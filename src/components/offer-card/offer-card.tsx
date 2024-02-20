@@ -40,7 +40,7 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
       <div className={`${cardInfoClass} place-card__info`}>
         <div className='place-card__price-wrapper'>
           <div className='place-card__price'>
-            <b className='place-card__price-value'>{`${offer.currency}${offer.price}`}</b>
+            <b className='place-card__price-value'>{`€${offer.price}`}</b>
             <span className='place-card__price-text'>
               /&nbsp;night
             </span>
