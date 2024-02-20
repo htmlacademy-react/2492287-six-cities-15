@@ -12,7 +12,7 @@ import { Main } from '../pages/main';
 import { TOffer } from '../shared/offer';
 import { OfferCardType } from '../components/offer-card/lib';
 import { TReview } from '../shared/review';
-import { Layout } from '../components/layout';
+import { MainLayout } from '../components/main-layout';
 
 export type TAppProps = {
   offers: TOffer[];
@@ -29,7 +29,7 @@ export const App: FC<TAppProps> = ({offers, favoriteOffers, nearOffers, reviews}
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<Layout authorizationStatus={AuthorizationStatus.NoAuth}/>}
+            element={<MainLayout authorizationStatus={AuthorizationStatus.NoAuth}/>}
           >
             <Route index element={<Main offers={offers} />}/>
             <Route

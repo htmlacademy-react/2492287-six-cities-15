@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import { Logo } from '../logo';
+import { MainLogo } from '../main-logo';
 import AuthorizationStatus from '../../shared/authorization-status';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
@@ -9,7 +9,7 @@ export type TLayoutProps = {
   authorizationStatus: AuthorizationStatus;
 }
 
-export const Layout: FC<TLayoutProps> = ({authorizationStatus} :TLayoutProps) => {
+export const MainLayout: FC<TLayoutProps> = ({authorizationStatus} :TLayoutProps) => {
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const username = isAuth ? 'Oliver.conner@gmail.com' : '';
   const favoriteCount = isAuth ? 3 : 0;
@@ -21,7 +21,7 @@ export const Layout: FC<TLayoutProps> = ({authorizationStatus} :TLayoutProps) =>
         <div className='container'>
           <div className='header__wrapper'>
             <div className='header__left'>
-              <Logo/>
+              <MainLogo/>
             </div>
             {
               !getIsLoginPath(location.pathname) &&
