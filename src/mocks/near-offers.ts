@@ -8,33 +8,37 @@ export const nearOffers: Array<TOffer> = [
   {
     id: 1,
     price: 80,
-    currency:Currency.EU,
+    currency: Currency.EU,
     title: 'Wood and stone place',
     offerType: OfferTypes.Room,
     ratingPercent: 80,
-    isBookmark: true,
     imageName: 'room.jpg',
-    place: Place.Amsterdam
+    place: Place.Amsterdam,
+    isBookmark: true,
+    isPremium: false
   },
   {
     id: 2,
     price: 132,
-    currency:Currency.EU,
+    currency: Currency.EU,
     title: 'Canal View Prinsengracht',
     offerType: OfferTypes.Apartment,
     ratingPercent: 80,
     imageName: 'apartment-02.jpg',
-    place: Place.Amsterdam
+    place: Place.Amsterdam,
+    isBookmark: false,
+    isPremium: false
   },
   {
     id: 3,
     price: 180,
-    currency:Currency.EU,
-    isPremium: true,
+    currency: Currency.EU,
     title: 'Nice, cozy, warm big bed apartment',
     offerType: OfferTypes.Apartment,
     ratingPercent: 100,
     imageName: 'apartment-03.jpg',
-    place: Place.Amsterdam
+    place: Place.Amsterdam,
+    isBookmark: false,
+    isPremium: true
   }
 ];
