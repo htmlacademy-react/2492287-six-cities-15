@@ -1,6 +1,6 @@
 import {Navigate} from 'react-router-dom';
 import AuthorizationStatus from '../../shared/authorization-status';
-import AppRoute from '../../shared/app-route';
+import { AppRoute } from '../../app';
 import {FC, PropsWithChildren } from 'react';
 
 export type TPrivateRouteProps = {

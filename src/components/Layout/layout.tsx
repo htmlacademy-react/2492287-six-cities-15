@@ -1,8 +1,9 @@
 import {FC} from 'react';
 import AuthorizationStatus from '../../shared/authorization-status';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
 import { Logo } from '../logo';
+import { AppRoute } from '../../app';
 
 export type TLayoutProps = {
   authorizationStatus: AuthorizationStatus;
@@ -27,21 +28,21 @@ export const Layout: FC<TLayoutProps> = ({authorizationStatus} :TLayoutProps) =>
               <nav className='header__nav'>
                 <ul className='header__nav-list'>
                   <li className='header__nav-item user'>
-                    <a
+                    <Link
                       className='header__nav-link header__nav-link--profile'
-                      href='#'
+                      to={AppRoute.Favorites}
                     >
                       <div className='header__avatar-wrapper user__avatar-wrapper'></div>
                       <span className='header__user-name user__name'>
                         {username}
                       </span>
                       <span className='header__favorite-count'>{favoriteCount}</span>
-                    </a>
+                    </Link>
                   </li>
                   <li className='header__nav-item'>
-                    <a className='header__nav-link' href='#'>
+                    <Link className='header__nav-link' to={AppRoute.Login}>
                       <span className='header__signout'>{isAuth ? 'Sign out' : 'Sign in'}</span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>

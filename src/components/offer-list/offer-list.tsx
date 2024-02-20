@@ -1,25 +1,31 @@
-import { FC } from 'react';
-import { CityOfferCard } from '../city-offer-card';
-import { TOffer } from '../../mocks/offers';
+import { FC, useState } from 'react';
+import { OfferCardType } from '../offer-card/lib';
+import { OfferCard } from '../offer-card';
+import { getCardListClassName } from './lib';
+import { TOffer } from '../../shared/offer';
 
 export type TOfferListProps = {
-  data: TOffer[]
+  offers: TOffer[];
+  offerCardType: OfferCardType;
 }
 
-export const OfferList: FC<TOfferListProps> = ({data}) => {
+export const OfferList: FC<TOfferListProps> = ({offers, offerCardType}) => {
+  const [, setSelectedOffer] = useState<TOffer>();
+  if (!offers){
+    return null;
+  }
+
+  const listClass = getCardListClassName(offerCardType);
+
   return (
-    <div className='cities__places-list places__list tabs__content'>
+    <div className={listClass}>
       {
-        data.map((offer: TOffer) => (
-          <CityOfferCard
-            price={offer.price}
-            currency={offer.currency}
-            isPremium={offer.isPremium}
-            isBookmark={offer.isBookmark}
-            title={offer.title}
-            offerType={offer.offerType}
-            ratingPercent={offer.ratingPercent}
-            imageName={offer.imageName}
+        offers.map((offer: TOffer) => (
+          <OfferCard
+            key={offer.id}
+            offer={offer}
+            setSelectedOffer = {setSelectedOffer}
+            offerCardType={offerCardType}
           />
         ))
       }

@@ -1,1 +1,1 @@
-export { ReviewOfferCard } from './review-create-card';
+export { ReviewCreateCard } from './review-create-card';

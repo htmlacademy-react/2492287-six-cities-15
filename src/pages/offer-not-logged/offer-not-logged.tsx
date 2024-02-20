@@ -1,10 +1,18 @@
 import { FC } from 'react';
-import Currency from '../../shared/currency';
-import OfferTypes from '../../shared/offer-types';
 import { Helmet } from 'react-helmet-async';
-import { NearOfferCard } from '../../components/near-offer-card';
+import { OfferList } from '../../components/offer-list';
+import { TOffer } from '../../shared/offer';
+import { TReview } from '../../shared/review';
+import { OfferCardType } from '../../components/offer-card/lib';
+import { ReviewList } from '../../components/review-list';
 
-export const OfferNotLogged: FC = () =>
+export type TOfferNotLoggedProps = {
+  nearOffers: TOffer[];
+  nearOfferCardType: OfferCardType;
+  reviews: TReview[];
+}
+
+export const OfferNotLogged: FC<TOfferNotLoggedProps> = ({nearOffers: offers, nearOfferCardType: offerCardType, reviews}) =>
   (
     <div className='page'>
       <Helmet>
@@ -141,38 +149,7 @@ export const OfferNotLogged: FC = () =>
                 <h2 className='reviews__title'>
                   Reviews · <span className='reviews__amount'>1</span>
                 </h2>
-                <ul className='reviews__list'>
-                  <li className='reviews__item'>
-                    <div className='reviews__user user'>
-                      <div className='reviews__avatar-wrapper user__avatar-wrapper'>
-                        <img
-                          className='reviews__avatar user__avatar'
-                          src='img/avatar-max.jpg'
-                          width={54}
-                          height={54}
-                          alt='Reviews avatar'
-                        />
-                      </div>
-                      <span className='reviews__user-name'>Max</span>
-                    </div>
-                    <div className='reviews__info'>
-                      <div className='reviews__rating rating'>
-                        <div className='reviews__stars rating__stars'>
-                          <span style={{ width: '80%' }} />
-                          <span className='visually-hidden'>Rating</span>
-                        </div>
-                      </div>
-                      <p className='reviews__text'>
-                        A quiet cozy and picturesque that hides behind a a river by
-                        the unique lightness of Amsterdam. The building is green and
-                        from 18th century.
-                      </p>
-                      <time className='reviews__time' dateTime='2019-04-24'>
-                        April 2019
-                      </time>
-                    </div>
-                  </li>
-                </ul>
+                <ReviewList reviews={reviews}/>
               </section>
             </div>
           </div>
@@ -184,32 +161,7 @@ export const OfferNotLogged: FC = () =>
               Other places in the neighbourhood
             </h2>
             <div className='near-places__list places__list'>
-              <NearOfferCard
-                price={80}
-                currencyType={Currency.EU}
-                isBookmark
-                title={'Wood and stone place'}
-                offerType={OfferTypes.Room}
-                ratingPercent={80}
-                imageName="room.jpg"
-              />
-              <NearOfferCard
-                price={132}
-                currencyType={Currency.EU}
-                title={'Canal View Prinsengracht'}
-                offerType={OfferTypes.Apartment}
-                ratingPercent={80}
-                imageName="apartment-02.jpg"
-              />
-              <NearOfferCard
-                price={180}
-                isPremium
-                currencyType={Currency.EU}
-                title={'Nice, cozy, warm big bed apartment'}
-                offerType={OfferTypes.Apartment}
-                ratingPercent={100}
-                imageName="apartment-03.jpg"
-              />
+              <OfferList offers={offers} offerCardType={offerCardType}/>
             </div>
           </section>
         </div>
