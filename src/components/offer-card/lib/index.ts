@@ -1,3 +1,5 @@
+import { AppRoute } from '../../../app';
+
 export enum OfferCardType {
   City = 'City',
   Favorite = 'Favorite',
@@ -40,3 +42,5 @@ export const getCardImageSize = (offerCardType: OfferCardType): ImageSize => {
     default: return {width: 260, height: 200};
   }
 };
+
+export const getOfferLinkById = (id: number) => AppRoute.Offer.replace(':id', String(id));

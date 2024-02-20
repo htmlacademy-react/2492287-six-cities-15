@@ -2,6 +2,8 @@ import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { TOffer } from '../../const';
 import { FavoriteLocationList } from '../../components/favorite-location-list';
+import { AppRoute } from '../../app';
+import { Link } from 'react-router-dom';
 
 export type TFavoritesProps = {
   offers: TOffer[];
@@ -19,12 +21,11 @@ export const Favorites: FC<TFavoritesProps> = ({offers}) => {
       </Helmet>
       <main className='page__main page__main--favorites'>
         <div className='page__favorites-container container'>
-          asfd
           <FavoriteLocationList offers={offers}/>
         </div>
       </main>
       <footer className='footer container'>
-        <a className='footer__logo-link' href='main.html'>
+        <Link className='footer__logo-link' to={AppRoute.Root}>
           <img
             className='footer__logo'
             src='img/logo.svg'
@@ -32,7 +33,7 @@ export const Favorites: FC<TFavoritesProps> = ({offers}) => {
             width={64}
             height={33}
           />
-        </a>
+        </Link>
       </footer>
     </>
   );
