@@ -2,8 +2,8 @@ import {FC} from 'react';
 import AuthorizationStatus from '../../shared/authorization-status';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
-import { Logo } from '../logo';
 import { AppRoute } from '../../app';
+import { Logo } from '../logo';
 
 export type TLayoutProps = {
   authorizationStatus: AuthorizationStatus;

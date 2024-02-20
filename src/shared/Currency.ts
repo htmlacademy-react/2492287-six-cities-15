@@ -1,6 +1,6 @@
 enum Currency {
-  US = '$',
-  EU = '€'
+  EU = '€',
+  US = '$'  
 }
 
 export default Currency;
