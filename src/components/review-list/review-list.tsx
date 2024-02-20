@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TReview } from '../../shared/review';
+import { TReview } from '../../const';
 import { ReviewCard } from '../review-card';
 
 export type TOfferListProps = {

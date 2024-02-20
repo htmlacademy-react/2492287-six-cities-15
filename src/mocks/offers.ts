@@ -1,6 +1,4 @@
-import Place from '../shared/place';
-import { TOffer } from '../shared/offer';
-import OfferTypes from '../shared/offer-types';
+import { OfferTypes, Place, TOffer } from '../const';
 
 export const offers: Array<TOffer> = [
   {

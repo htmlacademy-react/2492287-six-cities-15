@@ -3,11 +3,10 @@ import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
-import { TOffer } from '../../shared/offer';
-import { TReview } from '../../shared/review';
 import { ReviewCreateCard } from '../../components/review-create-card';
 import { ReviewList } from '../../components/review-list';
 import { useLocation } from 'react-router-dom';
+import { TOffer, TReview } from '../../const';
 
 export type TOfferProps = {
   nearOffers: TOffer[];

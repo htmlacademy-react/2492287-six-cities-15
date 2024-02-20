@@ -1,7 +1,6 @@
 import { FC } from 'react';
-import { TOffer } from '../../shared/offer';
+import { Place, TOffer } from '../../const';
 import { OfferList } from '../offer-list';
-import Place from '../../shared/place';
 import { OfferCardType } from '../offer-card/lib';
 
 export type TFavoriteLocationPlaceProps = {

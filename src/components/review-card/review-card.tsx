@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TReview } from '../../shared/review';
+import { TReview } from '../../const';
 
 export type TReviewCardProps = {
   review: TReview;

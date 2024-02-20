@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
-import { TOffer } from '../../shared/offer';
+import { TOffer } from '../../const';
 
 export type TMainProps = {
   offers: TOffer[];

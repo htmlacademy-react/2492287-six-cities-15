@@ -1,7 +1,6 @@
 import { FC } from 'react';
-import { TOffer } from '../../shared/offer';
-import Place from '../../shared/place';
 import { FavoriteLocationPlaceList } from '../favorite-location-place-list';
+import { Place, TOffer } from '../../const';
 
 export type TFavoriteLocationProps = {
   offers: TOffer[];

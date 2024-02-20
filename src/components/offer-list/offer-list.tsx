@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { OfferCardType } from '../offer-card/lib';
 import { OfferCard } from '../offer-card';
 import { getCardListClassName } from './lib';
-import { TOffer } from '../../shared/offer';
+import { TOffer } from '../../const';
 
 export type TOfferListProps = {
   offers: TOffer[];

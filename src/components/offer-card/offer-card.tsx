@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { OfferCardType, getCardClassName, getCardImageClassName, getCardImageSize, getCardInfoClassName } from './lib';
-import { TOffer } from '../../shared/offer';
 import { AppRoute } from '../../app';
 import { Link } from 'react-router-dom';
+import { TOffer } from '../../const';
 
 export type TOfferCardProps = {
   offer: TOffer;

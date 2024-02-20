@@ -1,4 +1,4 @@
-import { TReview } from '../shared/review';
+import { TReview } from '../const';
 
 export const reviews: Array<TReview> = [
   {

@@ -1,10 +1,9 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
-import { TOffer } from '../../shared/offer';
-import { TReview } from '../../shared/review';
 import { OfferCardType } from '../../components/offer-card/lib';
 import { ReviewList } from '../../components/review-list';
+import { TOffer, TReview } from '../../const';
 
 export type TOfferNotLoggedProps = {
   nearOffers: TOffer[];
