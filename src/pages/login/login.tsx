@@ -1,8 +1,8 @@
-import { JSX } from 'react';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-function Login(): JSX.Element{
-  return (
+export const Login: FC = () =>
+  (
     <main className='page__main page__main--login'>
       <Helmet>
         <title>Sign in</title>
@@ -46,6 +46,3 @@ function Login(): JSX.Element{
       </div>
     </main>
   );
-}
-
-export default Login;

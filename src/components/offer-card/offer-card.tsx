@@ -1,39 +1,46 @@
-import { JSX } from 'react';
-import Currency from '../../shared/Currency';
-import OfferTypes from '../../shared/OfferTypes';
+import { FC } from 'react';
+import { OfferCardType, getCardClassName, getCardImageClassName, getCardImageSize, getCardInfoClassName, getOfferLinkById } from './lib';
+import { Link } from 'react-router-dom';
+import { TOffer } from '../../const';
 
-type CityOfferCardProps = {
-  price: number;
-  currencyType: Currency;
-  title: string;
-  offerType: OfferTypes;
-  ratingPercent: number;
-  imageName: string;
-  isBookmark?: boolean;
-  isPremium?: boolean;
+export type TOfferCardProps = {
+  offer: TOffer;
+  offerCardType: OfferCardType;
+  setSelectedOffer: (offer: TOffer) => void;
 }
 
-function CityOfferCard({price, currencyType, title, offerType, ratingPercent, imageName, isBookmark, isPremium}: CityOfferCardProps): JSX.Element{
-  const bookmarkClass = isBookmark ? ' place-card__bookmark-button--active' : '';
+export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCardType}) => {
+  const bookmarkClass = offer.isBookmark ? ' place-card__bookmark-button--active' : '';
+  const cardClass = getCardClassName(offerCardType);
+  const cardImageClass = getCardImageClassName(offerCardType);
+  const cardInfoClass = getCardInfoClassName(offerCardType);
+  const imageSize = getCardImageSize(offerCardType);
+  const offerLink = getOfferLinkById(offer.id);
+
+  const offerMouseOverHandler = () => {
+    if (setSelectedOffer){
+      setSelectedOffer(offer);
+    }
+  };
 
   return (
-    <article className='cities__card place-card'>
-      {isPremium && <div className='place-card__mark'> <span>Premium</span> </div>}
-      <div className='cities__image-wrapper place-card__image-wrapper'>
-        <a href='#'>
+    <article className={`${cardClass} place-card`} onMouseOver={offerMouseOverHandler}>
+      {offer.isPremium && <div className='place-card__mark'> <span>Premium</span> </div>}
+      <div className={`${cardImageClass} place-card__image-wrapper`}>
+        <Link to={offerLink}>
           <img
             className='place-card__image'
-            src={`img/${imageName}`}
-            width={260}
-            height={200}
+            src={`img/${offer.imageName}`}
+            width={imageSize.width}
+            height={imageSize.height}
             alt='Place image'
           />
-        </a>
+        </Link>
       </div>
-      <div className='place-card__info'>
+      <div className={`${cardInfoClass} place-card__info`}>
         <div className='place-card__price-wrapper'>
           <div className='place-card__price'>
-            <b className='place-card__price-value'>{`${currencyType}${price}`}</b>
+            <b className='place-card__price-value'>{`€${offer.price}`}</b>
             <span className='place-card__price-text'>
               /&nbsp;night
             </span>
@@ -49,22 +56,20 @@ function CityOfferCard({price, currencyType, title, offerType, ratingPercent, im
             >
               <use xlinkHref='#icon-bookmark' />
             </svg>
-            <span className='visually-hidden'>{isBookmark ? 'In bookmarks' : 'To bookmarks'}</span>
+            <span className='visually-hidden'>{offer.isBookmark ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{ width: `${ratingPercent}%` }} />
+            <span style={{ width: `${offer.ratingPercent}%` }} />
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>
         <h2 className='place-card__name'>
-          <a href='#'>{title}</a>
+          <Link to={offerLink}>{offer.title}</Link>
         </h2>
-        <p className='place-card__type'>{offerType}</p>
+        <p className='place-card__type'>{offer.offerType}</p>
       </div>
     </article>
   );
-}
-
-export default CityOfferCard;
+};

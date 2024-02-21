@@ -1,8 +1,8 @@
-import { JSX } from 'react';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-function FavoritesEmpty(): JSX.Element{
-  return (
+export const FavoritesEmpty: FC = () =>
+  (
     <>
       <Helmet>
         <title>Favorites</title>
@@ -33,6 +33,3 @@ function FavoritesEmpty(): JSX.Element{
       </footer>
     </>
   );
-}
-
-export default FavoritesEmpty;

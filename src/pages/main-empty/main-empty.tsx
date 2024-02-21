@@ -1,9 +1,9 @@
 
-import { JSX } from 'react';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-function MainEmpty(): JSX.Element{
-  return (
+export const MainEmpty: FC = () =>
+  (
     <main className='page__main page__main--index page__main--index-empty'>
       <Helmet>
         <title>6 cities</title>
@@ -64,6 +64,3 @@ function MainEmpty(): JSX.Element{
       </div>
     </main>
   );
-}
-
-export default MainEmpty;

@@ -1,14 +1,15 @@
-import {JSX} from 'react';
-import Logo from '../Logo/logo';
-import AuthorizationStatus from '../../shared/AuthorizationStatus';
-import { Outlet, useLocation } from 'react-router-dom';
+import {FC} from 'react';
+import { Logo } from '../logo';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
+import { AppRoute } from '../../app';
+import { AuthorizationStatus } from '../../const';
 
-type LayoutProps = {
+export type TLayoutProps = {
   authorizationStatus: AuthorizationStatus;
 }
 
-function Layout({authorizationStatus} :LayoutProps): JSX.Element {
+export const Layout: FC<TLayoutProps> = ({authorizationStatus} :TLayoutProps) => {
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const username = isAuth ? 'Oliver.conner@gmail.com' : '';
   const favoriteCount = isAuth ? 3 : 0;
@@ -27,21 +28,21 @@ function Layout({authorizationStatus} :LayoutProps): JSX.Element {
               <nav className='header__nav'>
                 <ul className='header__nav-list'>
                   <li className='header__nav-item user'>
-                    <a
+                    <Link
                       className='header__nav-link header__nav-link--profile'
-                      href='#'
+                      to={AppRoute.Favorites}
                     >
                       <div className='header__avatar-wrapper user__avatar-wrapper'></div>
                       <span className='header__user-name user__name'>
                         {username}
                       </span>
                       <span className='header__favorite-count'>{favoriteCount}</span>
-                    </a>
+                    </Link>
                   </li>
                   <li className='header__nav-item'>
-                    <a className='header__nav-link' href='#'>
+                    <Link className='header__nav-link' to={AppRoute.Login}>
                       <span className='header__signout'>{isAuth ? 'Sign out' : 'Sign in'}</span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
@@ -52,6 +53,4 @@ function Layout({authorizationStatus} :LayoutProps): JSX.Element {
       <Outlet />
     </div>
   );
-}
-
-export default Layout;
+};

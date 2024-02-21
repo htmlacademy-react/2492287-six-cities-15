@@ -1,11 +1,18 @@
-import { JSX } from 'react';
-import NearOfferCard from '../../components/near-offer-card/near-offer-card';
-import Currency from '../../shared/Currency';
-import OfferTypes from '../../shared/OfferTypes';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { OfferList } from '../../components/offer-list';
+import { OfferCardType } from '../../components/offer-card/lib';
+import { ReviewList } from '../../components/review-list';
+import { TOffer, TReview } from '../../const';
 
-function OfferNotLogged(): JSX.Element{
-  return (
+export type TOfferNotLoggedProps = {
+  nearOffers: TOffer[];
+  nearOfferCardType: OfferCardType;
+  reviews: TReview[];
+}
+
+export const OfferNotLogged: FC<TOfferNotLoggedProps> = ({nearOffers: offers, nearOfferCardType: offerCardType, reviews}) =>
+  (
     <div className='page'>
       <Helmet>
         <title>Beautiful & luxurious studio at great location</title>
@@ -141,38 +148,7 @@ function OfferNotLogged(): JSX.Element{
                 <h2 className='reviews__title'>
                   Reviews · <span className='reviews__amount'>1</span>
                 </h2>
-                <ul className='reviews__list'>
-                  <li className='reviews__item'>
-                    <div className='reviews__user user'>
-                      <div className='reviews__avatar-wrapper user__avatar-wrapper'>
-                        <img
-                          className='reviews__avatar user__avatar'
-                          src='img/avatar-max.jpg'
-                          width={54}
-                          height={54}
-                          alt='Reviews avatar'
-                        />
-                      </div>
-                      <span className='reviews__user-name'>Max</span>
-                    </div>
-                    <div className='reviews__info'>
-                      <div className='reviews__rating rating'>
-                        <div className='reviews__stars rating__stars'>
-                          <span style={{ width: '80%' }} />
-                          <span className='visually-hidden'>Rating</span>
-                        </div>
-                      </div>
-                      <p className='reviews__text'>
-                        A quiet cozy and picturesque that hides behind a a river by
-                        the unique lightness of Amsterdam. The building is green and
-                        from 18th century.
-                      </p>
-                      <time className='reviews__time' dateTime='2019-04-24'>
-                        April 2019
-                      </time>
-                    </div>
-                  </li>
-                </ul>
+                <ReviewList reviews={reviews}/>
               </section>
             </div>
           </div>
@@ -184,39 +160,10 @@ function OfferNotLogged(): JSX.Element{
               Other places in the neighbourhood
             </h2>
             <div className='near-places__list places__list'>
-              <NearOfferCard
-                price={80}
-                currencyType={Currency.EU}
-                isBookmark
-                title={'Wood and stone place'}
-                offerType={OfferTypes.Room}
-                ratingPercent={80}
-                imageName="room.jpg"
-              />
-              <NearOfferCard
-                price={132}
-                currencyType={Currency.EU}
-                title={'Canal View Prinsengracht'}
-                offerType={OfferTypes.Apartment}
-                ratingPercent={80}
-                imageName="apartment-02.jpg"
-              />
-              <NearOfferCard
-                price={180}
-                isPremium
-                currencyType={Currency.EU}
-                title={'Nice, cozy, warm big bed apartment'}
-                offerType={OfferTypes.Apartment}
-                ratingPercent={100}
-                imageName="apartment-03.jpg"
-              />
+              <OfferList offers={offers} offerCardType={offerCardType}/>
             </div>
           </section>
         </div>
       </main>
     </div>
-
   );
-}
-
-export default OfferNotLogged;
