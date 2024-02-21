@@ -19,7 +19,7 @@ export type TOfferProps = {
 export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: offerCardType, reviews}) => {
   const { id } = useParams();
 
-  if (!validate(id)){
+  if (!validate(id || '')){
     return (<NotFound />);
   }
 
