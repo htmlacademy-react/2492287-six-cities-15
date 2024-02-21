@@ -9,7 +9,7 @@ export enum OfferTypes {
   Apartment = 'Apartment'
 }
 
-export enum Place {
+export enum City {
   Amsterdam = 'Amsterdam',
   Cologne = 'Cologne',
   Paris = 'Paris',
@@ -25,7 +25,7 @@ export type TOffer = {
   offerType: OfferTypes;
   ratingPercent: number;
   imageName: string;
-  place: Place;
+  city: City;
   isBookmark?: boolean;
   isPremium?: boolean;
 }

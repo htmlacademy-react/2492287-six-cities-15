@@ -1,4 +1,4 @@
-import { OfferTypes, Place, TOffer } from '../const';
+import { OfferTypes, City, TOffer } from '../const';
 
 export const favoriteOffers: Array<TOffer> = [
   {
@@ -9,7 +9,7 @@ export const favoriteOffers: Array<TOffer> = [
     offerType: OfferTypes.Apartment,
     ratingPercent: 100,
     imageName: 'apartment-small-03.jpg',
-    place: Place.Amsterdam,
+    city: City.Amsterdam,
     isBookmark: true
   },
   {
@@ -19,7 +19,7 @@ export const favoriteOffers: Array<TOffer> = [
     offerType: OfferTypes.Room,
     ratingPercent: 80,
     imageName: 'room-small.jpg',
-    place: Place.Amsterdam,
+    city: City.Amsterdam,
     isBookmark: true
   },
   {
@@ -29,7 +29,7 @@ export const favoriteOffers: Array<TOffer> = [
     offerType: OfferTypes.Apartment,
     ratingPercent: 100,
     imageName: 'apartment-small-04.jpg',
-    place: Place.Cologne,
+    city: City.Cologne,
     isBookmark: true
   }
 ];

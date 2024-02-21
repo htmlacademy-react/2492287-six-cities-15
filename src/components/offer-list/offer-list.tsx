@@ -20,7 +20,7 @@ export const OfferList: FC<TOfferListProps> = ({offers, offerCardType}) => {
   return (
     <div className={listClass}>
       {
-        offers.map((offer: TOffer) => (
+        offers.map((offer) => (
           <OfferCard
             key={offer.id}
             offer={offer}

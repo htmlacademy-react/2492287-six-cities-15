@@ -1,10 +1,15 @@
 import { FC, useState } from 'react';
 import { ReviewStar } from '../review-star';
+import { TReview } from '../../const';
 
-type TReviewData = {
-  rating: number;
-  review: string;
-}
+type TReviewData = Pick<TReview, 'rating' | 'review'>;
+const raitings = [
+  {value: 5, name: 'perfect'},
+  {value: 4, name: 'good'},
+  {value: 3, name: 'not bad'},
+  {value: 2, name: 'badly'},
+  {value: 1, name: 'terrbly'}
+];
 
 export const ReviewCreateCard: FC = () => {
   const [formdata, setFormdata] = useState<TReviewData>({
@@ -12,13 +17,13 @@ export const ReviewCreateCard: FC = () => {
     review: ''
   });
 
-  const inputChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = evt.target;
+  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = event.target;
     setFormdata({...formdata, [name]: value});
   };
 
-  const textareaChangeHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const {name, value} = evt.target;
+  const textareaChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const {name, value} = event.target;
     setFormdata({...formdata, [name]: value});
   };
 
@@ -28,11 +33,11 @@ export const ReviewCreateCard: FC = () => {
         Your review
       </label>
       <div className='reviews__rating-form form__rating'>
-        <ReviewStar defaultValue={5} name='perfect' onChange={inputChangeHandler}/>
-        <ReviewStar defaultValue={4} name='good' onChange={inputChangeHandler}/>
-        <ReviewStar defaultValue={3} name='not bad' onChange={inputChangeHandler}/>
-        <ReviewStar defaultValue={2} name='badly' onChange={inputChangeHandler}/>
-        <ReviewStar defaultValue={1} name='terribly' onChange={inputChangeHandler}/>
+        {
+          raitings.map((raiting) => (
+            <ReviewStar key={raiting.value} defaultValue={raiting.value} name={raiting.name} onChange={inputChangeHandler}/>
+          ))
+        }
       </div>
       <textarea
         className='reviews__textarea form__textarea'

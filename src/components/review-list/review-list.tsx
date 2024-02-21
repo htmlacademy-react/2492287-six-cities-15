@@ -7,14 +7,19 @@ export type TOfferListProps = {
 }
 
 export const ReviewList: FC<TOfferListProps> = ({reviews}) => (
-  <ul className='reviews__list'>
-    {
-      reviews.map((review: TReview) => (
-        <ReviewCard
-          key={review.id}
-          review={review}
-        />
-      ))
-    }
-  </ul>
+  <>
+    <h2 className='reviews__title'>
+        Reviews · <span className='reviews__amount'>{reviews.length}</span>
+    </h2>
+    <ul className='reviews__list'>
+      {
+        reviews.map((review) => (
+          <ReviewCard
+            key={review.id}
+            review={review}
+          />
+        ))
+      }
+    </ul>
+  </>
 );

@@ -5,8 +5,10 @@ import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
 import { ReviewCreateCard } from '../../components/review-create-card';
 import { ReviewList } from '../../components/review-list';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { TOffer, TReview } from '../../const';
+import { NotFound } from '../not-found';
+import { validate } from './lib';
 
 export type TOfferProps = {
   nearOffers: TOffer[];
@@ -15,9 +17,11 @@ export type TOfferProps = {
 }
 
 export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: offerCardType, reviews}) => {
-  const location = useLocation();
-  const paths = location.pathname.split('/');
-  const offerId = parseInt(paths[paths.length - 1], 10);
+  const { id } = useParams();
+
+  if (!validate(id)){
+    return (<NotFound />);
+  }
 
   return (
     <main className='page__main page__main--offer'>
@@ -151,10 +155,7 @@ export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: o
               </div>
             </div>
             <section className='offer__reviews reviews'>
-              <h2 className='reviews__title'>
-                Reviews · <span className='reviews__amount'>1</span>
-              </h2>
-              <ReviewList reviews={reviews.filter((review: TReview) => review.offerId === offerId)}/>
+              <ReviewList reviews={reviews.filter((review) => review.offerId.toString() === id)}/>
               <ReviewCreateCard/>
             </section>
           </div>

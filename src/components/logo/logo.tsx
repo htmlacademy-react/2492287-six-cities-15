@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { AppRoute } from '../../app';
 
-export const MainLogo: FC = () =>
+export const Logo: FC = () =>
   (
     <a className='header__logo-link header__logo-link--active' href={AppRoute.Root}>
       <img
