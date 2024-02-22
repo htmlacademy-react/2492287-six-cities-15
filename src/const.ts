@@ -14,7 +14,7 @@ export type TCity = {
   name: string;
   lat: number;
   lng: number;
-};
+}
 
 export enum LogoLocation {
   Header = 'Header',
@@ -45,19 +45,17 @@ export type TReview = {
   offerId: number;
 }
 
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
-export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export type TPoint = Pick<TOffer, 'title' | 'lat' | 'lng'>;
 
 export const cities: TCity[] = [
-  {id: 1, name: 'Amsterdam', lat: 52.3909553943508, lng: 4.85309666406198},
+  {id: 1, name: 'Paris', lat: 52.3909553943508, lng: 4.85309666406198},
   {id: 2, name: 'Cologne', lat: 52.3909553943508, lng: 4.85309666406198},
-  {id: 3, name: 'Paris', lat: 52.3909553943508, lng: 4.85309666406198},
-  {id: 4, name: 'Brussels', lat: 52.3909553943508, lng: 4.85309666406198},
+  {id: 3, name: 'Brussels', lat: 52.3909553943508, lng: 4.85309666406198},
+  {id: 4, name: 'Amsterdam', lat: 52.3909553943508, lng: 4.85309666406198},
   {id: 5, name: 'Hamburg', lat: 52.3909553943508, lng: 4.85309666406198},
   {id: 6, name: 'Dusseldorf', lat: 52.3909553943508, lng: 4.85309666406198}
 ];
