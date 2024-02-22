@@ -1,4 +1,4 @@
-import { OfferTypes, City, TOffer } from '../const';
+import { OfferTypes, TOffer } from '../const';
 
 export const offers: Array<TOffer> = [
   {
@@ -7,46 +7,56 @@ export const offers: Array<TOffer> = [
     isPremium: true,
     title: 'Beautiful & luxurious apartment at great location',
     offerType: OfferTypes.Apartment,
-    ratingPercent: 80,
+    rating: 4,
     imageName: 'apartment-01.jpg',
-    city: City.Amsterdam
+    cityId: 1,
+    lat: 52.3909553943508,
+    lng: 4.85309666406198
   },
   {
     id: 2,
-    price: 80,
-    title: 'Wood and stone place',
+    price: 83,
+    title: 'Some good place',
     offerType: OfferTypes.Room,
-    ratingPercent: 80,
+    rating: 4,
     imageName: 'room.jpg',
-    city: City.Amsterdam,
-    isBookmark: true
+    cityId: 1,
+    isBookmark: true,
+    lat: 52.3609553943508,
+    lng: 4.85309666406198
   },
   {
     id: 3,
     price: 132,
     title: 'Canal View Prinsengracht',
     offerType: OfferTypes.Apartment,
-    ratingPercent: 80,
+    rating: 4,
     imageName: 'apartment-02.jpg',
-    city: City.Amsterdam
+    cityId: 1,
+    lat: 52.3909553943508,
+    lng: 4.929309666406198
   },
   {
     id: 4,
     price: 180,
     title: 'Nice, cozy, warm big bed apartment',
     offerType: OfferTypes.Apartment,
-    ratingPercent: 100,
+    rating: 5,
     imageName: 'apartment-03.jpg',
-    city: City.Amsterdam
+    cityId: 1,
+    lat: 52.3809553943508,
+    lng: 4.939309666406198
   },
   {
     id: 5,
     price: 80,
     title: 'Wood and stone place',
     offerType: OfferTypes.Room,
-    ratingPercent: 80,
+    rating: 4,
     imageName: 'room.jpg',
-    city: City.Amsterdam,
-    isBookmark: true
+    cityId: 1,
+    isBookmark: true,
+    lat: 52.3909553943508,
+    lng: 4.939309666406198
   }
 ];
