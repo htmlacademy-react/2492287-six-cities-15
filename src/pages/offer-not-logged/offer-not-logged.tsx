@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
@@ -11,8 +11,9 @@ export type TOfferNotLoggedProps = {
   reviews: TReview[];
 }
 
-export const OfferNotLogged: FC<TOfferNotLoggedProps> = ({nearOffers: offers, nearOfferCardType: offerCardType, reviews}) =>
-  (
+export const OfferNotLogged: FC<TOfferNotLoggedProps> = ({nearOffers: offers, nearOfferCardType: offerCardType, reviews}) => {
+  const [, setSelectedOffer] = useState<TOffer>();
+  return (
     <div className='page'>
       <Helmet>
         <title>Beautiful & luxurious studio at great location</title>
@@ -160,10 +161,11 @@ export const OfferNotLogged: FC<TOfferNotLoggedProps> = ({nearOffers: offers, ne
               Other places in the neighbourhood
             </h2>
             <div className='near-places__list places__list'>
-              <OfferList offers={offers} offerCardType={offerCardType}/>
+              <OfferList offers={offers} offerCardType={offerCardType} setSelectedOffer={setSelectedOffer}/>
             </div>
           </section>
         </div>
       </main>
     </div>
   );
+};

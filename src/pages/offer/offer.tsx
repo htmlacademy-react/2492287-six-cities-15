@@ -1,14 +1,15 @@
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
 import { ReviewCreateCard } from '../../components/review-create-card';
 import { ReviewList } from '../../components/review-list';
 import { useParams } from 'react-router-dom';
-import { TOffer, TReview } from '../../const';
+import { TOffer, TReview, cities } from '../../const';
 import { NotFound } from '../not-found';
 import { validate } from './lib';
+import { Map } from '../../components/map';
 
 export type TOfferProps = {
   nearOffers: TOffer[];
@@ -18,6 +19,7 @@ export type TOfferProps = {
 
 export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: offerCardType, reviews}) => {
   const { id } = useParams();
+  const [selectedNeighbourOffer, setSelectedNeighbourOffer] = useState<TOffer>();
 
   if (!validate(id || '')){
     return (<NotFound />);
@@ -160,14 +162,16 @@ export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: o
             </section>
           </div>
         </div>
-        <section className='offer__map map' />
+        <section className='offer__map map' >
+          <Map city={cities.find((value) => value.id === selectedNeighbourOffer?.cityId) || cities[0]} selectedPoint={selectedNeighbourOffer} points={offers}/>
+        </section>
       </section>
       <div className='container'>
         <section className='near-places places'>
           <h2 className='near-places__title'>
             Other places in the neighbourhood
           </h2>
-          <OfferList offers={offers} offerCardType={offerCardType}/>
+          <OfferList offers={offers} offerCardType={offerCardType} setSelectedOffer={setSelectedNeighbourOffer}/>
         </section>
       </div>
     </main>

@@ -41,7 +41,7 @@ export const App: FC<TAppProps> = ({offers, favoriteOffers, nearOffers, reviews}
             <Route path={AppRoute.Offer} element={<Offer nearOffers={nearOffers} nearOfferCardType={OfferCardType.Near} reviews={reviews}/>}/>
             <Route path={AppRoute.Login} element={<Login/>}/>
           </Route>
-          <Route path="*" element={<NotFound/>}/>
+          <Route path='*' element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
