@@ -163,7 +163,7 @@ export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: o
           </div>
         </div>
         <section className='offer__map map' >
-          <Map city={cities.find((value) => value.id === selectedNeighbourOffer?.cityId) || cities[0]} selectedPoint={selectedNeighbourOffer} points={offers}/>
+          <Map city={cities.find((value) => value.id === selectedNeighbourOffer?.cityId) || cities[0]} selectedPoint={undefined} points={offers}/>
         </section>
       </section>
       <div className='container'>
