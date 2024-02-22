@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Logo } from '../../components/logo';
+import { LogoLocation } from '../../const';
 
 export const FavoritesEmpty: FC = () =>
   (
@@ -21,15 +23,7 @@ export const FavoritesEmpty: FC = () =>
         </div>
       </main>
       <footer className='footer'>
-        <a className='footer__logo-link' href='main.html'>
-          <img
-            className='footer__logo'
-            src='img/logo.svg'
-            alt='6 cities logo'
-            width={64}
-            height={33}
-          />
-        </a>
+        <Logo logoLocation={LogoLocation.Footer}/>
       </footer>
     </>
   );
