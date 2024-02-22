@@ -6,7 +6,9 @@ export enum AuthorizationStatus {
 
 export enum OfferTypes {
   Room = 'Room',
-  Apartment = 'Apartment'
+  Apartment = 'Apartment',
+  House = 'House',
+  Hotel = 'Hotel'
 }
 
 export type TCity = {
