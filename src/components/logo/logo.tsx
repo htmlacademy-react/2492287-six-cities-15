@@ -9,12 +9,12 @@ type TLogoProps = {
 }
 export const Logo: FC<TLogoProps> = ({logoLocation = LogoLocation.Header}) => {
   const logoClassName = getLogoClassName(logoLocation);
-  const logoImpClassName = getLogoImgClassName(logoLocation);
+  const logoImgClassName = getLogoImgClassName(logoLocation);
   const logoSize = getLogoSize(logoLocation);
   return (
     <Link className={logoClassName} to={AppRoute.Root}>
       <img
-        className={logoImpClassName}
+        className={logoImgClassName}
         src='img/logo.svg'
         alt='6 cities logo'
         width={logoSize.width}
