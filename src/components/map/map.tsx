@@ -50,5 +50,5 @@ export const Map: FC<MapProps> = ({city, points, selectedPoint}) => {
     }
   }, [map, points, selectedPoint]);
 
-  return <div style={{height: '500px'}} ref={mapRef}></div>;
+  return <div style={{height: '100%'}} ref={mapRef}></div>;
 };

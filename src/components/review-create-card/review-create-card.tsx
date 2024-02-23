@@ -16,6 +16,7 @@ export const ReviewCreateCard: FC = () => {
     rating: 0,
     review: ''
   });
+  const [canSubmit, setCanSubmit] = useState(false);
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
@@ -24,6 +25,8 @@ export const ReviewCreateCard: FC = () => {
 
   const textareaChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = event.target;
+    setCanSubmit(value.length >= 50 && value.length <= 300);
+
     setFormdata({...formdata, [name]: value});
   };
 
@@ -57,7 +60,7 @@ export const ReviewCreateCard: FC = () => {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled
+          disabled={!canSubmit}
         >
           Submit
         </button>

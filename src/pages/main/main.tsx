@@ -47,7 +47,7 @@ export const Main: FC<TMainProps> = ({offers}) => {
             </div>
           </section>
           <div className='cities__right-section'>
-            <section className='cities__map map'>
+            <section style={{width: '100%'}}>
               <Map city={cities.find((value) => value.id === offer?.cityId) || cities[0]} selectedPoint={offer} points={offers}/>
             </section>
           </div>
