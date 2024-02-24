@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { ReviewStar } from '../review-star';
 import { TReview } from '../../const';
+import { validateSubmit } from './lib';
 
 type TReviewData = Pick<TReview, 'rating' | 'review'>;
 const raitings = [
@@ -16,7 +17,6 @@ export const ReviewCreateCard: FC = () => {
     rating: 0,
     review: ''
   });
-  const [canSubmit, setCanSubmit] = useState(false);
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
@@ -25,8 +25,6 @@ export const ReviewCreateCard: FC = () => {
 
   const textareaChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = event.target;
-    setCanSubmit(value.length >= 50 && value.length <= 300);
-
     setFormdata({...formdata, [name]: value});
   };
 
@@ -60,7 +58,7 @@ export const ReviewCreateCard: FC = () => {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled={!canSubmit}
+          disabled={!validateSubmit(formdata.review)}
         >
           Submit
         </button>
