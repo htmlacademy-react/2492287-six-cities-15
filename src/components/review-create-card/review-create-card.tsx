@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { ReviewStar } from '../review-star';
 import { TReview } from '../../const';
+import { validateSubmit } from './lib';
 
 type TReviewData = Pick<TReview, 'rating' | 'review'>;
 const raitings = [
@@ -57,7 +58,7 @@ export const ReviewCreateCard: FC = () => {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled
+          disabled={!validateSubmit(formdata.review)}
         >
           Submit
         </button>

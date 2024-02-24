@@ -1,4 +1,4 @@
-import { OfferTypes, City, TOffer } from '../const';
+import { OfferTypes, TOffer } from '../const';
 
 export const favoriteOffers: Array<TOffer> = [
   {
@@ -7,29 +7,35 @@ export const favoriteOffers: Array<TOffer> = [
     isPremium: true,
     title: 'Nice, cozy, warm big bed apartment',
     offerType: OfferTypes.Apartment,
-    ratingPercent: 100,
+    rating: 5,
     imageName: 'apartment-small-03.jpg',
-    city: City.Amsterdam,
-    isBookmark: true
+    cityId: 1,
+    isBookmark: true,
+    lat: 52.3909553943508,
+    lng: 4.85309666406198
   },
   {
     id: 2,
     price: 80,
     title: 'Wood and stone place',
     offerType: OfferTypes.Room,
-    ratingPercent: 80,
+    rating: 4,
     imageName: 'room-small.jpg',
-    city: City.Amsterdam,
-    isBookmark: true
+    cityId: 1,
+    isBookmark: true,
+    lat: 52.3609553943508,
+    lng: 4.85309666406198
   },
   {
     id: 3,
     price: 180,
     title: 'White castle',
     offerType: OfferTypes.Apartment,
-    ratingPercent: 100,
+    rating: 5,
     imageName: 'apartment-small-04.jpg',
-    city: City.Cologne,
-    isBookmark: true
+    cityId: 1,
+    isBookmark: true,
+    lat: 52.3909553943508,
+    lng: 4.929309666406198
   }
 ];

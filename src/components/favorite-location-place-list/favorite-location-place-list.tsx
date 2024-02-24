@@ -1,23 +1,25 @@
-import { FC } from 'react';
-import { City, TOffer } from '../../const';
+import { FC, useState } from 'react';
+import { TCity, TOffer } from '../../const';
 import { OfferList } from '../offer-list';
 import { OfferCardType } from '../offer-card/lib';
 
 export type TFavoriteLocationPlaceProps = {
   offers: TOffer[];
-  city: City;
+  city: TCity;
 }
 
-export const FavoriteLocationPlaceList: FC<TFavoriteLocationPlaceProps> = ({offers, city}) =>
-  (
+export const FavoriteLocationPlaceList: FC<TFavoriteLocationPlaceProps> = ({offers, city}) => {
+  const [, setSelectedOffer] = useState<TOffer>();
+  return (
     <li className='favorites__locations-items'>
       <div className='favorites__locations locations locations--current'>
         <div className='locations__item'>
           <a className='locations__item-link' href='#'>
-            <span>{city}</span>
+            <span>{city.name}</span>
           </a>
         </div>
       </div>
-      <OfferList offers={offers.filter((item) => item.city === city)} offerCardType={OfferCardType.Favorite}/>
+      <OfferList offers={offers.filter((item) => item.cityId === city.id)} offerCardType={OfferCardType.Favorite} setSelectedOffer={setSelectedOffer}/>
     </li>
   );
+};
