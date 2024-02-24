@@ -2,12 +2,13 @@ import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AppRoute } from '../../app';
 import { Link } from 'react-router-dom';
+import { APP_TITLE } from '../../const';
 
 export const NotFound: FC = () =>
   (
     <div className='container' style={{textAlign: 'center'}}>
       <Helmet>
-        <title>6 cities. Address not found</title>
+        <title>{APP_TITLE}: Address not found</title>
       </Helmet>
       <svg width="256px" height="256px" viewBox="-6.4 -6.4 76.80 76.80" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" className="iconify iconify--emojione-monotone" preserveAspectRatio="xMidYMid meet" fill="#000000" stroke="#000000" strokeWidth="0.704" transform="rotate(0)">
         <g id="SVGRepo_bgCarrier" strokeWidth="0"/>

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { LogoLocation, TOffer } from '../../const';
+import { APP_TITLE, LogoLocation, TOffer } from '../../const';
 import { FavoriteLocationList } from '../../components/favorite-location-list';
 import { Logo } from '../../components/logo';
 
@@ -16,7 +16,7 @@ export const Favorites: FC<TFavoritesProps> = ({offers}) => {
   return (
     <>
       <Helmet>
-        <title>Saved listing</title>
+        <title>{APP_TITLE}: favorites</title>
       </Helmet>
       <main className='page__main page__main--favorites'>
         <div className='page__favorites-container container'>

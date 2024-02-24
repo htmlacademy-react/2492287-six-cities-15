@@ -6,7 +6,7 @@ import { OfferCardType } from '../../components/offer-card/lib';
 import { ReviewCreateCard } from '../../components/review-create-card';
 import { ReviewList } from '../../components/review-list';
 import { useParams } from 'react-router-dom';
-import { TOffer, TReview, cities } from '../../const';
+import { APP_TITLE, TOffer, TReview, cities } from '../../const';
 import { NotFound } from '../not-found';
 import { validate } from './lib';
 import { Map } from '../../components/map';
@@ -28,7 +28,7 @@ export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: o
   return (
     <main className='page__main page__main--offer'>
       <Helmet>
-        <title>Beautiful & luxurious studio at great location</title>
+        <title>{APP_TITLE}: offer</title>
       </Helmet>
       <section className='offer'>
         <div className='offer__gallery-container container'>

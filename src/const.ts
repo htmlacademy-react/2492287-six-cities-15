@@ -1,3 +1,5 @@
+export const APP_TITLE = '6 cities';
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

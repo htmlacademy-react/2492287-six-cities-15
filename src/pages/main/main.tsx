@@ -3,7 +3,7 @@ import { FC, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
-import { OfferSortType, TCity, TOffer, cities } from '../../const';
+import { APP_TITLE, OfferSortType, TCity, TOffer, cities } from '../../const';
 import { CityTabList } from '../../components/city-tab-list/city-tab-list';
 import { Map } from '../../components/map';
 import { OfferSort } from '../../components/offer-sort';
@@ -28,7 +28,7 @@ export const Main: FC<TMainProps> = ({offers}) => {
   return (
     <main className='page__main page__main--index'>
       <Helmet>
-        <title>6 cities</title>
+        <title>{APP_TITLE}</title>
       </Helmet>
       <h1 className='visually-hidden'>Cities</h1>
       <div className='tabs'>
