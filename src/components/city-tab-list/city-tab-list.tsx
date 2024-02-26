@@ -4,15 +4,16 @@ import { CityTab } from '../city-tab';
 
 export type TCityTabListProps = {
   activeCity: TCity;
-  setActiveCity: (city: TCity) => void;
+  onChangeCity: (city: TCity) => void;
 }
 
-export const CityTabList: FC<TCityTabListProps> = ({activeCity, setActiveCity}) => (
+export const CityTabList: FC<TCityTabListProps> = ({activeCity, onChangeCity}) => (
   <ul className='locations__list tabs__list'>
     {
       cities.map((city) => (
-        <CityTab key={city.id} city={city} isActive={activeCity === city} setActiveCity={setActiveCity}/>
+        <CityTab key={city.id} city={city} isActive={activeCity === city} onChangeCity={onChangeCity}/>
       ))
     }
   </ul>
 );
+

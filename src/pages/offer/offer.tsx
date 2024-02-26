@@ -1,34 +1,41 @@
 
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
 import { ReviewCreateCard } from '../../components/review-create-card';
 import { ReviewList } from '../../components/review-list';
 import { useParams } from 'react-router-dom';
-import { APP_TITLE, TOffer, TReview, cities } from '../../const';
+import { TReview, cities } from '../../const';
 import { NotFound } from '../not-found';
 import { validate } from './lib';
 import { Map } from '../../components/map';
+import { getNearOffers } from '../../mocks/near-offers';
+import { useAppSelector } from '../../hooks';
 
 export type TOfferProps = {
-  nearOffers: TOffer[];
   nearOfferCardType: OfferCardType;
   reviews: TReview[];
 }
 
-export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: offerCardType, reviews}) => {
+export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType, reviews}) => {
   const { id } = useParams();
-  const [selectedNeighbourOffer, setSelectedNeighbourOffer] = useState<TOffer>();
+  const offers = useAppSelector((state) => state.offers);
 
   if (!validate(id || '')){
     return (<NotFound />);
   }
 
+  const offer = offers.find((item) => item.id === parseInt(id || '0', 10));
+  if (!offer){
+    return <NotFound/>;
+  }
+  const nearOffers = getNearOffers(offer);
+
   return (
     <main className='page__main page__main--offer'>
       <Helmet>
-        <title>{APP_TITLE}: offer</title>
+        <title>Beautiful & luxurious studio at great location</title>
       </Helmet>
       <section className='offer'>
         <div className='offer__gallery-container container'>
@@ -163,7 +170,7 @@ export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: o
           </div>
         </div>
         <section style={{margin: 'auto', marginBottom: 50, width: 1144, height: 579}} >
-          <Map city={cities.find((value) => value.id === selectedNeighbourOffer?.cityId) || cities[0]} selectedPoint={undefined} points={offers}/>
+          <Map city={cities[offer.cityId]} selectedPoint={undefined} points={nearOffers}/>
         </section>
       </section>
       <div className='container'>
@@ -171,7 +178,7 @@ export const Offer: FC<TOfferProps> = ({nearOffers: offers, nearOfferCardType: o
           <h2 className='near-places__title'>
             Other places in the neighbourhood
           </h2>
-          <OfferList offers={offers} offerCardType={offerCardType} setSelectedOffer={setSelectedNeighbourOffer}/>
+          <OfferList offers={nearOffers} offerCardType={offerCardType} />
         </section>
       </div>
     </main>

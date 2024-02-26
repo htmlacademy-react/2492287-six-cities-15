@@ -7,7 +7,7 @@ import { TOffer } from '../../const';
 export type TOfferListProps = {
   offers: TOffer[];
   offerCardType: OfferCardType;
-  setSelectedOffer: (offer: TOffer) => void;
+  setSelectedOffer?: (offer: TOffer) => void;
 }
 
 export const OfferList: FC<TOfferListProps> = ({offers, offerCardType, setSelectedOffer}) => {
