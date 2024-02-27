@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { APP_TITLE } from '../../const';
 
 export const Login: FC = () =>
   (
     <main className='page__main page__main--login'>
       <Helmet>
-        <title>Sign in</title>
+        <title>{APP_TITLE}: authorization</title>
       </Helmet>
       <div className='page__login-container container'>
         <section className='login'>

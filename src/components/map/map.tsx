@@ -3,6 +3,7 @@ import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, TCity, TPoint} from '../../const';
 import 'leaflet/dist/leaflet.css';
+import { ZOOM_MAP_DEFAULT } from '../../hooks/const';
 
 type MapProps = {
   city: TCity;
@@ -27,6 +28,11 @@ export const Map: FC<MapProps> = ({city, points, selectedPoint}) => {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    map?.panTo({lat: city.lat, lng: city.lng});
+    map?.setZoom(ZOOM_MAP_DEFAULT);
+  }, [city, map]);
+
+  useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
@@ -37,7 +43,7 @@ export const Map: FC<MapProps> = ({city, points, selectedPoint}) => {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.title === selectedPoint.title
+            selectedPoint !== undefined && point.lat === selectedPoint.lat && point.lng === selectedPoint.lng
               ? currentCustomIcon
               : defaultCustomIcon
           )

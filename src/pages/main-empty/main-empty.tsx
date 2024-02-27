@@ -1,12 +1,13 @@
 
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { APP_TITLE } from '../../const';
 
 export const MainEmpty: FC = () =>
   (
     <main className='page__main page__main--index page__main--index-empty'>
       <Helmet>
-        <title>6 cities</title>
+        <title>{APP_TITLE}</title>
       </Helmet>
       <h1 className='visually-hidden'>Cities</h1>
       <div className='tabs'>

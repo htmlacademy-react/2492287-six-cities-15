@@ -1,43 +1,17 @@
-import { OfferTypes, TOffer } from '../const';
+import { TOffer } from '../const';
+import { offers } from './offers';
 
-export const nearOffers: Array<TOffer> = [
-  {
-    id: 1,
-    price: 80,
-    title: 'Wood and stone place',
-    offerType: OfferTypes.Room,
-    rating: 4,
-    imageName: 'room.jpg',
-    cityId: 1,
-    isBookmark: true,
-    isPremium: false,
-    lat: 52.3909553943508,
-    lng: 4.85309666406198
-  },
-  {
-    id: 2,
-    price: 132,
-    title: 'Canal View Prinsengracht',
-    offerType: OfferTypes.Apartment,
-    rating: 4,
-    imageName: 'apartment-02.jpg',
-    cityId: 1,
-    isBookmark: false,
-    isPremium: false,
-    lat: 52.3609553943508,
-    lng: 4.85309666406198
-  },
-  {
-    id: 3,
-    price: 180,
-    title: 'Nice, cozy, warm big bed apartment',
-    offerType: OfferTypes.Apartment,
-    rating: 5,
-    imageName: 'apartment-03.jpg',
-    cityId: 1,
-    isBookmark: false,
-    isPremium: true,
-    lat: 52.3909553943508,
-    lng: 4.929309666406198
+const getHypotenuse = (side1: number, side2: number) => Math.sqrt(side1 ** 2 + side2 ** 2);
+
+export const getNearOffers = (offer: TOffer) => {
+  const result = [...offers.filter((item) => (item?.cityId === offer?.cityId) && (item?.id !== offer?.id))]
+    .sort((item1, item2) => {
+      const length1 = getHypotenuse(Math.abs(offer.lat - item1.lat), Math.abs(offer.lng - item1.lng));
+      const length2 = getHypotenuse(Math.abs(offer.lat - item2.lat), Math.abs(offer.lng - item2.lng));
+      return length1 - length2;
+    });
+  if (result.length > 3){
+    result.splice(3, result.length - 3);
   }
-];
+  return result;
+};

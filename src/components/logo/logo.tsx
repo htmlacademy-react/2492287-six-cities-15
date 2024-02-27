@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { AppRoute } from '../../app';
 import { Link } from 'react-router-dom';
-import { LogoLocation } from '../../const';
+import { APP_TITLE, LogoLocation } from '../../const';
 import { getLogoClassName, getLogoImgClassName, getLogoSize } from './lib';
 
 type TLogoProps = {
@@ -16,7 +16,7 @@ export const Logo: FC<TLogoProps> = ({logoLocation = LogoLocation.Header}) => {
       <img
         className={logoImgClassName}
         src='img/logo.svg'
-        alt='6 cities logo'
+        alt={`${APP_TITLE} logo`}
         width={logoSize.width}
         height={logoSize.height}
       />
