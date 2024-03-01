@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Spinner } from '../../components/Spinner';
+import { Spinner } from '../../components/spinner';
 import { APP_TITLE } from '../../const';
 
 export const Loading: FC = () => (
