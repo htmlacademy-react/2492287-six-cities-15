@@ -1,5 +1,5 @@
 import {Navigate} from 'react-router-dom';
-import { AppRoute } from '../../app';
+import { AppRoute } from '..';
 import {FC, PropsWithChildren } from 'react';
 import { AuthorizationStatus } from '../../const';
 
@@ -13,6 +13,6 @@ export const PrivateRoute: FC<PropsWithChildren<TPrivateRouteProps>> = (props) =
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ? children as JSX.Element
-      : <Navigate to={`/${AppRoute.Login}`} />
+      : <Navigate to={`${AppRoute.Login}`} />
   );
 };

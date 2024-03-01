@@ -4,6 +4,8 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
 import { AppRoute } from '../../app';
 import { AuthorizationStatus, LogoLocation } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logoutAction } from '../../store/api-action';
 
 export type TLayoutProps = {
   authorizationStatus: AuthorizationStatus;
@@ -11,9 +13,16 @@ export type TLayoutProps = {
 
 export const Layout: FC<TLayoutProps> = ({authorizationStatus}) => {
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
-  const username = isAuth ? 'Oliver.conner@gmail.com' : '';
-  const favoriteCount = isAuth ? 3 : 0;
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const favoriteCount = useAppSelector((state) => state.favorites.length);
   const location = useLocation();
+
+  const handleLoginClick = () => {
+    if (isAuth){
+      dispatch(logoutAction());
+    }
+  };
 
   return (
     <div className={`page ${getClassName(location.pathname)}`}>
@@ -32,15 +41,17 @@ export const Layout: FC<TLayoutProps> = ({authorizationStatus}) => {
                       className='header__nav-link header__nav-link--profile'
                       to={AppRoute.Favorites}
                     >
-                      <div className='header__avatar-wrapper user__avatar-wrapper'></div>
+                      <div className='header__avatar-wrapper user__avatar-wrapper'>
+                        <img src={user?.avatarUrl} style={{borderRadius: 20}}/>
+                      </div>
                       <span className='header__user-name user__name'>
-                        {username}
+                        {user?.email}
                       </span>
-                      <span className='header__favorite-count'>{favoriteCount}</span>
+                      <span className='header__favorite-count'>{isAuth ? favoriteCount : 0}</span>
                     </Link>
                   </li>
                   <li className='header__nav-item'>
-                    <Link className='header__nav-link' to={AppRoute.Login}>
+                    <Link className='header__nav-link' to={AppRoute.Login} onClick={handleLoginClick}>
                       <span className='header__signout'>{isAuth ? 'Sign out' : 'Sign in'}</span>
                     </Link>
                   </li>

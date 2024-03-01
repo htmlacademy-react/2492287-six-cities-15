@@ -9,7 +9,7 @@ export type TFavoriteLocationPlaceProps = {
 }
 
 export const FavoriteLocationPlaceList: FC<TFavoriteLocationPlaceProps> = ({offers, city}) => {
-  const [, setSelectedOffer] = useState<TOffer>();
+  const [, setSelectedOffer] = useState<TOffer | null>();
   return (
     <li className='favorites__locations-items'>
       <div className='favorites__locations locations locations--current'>
@@ -19,7 +19,7 @@ export const FavoriteLocationPlaceList: FC<TFavoriteLocationPlaceProps> = ({offe
           </a>
         </div>
       </div>
-      <OfferList offers={offers.filter((item) => item.cityId === city.id)} offerCardType={OfferCardType.Favorite} setSelectedOffer={setSelectedOffer}/>
+      <OfferList offers={offers.filter((item) => item.city.name === city.name)} offerCardType={OfferCardType.Favorite} setSelectedOffer={setSelectedOffer}/>
     </li>
   );
 };

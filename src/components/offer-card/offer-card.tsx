@@ -2,20 +2,23 @@ import { FC } from 'react';
 import { OfferCardType, getCardClassName, getCardImageClassName, getCardImageSize, getCardInfoClassName, getOfferLinkById } from './lib';
 import { Link } from 'react-router-dom';
 import { TOffer } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { setFavoriteAction } from '../../store/api-action';
 
 export type TOfferCardProps = {
   offer: TOffer;
   offerCardType: OfferCardType;
-  setSelectedOffer?: (offer: TOffer) => void;
+  setSelectedOffer?: (offer: TOffer | null) => void;
 }
 
 export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCardType}) => {
-  const bookmarkClass = offer.isBookmark ? ' place-card__bookmark-button--active' : '';
+  const bookmarkClass = offer.isFavorite ? ' place-card__bookmark-button--active' : '';
   const cardClass = getCardClassName(offerCardType);
   const cardImageClass = getCardImageClassName(offerCardType);
   const cardInfoClass = getCardInfoClassName(offerCardType);
   const imageSize = getCardImageSize(offerCardType);
   const offerLink = getOfferLinkById(offer.id);
+  const dispatch = useAppDispatch();
 
   const handleOfferMouseOver = () => {
     if (setSelectedOffer){
@@ -23,14 +26,24 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
     }
   };
 
+  const handleMouseOut = () => {
+    if (setSelectedOffer){
+      setSelectedOffer(null);
+    }
+  };
+
+  const handleFavoriteClick = () => {
+    dispatch(setFavoriteAction({offerId: offer.id, status: !offer.isFavorite}));
+  };
+
   return (
-    <article className={`${cardClass} place-card`} onMouseOver={handleOfferMouseOver}>
+    <article className={`${cardClass} place-card`} onMouseOver={handleOfferMouseOver} onMouseOut={handleMouseOut}>
       {offer.isPremium && <div className='place-card__mark'> <span>Premium</span> </div>}
       <div className={`${cardImageClass} place-card__image-wrapper`}>
         <Link to={offerLink}>
           <img
             className='place-card__image'
-            src={`img/${offer.imageName}`}
+            src={offer.previewImage}
             width={imageSize.width}
             height={imageSize.height}
             alt='Place image'
@@ -47,6 +60,7 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
           </div>
           <button
             className={`place-card__bookmark-button button${bookmarkClass}`}
+            onClick={handleFavoriteClick}
             type='button'
           >
             <svg
@@ -56,7 +70,7 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
             >
               <use xlinkHref='#icon-bookmark' />
             </svg>
-            <span className='visually-hidden'>{offer.isBookmark ? 'In bookmarks' : 'To bookmarks'}</span>
+            <span className='visually-hidden'>{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className='place-card__rating rating'>
@@ -68,7 +82,7 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
         <h2 className='place-card__name'>
           <Link to={offerLink}>{offer.title}</Link>
         </h2>
-        <p className='place-card__type'>{offer.offerType}</p>
+        <p className='place-card__type'>{offer.type}</p>
       </div>
     </article>
   );

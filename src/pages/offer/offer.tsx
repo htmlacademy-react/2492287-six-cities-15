@@ -1,99 +1,88 @@
-
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
 import { ReviewCreateCard } from '../../components/review-create-card';
 import { ReviewList } from '../../components/review-list';
 import { useParams } from 'react-router-dom';
-import { TReview, cities } from '../../const';
+import { APP_TITLE, AuthorizationStatus } from '../../const';
 import { NotFound } from '../not-found';
-import { validate } from './lib';
 import { Map } from '../../components/map';
-import { getNearOffers } from '../../mocks/near-offers';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction, setFavoriteAction } from '../../store/api-action';
+import { Loading } from '../loading';
+import { loadOffer, setErrorText } from '../../store/action';
 
 export type TOfferProps = {
   nearOfferCardType: OfferCardType;
-  reviews: TReview[];
 }
 
-export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType, reviews}) => {
+export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType}) => {
   const { id } = useParams();
-  const offers = useAppSelector((state) => state.offers);
 
-  if (!validate(id || '')){
-    return (<NotFound />);
-  }
+  const offer = useAppSelector((state) => state.offer);
+  const nearOffers = useAppSelector((state) => state.nearOffers);
+  const [offerLoading, setOfferLoading] = useState(true);
+  const errorText = useAppSelector((state) => state.errorText);
+  const dispatch = useAppDispatch();
+  const reviews = useAppSelector((state) => state.reviews);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  const offer = offers.find((item) => item.id === parseInt(id || '0', 10));
-  if (!offer){
+  useEffect(() => {
+    dispatch(fetchOfferAction(id ?? ''));
+    dispatch(fetchNearOffersAction(id ?? ''));
+    dispatch(fetchReviewsAction(id ?? ''));
+    return () => {
+      dispatch(loadOffer(null));
+    };
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    if (offer || (errorText.length > 0)){
+      setOfferLoading(false);
+      dispatch(setErrorText(''));
+    }
+  }, [errorText, offer, dispatch]);
+
+  if (offerLoading){
+    return <Loading/>;
+  }else if(!offer) {
     return <NotFound/>;
   }
-  const nearOffers = getNearOffers(offer);
+
+  const handleFavoriteClick = () => {
+    dispatch(setFavoriteAction({offerId: offer.id, status: !offer.isFavorite}));
+  };
 
   return (
     <main className='page__main page__main--offer'>
       <Helmet>
-        <title>Beautiful & luxurious studio at great location</title>
+        <title>{`${APP_TITLE}: ${offer?.title}`}</title>
       </Helmet>
       <section className='offer'>
         <div className='offer__gallery-container container'>
           <div className='offer__gallery'>
-            <div className='offer__image-wrapper'>
-              <img
-                className='offer__image'
-                src='img/room.jpg'
-                alt='Photo studio'
-              />
-            </div>
-            <div className='offer__image-wrapper'>
-              <img
-                className='offer__image'
-                src='img/apartment-01.jpg'
-                alt='Photo studio'
-              />
-            </div>
-            <div className='offer__image-wrapper'>
-              <img
-                className='offer__image'
-                src='img/apartment-02.jpg'
-                alt='Photo studio'
-              />
-            </div>
-            <div className='offer__image-wrapper'>
-              <img
-                className='offer__image'
-                src='img/apartment-03.jpg'
-                alt='Photo studio'
-              />
-            </div>
-            <div className='offer__image-wrapper'>
-              <img
-                className='offer__image'
-                src='img/studio-01.jpg'
-                alt='Photo studio'
-              />
-            </div>
-            <div className='offer__image-wrapper'>
-              <img
-                className='offer__image'
-                src='img/apartment-01.jpg'
-                alt='Photo studio'
-              />
-            </div>
+            {offer?.images.map((imageSrc) => (
+              <div className='offer__image-wrapper' key={imageSrc}>
+                <img
+                  className='offer__image'
+                  src={imageSrc}
+                  alt='Photo studio'
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div className='offer__container container'>
           <div className='offer__wrapper'>
             <div className='offer__mark'>
-              <span>Premium</span>
+              <span>{offer?.isPremium ? 'Premium' : ''}</span>
             </div>
             <div className='offer__name-wrapper'>
               <h1 className='offer__name'>
-                Beautiful &amp; luxurious studio at great location
+                {offer?.title}
               </h1>
-              <button className='offer__bookmark-button button' type='button'>
+              <button className='offer__bookmark-button button' type='button' onClick={handleFavoriteClick}>
                 <svg className='offer__bookmark-icon' width={31} height={33}>
                   <use xlinkHref='#icon-bookmark' />
                 </svg>
@@ -102,37 +91,30 @@ export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType, review
             </div>
             <div className='offer__rating rating'>
               <div className='offer__stars rating__stars'>
-                <span style={{ width: '80%' }} />
+                <span style={{ width: `${Math.round(offer?.rating * 20)}%` }} />
                 <span className='visually-hidden'>Rating</span>
               </div>
-              <span className='offer__rating-value rating__value'>4.8</span>
+              <span className='offer__rating-value rating__value'>{offer?.rating}</span>
             </div>
             <ul className='offer__features'>
               <li className='offer__feature offer__feature--entire'>Apartment</li>
               <li className='offer__feature offer__feature--bedrooms'>
-                3 Bedrooms
+                {`${offer?.bedrooms} ${offer?.bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}`}
               </li>
               <li className='offer__feature offer__feature--adults'>
-                Max 4 adults
+                {`Max ${offer?.maxAdults} ${offer.maxAdults > 1 ? 'adults' : 'adult'}`}
               </li>
             </ul>
             <div className='offer__price'>
-              <b className='offer__price-value'>€120</b>
+              <b className='offer__price-value'>€{offer?.price}</b>
               <span className='offer__price-text'>&nbsp;night</span>
             </div>
             <div className='offer__inside'>
               <h2 className='offer__inside-title'>What&apos;s inside</h2>
               <ul className='offer__inside-list'>
-                <li className='offer__inside-item'>Wi-Fi</li>
-                <li className='offer__inside-item'>Washing machine</li>
-                <li className='offer__inside-item'>Towels</li>
-                <li className='offer__inside-item'>Heating</li>
-                <li className='offer__inside-item'>Coffee machine</li>
-                <li className='offer__inside-item'>Baby seat</li>
-                <li className='offer__inside-item'>Kitchen</li>
-                <li className='offer__inside-item'>Dishwasher</li>
-                <li className='offer__inside-item'>Cabel TV</li>
-                <li className='offer__inside-item'>Fridge</li>
+                {offer?.goods.map((good) => (
+                  <li className='offer__inside-item' key={good}>{good}</li>
+                ))}
               </ul>
             </div>
             <div className='offer__host'>
@@ -141,36 +123,30 @@ export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType, review
                 <div className='offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper'>
                   <img
                     className='offer__avatar user__avatar'
-                    src='img/avatar-angelina.jpg'
+                    src={offer?.host.avatarUrl}
                     width={74}
                     height={74}
                     alt='Host avatar'
                   />
                 </div>
-                <span className='offer__user-name'>Angelina</span>
-                <span className='offer__user-status'>Pro</span>
+                <span className='offer__user-name'>{offer?.host.name}</span>
+                <span className='offer__user-status'>{offer?.host.isPro ? 'Pro' : ''}</span>
               </div>
               <div className='offer__description'>
-                <p className='offer__text'>
-                  A quiet cozy and picturesque that hides behind a a river by the
-                  unique lightness of Amsterdam. The building is green and from
-                  18th century.
-                </p>
-                <p className='offer__text'>
-                  An independent House, strategically located between Rembrand
-                  Square and National Opera, but where the bustle of the city
-                  comes to rest in this alley flowery and colorful.
-                </p>
+                <p className='offer__text'> {offer?.description}</p>
               </div>
             </div>
             <section className='offer__reviews reviews'>
-              <ReviewList reviews={reviews.filter((review) => review.offerId.toString() === id)}/>
-              <ReviewCreateCard/>
+              <ReviewList reviews={reviews}/>
+              {
+                authorizationStatus === AuthorizationStatus.Auth &&
+                <ReviewCreateCard/>
+              }
             </section>
           </div>
         </div>
         <section style={{margin: 'auto', marginBottom: 50, width: 1144, height: 579}} >
-          <Map city={cities[offer.cityId]} selectedPoint={undefined} points={nearOffers}/>
+          <Map city={offer.city} selectedPoint={null} points={nearOffers}/>
         </section>
       </section>
       <div className='container'>

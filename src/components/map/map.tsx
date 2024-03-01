@@ -8,7 +8,7 @@ import { ZOOM_MAP_DEFAULT } from '../../hooks/const';
 type MapProps = {
   city: TCity;
   points: TPoint[];
-  selectedPoint: TPoint | undefined;
+  selectedPoint: TPoint | null;
 };
 
 const defaultCustomIcon = new Icon({
@@ -28,7 +28,7 @@ export const Map: FC<MapProps> = ({city, points, selectedPoint}) => {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
-    map?.panTo({lat: city.lat, lng: city.lng});
+    map?.panTo({lat: city.location.latitude, lng: city.location.longitude});
     map?.setZoom(ZOOM_MAP_DEFAULT);
   }, [city, map]);
 
@@ -37,13 +37,13 @@ export const Map: FC<MapProps> = ({city, points, selectedPoint}) => {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng
+          lat: point.location.latitude,
+          lng: point.location.longitude
         });
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.lat === selectedPoint.lat && point.lng === selectedPoint.lng
+            selectedPoint !== undefined && point.location.latitude === selectedPoint?.location.latitude && point.location.longitude === selectedPoint.location.longitude
               ? currentCustomIcon
               : defaultCustomIcon
           )

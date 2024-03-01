@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from './';
-import { PrivateRoute } from '../components/private-route';
+import { PrivateRoute } from './private-route';
 import { Favorites } from '../pages/favorites';
 import { NotFound } from '../pages/not-found';
 import { Offer } from '../pages/offer';
@@ -10,24 +10,31 @@ import { Login } from '../pages/login';
 import { Main } from '../pages/main';
 import { OfferCardType } from '../components/offer-card/lib';
 import { Layout } from '../components/layout';
-import { AuthorizationStatus, TOffer, TReview } from '../const';
+import { AuthorizationStatus } from '../const';
+import { useAppSelector } from '../hooks';
+import { Loading } from '../pages/loading';
+import { HistoryRouter } from '../components/history-route';
+import browserHistory from '../browser-history';
 
-export type TAppProps = {
-  offers: TOffer[];
-  reviews: TReview[];
-}
+export const App: FC = () => {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-export const App: FC<TAppProps> = ({offers, reviews} :TAppProps) => {
-  const authorizationStatus: AuthorizationStatus = AuthorizationStatus.Auth;
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (
+      <Loading/>
+    );
+  }
+
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<Layout authorizationStatus={AuthorizationStatus.NoAuth}/>}
+            element={<Layout authorizationStatus={authorizationStatus}/>}
           >
-            <Route index element={<Main offers={offers} />}/>
+            <Route index element={<Main/>}/>
             <Route
               path={AppRoute.Favorites}
               element={
@@ -36,12 +43,13 @@ export const App: FC<TAppProps> = ({offers, reviews} :TAppProps) => {
                 </PrivateRoute>
               }
             />
-            <Route path={AppRoute.Offer} element={<Offer nearOfferCardType={OfferCardType.Near} reviews={reviews}/>}/>
+            <Route path={AppRoute.Offer} element={<Offer nearOfferCardType={OfferCardType.Near}/>}/>
             <Route path={AppRoute.Login} element={<Login/>}/>
+            <Route path='*' element={<NotFound/>}/>
           </Route>
-          <Route path='*' element={<NotFound/>}/>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 };
+

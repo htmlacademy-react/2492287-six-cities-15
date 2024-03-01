@@ -1,4 +1,3 @@
-
 import { FC, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
@@ -7,34 +6,24 @@ import { APP_TITLE, OfferSortType, TCity, TOffer } from '../../const';
 import { CityTabList } from '../../components/city-tab-list/city-tab-list';
 import { Map } from '../../components/map';
 import { OfferSort } from '../../components/offer-sort';
-import { changeCity, fillOffers } from '../../store/action';
+import { changeCity } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSortedOffers } from './lib';
 
-export type TMainProps = {
-  offers: TOffer[];
-}
-
-export const Main: FC<TMainProps> = ({offers}) => {
-  const [offer, setOffer] = useState<TOffer>();
+export const Main: FC = () => {
+  const [offer, setOffer] = useState<TOffer | null>(null);
   const [offerSortType, setOfferSort] = useState<OfferSortType>(OfferSortType.Popular);
   const selectedCity = useAppSelector((state) => state.activeCity);
-  const sortOffers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
-
+  const offers = useAppSelector((state) => state.offers);
+  const [sortedOffers, setSortedOffers] = useState<TOffer[]>([]);
   const handleChangeCity = (city: TCity) => {
     dispatch(changeCity({city}));
-    const sorted = getSortedOffers(offerSortType, offers.filter((item) => item.cityId === city.id));
-    dispatch(fillOffers({offers: sorted}));
   };
 
-  useEffect(() =>{
-    dispatch(
-      fillOffers({
-        offers: getSortedOffers(offerSortType, offers.filter((item) => item.cityId === selectedCity.id))
-      })
-    );
-  }, [offerSortType, selectedCity.id, dispatch, offers]);
+  useEffect(() => {
+    setSortedOffers(getSortedOffers(offerSortType, offers.filter((item) => item.city.name === selectedCity.name)));
+  }, [selectedCity, offers, offerSortType]);
 
   return (
     <main className='page__main page__main--index'>
@@ -51,15 +40,15 @@ export const Main: FC<TMainProps> = ({offers}) => {
         <div className='cities__places-container container'>
           <section className='cities__places places'>
             <h2 className='visually-hidden'>Places</h2>
-            <b className='places__found'>{sortOffers.length} places to stay in {selectedCity.name}</b>
+            <b className='places__found'>{sortedOffers.length} places to stay in {selectedCity?.name}</b>
             <OfferSort selectedSort={offerSortType} setSelectedSort={setOfferSort}/>
             <div className='cities__places-list places__list tabs__content'>
-              <OfferList offers={sortOffers} offerCardType={OfferCardType.City} setSelectedOffer={setOffer}/>
+              <OfferList offers={sortedOffers} offerCardType={OfferCardType.City} setSelectedOffer={setOffer}/>
             </div>
           </section>
           <div className='cities__right-section'>
             <section style={{width: '100%'}}>
-              <Map city={selectedCity} selectedPoint={offer} points={sortOffers}/>
+              <Map city={selectedCity} selectedPoint={offer} points={sortedOffers}/>
             </section>
           </div>
         </div>

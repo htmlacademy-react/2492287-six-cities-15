@@ -5,7 +5,6 @@ import { TCity } from '../../const';
 export type TCityTabProps = {
   city: TCity;
   isActive: boolean;
-  //setActiveCity: (city: TCity) => void;
   onChangeCity: (city: TCity) => void;
 }
 export const CityTab: FC<TCityTabProps> = ({city, isActive, onChangeCity}) => (

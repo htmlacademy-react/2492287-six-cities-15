@@ -1,13 +1,13 @@
 import { FC } from 'react';
-import { TReview } from '../../const';
+import { TReviewFull } from '../../const';
 
 export type TReviewCardProps = {
-  review: TReview;
+  review: TReviewFull;
 }
 
-export const ReviewCard: FC<TReviewCardProps> = ({review}) => {
-  const reviewPeriod = new Intl.DateTimeFormat('us-US', {month: 'long', year: 'numeric'}).format(review.date);
-  const reviewDate = review.date.toISOString().split('T')[0];
+export const ReviewCard: FC<TReviewCardProps> = ({review: review}) => {
+  const reviewPeriod = new Intl.DateTimeFormat('us-US', {month: 'long', year: 'numeric'}).format(new Date(review.date));
+  const reviewDate = new Date(review.date).toISOString().split('T')[0];
 
   return (
     <li className='reviews__item'>
@@ -15,13 +15,13 @@ export const ReviewCard: FC<TReviewCardProps> = ({review}) => {
         <div className='reviews__avatar-wrapper user__avatar-wrapper'>
           <img
             className='reviews__avatar user__avatar'
-            src={`img/${review.avatar}`}
+            src={review.user.avatarUrl}
             width={54}
             height={54}
             alt='Reviews avatar'
           />
         </div>
-        <span className='reviews__user-name'>{review.userName}</span>
+        <span className='reviews__user-name'>{review?.user?.name}</span>
       </div>
       <div className='reviews__info'>
         <div className='reviews__rating rating'>
@@ -31,7 +31,7 @@ export const ReviewCard: FC<TReviewCardProps> = ({review}) => {
           </div>
         </div>
         <p className='reviews__text'>
-          {review.review}
+          {review.comment}
         </p>
         <time className='reviews__time' dateTime={reviewDate}>
           {reviewPeriod}
