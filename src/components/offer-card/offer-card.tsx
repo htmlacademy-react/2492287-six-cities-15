@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { OfferCardType, getCardClassName, getCardImageClassName, getCardImageSize, getCardInfoClassName, getOfferLinkById } from './lib';
 import { Link } from 'react-router-dom';
-import { TOffer } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { setFavoriteAction } from '../../store/api-action';
+import { AuthorizationStatus, TOffer } from '../../const';
+import { ButtonFavorite } from '../button-favorite';
+import { useAppSelector } from '../../hooks';
 
 export type TOfferCardProps = {
   offer: TOffer;
@@ -12,13 +12,12 @@ export type TOfferCardProps = {
 }
 
 export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCardType}) => {
-  const bookmarkClass = offer.isFavorite ? ' place-card__bookmark-button--active' : '';
   const cardClass = getCardClassName(offerCardType);
   const cardImageClass = getCardImageClassName(offerCardType);
   const cardInfoClass = getCardInfoClassName(offerCardType);
   const imageSize = getCardImageSize(offerCardType);
   const offerLink = getOfferLinkById(offer.id);
-  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const handleOfferMouseOver = () => {
     if (setSelectedOffer){
@@ -30,10 +29,6 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
     if (setSelectedOffer){
       setSelectedOffer(null);
     }
-  };
-
-  const handleFavoriteClick = () => {
-    dispatch(setFavoriteAction({offerId: offer.id, status: !offer.isFavorite}));
   };
 
   return (
@@ -58,20 +53,7 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
               /&nbsp;night
             </span>
           </div>
-          <button
-            className={`place-card__bookmark-button button${bookmarkClass}`}
-            onClick={handleFavoriteClick}
-            type='button'
-          >
-            <svg
-              className='place-card__bookmark-icon'
-              width={18}
-              height={19}
-            >
-              <use xlinkHref='#icon-bookmark' />
-            </svg>
-            <span className='visually-hidden'>{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>
+          <ButtonFavorite offer={offer} typeCard='place-card' width={18} height={19} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>

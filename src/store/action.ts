@@ -14,6 +14,5 @@ export const requireAuthorization = createAction<AuthorizationStatus>('user/requ
 export const redirectToRoute = createAction<AppRoute>('cities/redirectToRoute');
 export const saveUser = createAction<TUserData | null>('cities/saveUser');
 export const setOfferDataLoadingStatus = createAction<boolean>('data/setOfferDataLoadingStatus');
-export const setErrorText = createAction<string>('cities/setErrorText');
 export const loadReviews = createAction<TReviewFull[]>('data/loadReviews');
 export const addReview = createAction<TReviewFull>('data/addComment');

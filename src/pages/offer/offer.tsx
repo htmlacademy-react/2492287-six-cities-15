@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
@@ -9,9 +9,10 @@ import { APP_TITLE, AuthorizationStatus } from '../../const';
 import { NotFound } from '../not-found';
 import { Map } from '../../components/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction, setFavoriteAction } from '../../store/api-action';
+import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-action';
 import { Loading } from '../loading';
-import { loadOffer, setErrorText } from '../../store/action';
+import { loadOffer } from '../../store/action';
+import { ButtonFavorite } from '../../components/button-favorite';
 
 export type TOfferProps = {
   nearOfferCardType: OfferCardType;
@@ -22,37 +23,33 @@ export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType}) => {
 
   const offer = useAppSelector((state) => state.offer);
   const nearOffers = useAppSelector((state) => state.nearOffers);
-  const [offerLoading, setOfferLoading] = useState(true);
-  const errorText = useAppSelector((state) => state.errorText);
+  const offerLoadingStatus = useAppSelector((state) => state.offerLoadingStatus);
   const dispatch = useAppDispatch();
   const reviews = useAppSelector((state) => state.reviews);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   useEffect(() => {
     dispatch(fetchOfferAction(id ?? ''));
-    dispatch(fetchNearOffersAction(id ?? ''));
-    dispatch(fetchReviewsAction(id ?? ''));
     return () => {
       dispatch(loadOffer(null));
     };
   }, [id, dispatch]);
 
   useEffect(() => {
-    if (offer || (errorText.length > 0)){
-      setOfferLoading(false);
-      dispatch(setErrorText(''));
+    if (offer){
+      dispatch(fetchNearOffersAction(id ?? ''));
+      dispatch(fetchReviewsAction(id ?? ''));
     }
-  }, [errorText, offer, dispatch]);
 
-  if (offerLoading){
+  }, [id, dispatch, offer]);
+
+  if (offerLoadingStatus === 'loading' && !offer){
     return <Loading/>;
-  }else if(!offer) {
+  }else if(offerLoadingStatus === 'failed'){
+    return <NotFound/>;
+  }else if (!offer){
     return <NotFound/>;
   }
-
-  const handleFavoriteClick = () => {
-    dispatch(setFavoriteAction({offerId: offer.id, status: !offer.isFavorite}));
-  };
 
   return (
     <main className='page__main page__main--offer'>
@@ -75,19 +72,17 @@ export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType}) => {
         </div>
         <div className='offer__container container'>
           <div className='offer__wrapper'>
-            <div className='offer__mark'>
-              <span>{offer?.isPremium ? 'Premium' : ''}</span>
-            </div>
+            {
+              offer?.isPremium &&
+              <div className='offer__mark'>
+                <span>Premium</span>
+              </div>
+            }
             <div className='offer__name-wrapper'>
               <h1 className='offer__name'>
                 {offer?.title}
               </h1>
-              <button className='offer__bookmark-button button' type='button' onClick={handleFavoriteClick}>
-                <svg className='offer__bookmark-icon' width={31} height={33}>
-                  <use xlinkHref='#icon-bookmark' />
-                </svg>
-                <span className='visually-hidden'>To bookmarks</span>
-              </button>
+              <ButtonFavorite offer={offer} typeCard='offer' width={31} height={33} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
             </div>
             <div className='offer__rating rating'>
               <div className='offer__stars rating__stars'>

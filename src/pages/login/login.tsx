@@ -10,7 +10,8 @@ export const Login: FC = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const errorText = useAppSelector((state) => state.errorText);
+  //const errorText = useAppSelector((state) => state.errorText);
+  const loginError = useAppSelector((state) => state.loginError);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ export const Login: FC = () => {
               Sign in
             </button>
             <div style={{color:'red', marginTop: 10}}>
-              {errorText.split('\r\n').map((item) => (
+              {loginError.split('\r\n').map((item) => (
                 <div key={item}>{item}</div>
               ))}
             </div>

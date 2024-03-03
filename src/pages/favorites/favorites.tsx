@@ -1,18 +1,12 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { APP_TITLE, LogoLocation } from '../../const';
 import { FavoriteLocationList } from '../../components/favorite-location-list';
 import { Logo } from '../../components/logo';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchFavoritesAction } from '../../store/api-action';
+import { useAppSelector } from '../../hooks';
 
 export const Favorites: FC = () => {
-  const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
-
-  useEffect(() => {
-    dispatch(fetchFavoritesAction());
-  }, [dispatch]);
 
   return (
     <>

@@ -1,11 +1,11 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import { Logo } from '../logo';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
 import { AppRoute } from '../../app';
 import { AuthorizationStatus, LogoLocation } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-action';
+import { fetchFavoritesAction, logoutAction } from '../../store/api-action';
 
 export type TLayoutProps = {
   authorizationStatus: AuthorizationStatus;
@@ -15,8 +15,14 @@ export const Layout: FC<TLayoutProps> = ({authorizationStatus}) => {
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const favoriteCount = useAppSelector((state) => state.favorites.length);
+  const favorites = useAppSelector((state) => state.favorites);
   const location = useLocation();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth){
+      dispatch(fetchFavoritesAction());
+    }
+  }, [dispatch, authorizationStatus]);
 
   const handleLoginClick = () => {
     if (isAuth){
@@ -36,20 +42,23 @@ export const Layout: FC<TLayoutProps> = ({authorizationStatus}) => {
               !getIsLoginPath(location.pathname) &&
               <nav className='header__nav'>
                 <ul className='header__nav-list'>
-                  <li className='header__nav-item user'>
-                    <Link
-                      className='header__nav-link header__nav-link--profile'
-                      to={AppRoute.Favorites}
-                    >
-                      <div className='header__avatar-wrapper user__avatar-wrapper'>
-                        <img src={user?.avatarUrl} style={{borderRadius: 20}}/>
-                      </div>
-                      <span className='header__user-name user__name'>
-                        {user?.email}
-                      </span>
-                      <span className='header__favorite-count'>{isAuth ? favoriteCount : 0}</span>
-                    </Link>
-                  </li>
+                  {
+                    isAuth &&
+                    <li className='header__nav-item user'>
+                      <Link
+                        className='header__nav-link header__nav-link--profile'
+                        to={AppRoute.Favorites}
+                      >
+                        <div className='header__avatar-wrapper user__avatar-wrapper'>
+                          <img src={user?.avatarUrl} style={{borderRadius: 20}}/>
+                        </div>
+                        <span className='header__user-name user__name'>
+                          {user?.email}
+                        </span>
+                        <span className='header__favorite-count'>{favorites.length}</span>
+                      </Link>
+                    </li>
+                  }
                   <li className='header__nav-item'>
                     <Link className='header__nav-link' to={AppRoute.Login} onClick={handleLoginClick}>
                       <span className='header__signout'>{isAuth ? 'Sign out' : 'Sign in'}</span>

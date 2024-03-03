@@ -1,6 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addReview, changeCity, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, requireAuthorization, setErrorText, setFavorite, setOfferDataLoadingStatus, setOffersDataLoadingStatus, saveUser } from './action';
+import { addReview, changeCity, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, requireAuthorization, setFavorite, setOfferDataLoadingStatus, setOffersDataLoadingStatus, saveUser } from './action';
 import { AuthorizationStatus, TCity, TReviewFull, TOffer, TOfferFull, cities, TUserData } from '../const';
+import { fetchOfferAction, loginAction, setFavoriteAction } from './api-action';
+import { AxiosError, isAxiosError } from 'axios';
+import { concatErrors } from './lib';
+import { TErrorLogin } from './const';
+import { toast } from 'react-toastify';
+
+type TLoading = 'idle' | 'loading' | 'failed';
 
 type InitalState = {
   activeCity: TCity;
@@ -10,12 +17,14 @@ type InitalState = {
   nearOffers: TOffer[];
   favorites: TOffer[];
   isOfferDataLoading: boolean;
-  errorText: string;
   reviews: TReviewFull[];
   offer: TOfferFull | null;
   favorite?: TOfferFull;
   review?: TReviewFull;
   user: TUserData | null;
+  offerLoadingStatus: TLoading;
+  loginError: string;
+  favoriteLoadingStatus: TLoading;
 }
 
 const initialState: InitalState = {
@@ -26,10 +35,12 @@ const initialState: InitalState = {
   isOfferDataLoading: false,
   nearOffers: [],
   favorites: [],
-  errorText: '',
   reviews: [],
   offer: null,
-  user: null
+  user: null,
+  offerLoadingStatus: 'idle',
+  loginError: '',
+  favoriteLoadingStatus: 'idle'
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -57,12 +68,26 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFavorite, (state, action) => {
       state.favorite = action.payload;
+
+      const favoriteIndex = state.favorites.findIndex((item) => item.id === action.payload.id);
+
+      if (favoriteIndex > -1){
+        state.favorites.splice(favoriteIndex, 1);
+      } else if (action.payload.isFavorite){
+        state.favorites.push(action.payload);
+      }
+
+      const offer = state.offers.find((item) => item.id === action.payload.id);
+      if (offer){
+        offer.isFavorite = action.payload.isFavorite;
+      }
+
+      if (state.offer && (state.offer.id === action.payload.id)){
+        state.offer.isFavorite = action.payload.isFavorite;
+      }
     })
     .addCase(loadNearOffers, (state, action) => {
       state.nearOffers = action.payload;
-    })
-    .addCase(setErrorText, (state, action) => {
-      state.errorText = action.payload;
     })
     .addCase(setOfferDataLoadingStatus, (state, action) => {
       state.isOfferDataLoading = action.payload;
@@ -72,5 +97,35 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(addReview, (state, action) => {
       state.review = action.payload;
+    })
+    .addCase(fetchOfferAction.fulfilled, (state) => {
+      state.offerLoadingStatus = 'idle';
+    })
+    .addCase(fetchOfferAction.pending, (state) => {
+      state.offerLoadingStatus = 'loading';
+    })
+    .addCase(fetchOfferAction.rejected, (state) => {
+      state.offerLoadingStatus = 'failed';
+      state.offer = null;
+    })
+    .addCase(setFavoriteAction.fulfilled, (state) => {
+      state.favoriteLoadingStatus = 'idle';
+    })
+    .addCase(setFavoriteAction.pending, (state) => {
+      state.favoriteLoadingStatus = 'loading';
+    })
+    .addCase(setFavoriteAction.rejected, (state) => {
+      state.favoriteLoadingStatus = 'failed';
+    })
+    .addCase(loginAction.pending, (state) => {
+      state.loginError = '';
+    })
+    .addCase(loginAction.rejected, (state, action) => {
+      if (isAxiosError(action.payload)){
+        const axiosErr = action.payload as AxiosError;
+        const errorLogin = axiosErr.response?.data as TErrorLogin;
+        state.loginError = concatErrors(errorLogin.details);
+        toast.error(state.loginError);
+      }
     });
 });

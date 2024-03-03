@@ -1,37 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TAppDispatch, TAuthData, AuthorizationStatus, TState, TOffer, TOfferFull, TUserData, TReviewFull, TReview } from '../const';
-import { AxiosError, AxiosInstance, isAxiosError } from 'axios';
-import { addReview, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, redirectToRoute, requireAuthorization, saveUser, setErrorText, setFavorite, setOffersDataLoadingStatus } from './action';
+import { AxiosInstance } from 'axios';
+import { addReview, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, redirectToRoute, requireAuthorization, saveUser, setFavorite, setOffersDataLoadingStatus } from './action';
 import { ApiRoute, AppRoute } from '../app/routes';
 import { dropToken, saveToken } from '../services/token';
 import { generatePath } from 'react-router-dom';
-import { concatErrors } from './lib';
-import { TError, TErrorLogin } from './const';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {dispatch: TAppDispatch; state: TState; extra: AxiosInstance}>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<TOffer[]>(ApiRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadOffers(data));
+    dispatch(setOffersDataLoadingStatus(false));
   },
 );
 
 export const fetchOfferAction = createAsyncThunk<void, string, {dispatch: TAppDispatch; state: TState; extra: AxiosInstance}>(
   'data/fetchOffer',
   async (id, {dispatch, extra: api}) => {
-    try{
-      dispatch(setErrorText(''));
-      const {data} = await api.get<TOfferFull>(generatePath(ApiRoute.Offer, {id}));
-      dispatch(loadOffer(data));
-    } catch(err: unknown){
-      if (isAxiosError(err)){
-        const axiosErr = err as AxiosError;
-        const error = axiosErr.response?.data as TError;
-        dispatch(setErrorText(error.message));
-      }
-    }
+    const {data} = await api.get<TOfferFull>(generatePath(ApiRoute.Offer, {id}));
+    dispatch(loadOffer(data));
   },
 );
 
@@ -56,9 +45,6 @@ export const setFavoriteAction = createAsyncThunk<void, {offerId: string; status
   async ({offerId, status}, {dispatch, extra: api}) => {
     const {data} = await api.post<TOfferFull>(generatePath(ApiRoute.FavoriteSet, {offerId, status: status ? '1' : '0'}));
     dispatch(setFavorite(data));
-    dispatch(fetchFavoritesAction());
-    dispatch(fetchOffersAction());
-    dispatch(fetchOfferAction(offerId));
   },
 );
 
@@ -81,9 +67,8 @@ export const loginAction = createAsyncThunk<void, TAuthData, {
   extra: AxiosInstance;
 }>(
   'user/login',
-  async ({login: email, password}, {dispatch, extra: api}) => {
+  async ({login: email, password}, {dispatch, extra: api, rejectWithValue}) => {
     try{
-      dispatch(setErrorText(''));
       const {data} = await api.post<TUserData>(ApiRoute.Login, {email, password});
       const token = data.token;
       saveToken(token);
@@ -93,12 +78,7 @@ export const loginAction = createAsyncThunk<void, TAuthData, {
     }catch (error: unknown){
       dispatch(saveUser(null));
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-      if (isAxiosError(error)){
-        const axiosErr = error as AxiosError;
-        const errorLogin = axiosErr.response?.data as TErrorLogin;
-        const errorText = concatErrors(errorLogin.details);
-        dispatch(setErrorText(errorText));
-      }
+      return rejectWithValue(error);
     }
   },
 );
