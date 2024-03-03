@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addReview, changeCity, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, requireAuthorization, setFavorite, setOfferDataLoadingStatus, setOffersDataLoadingStatus, saveUser } from './action';
+import { addReview, changeCity, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, requireAuthorization, setFavorite, setOfferDataLoadingStatus, setOffersDataLoadingStatus, saveUser, setFavoritesOff } from './action';
 import { AuthorizationStatus, TCity, TReviewFull, TOffer, TOfferFull, cities, TUserData } from '../const';
 import { fetchOfferAction, loginAction, setFavoriteAction } from './api-action';
 import { AxiosError, isAxiosError } from 'axios';
@@ -65,6 +65,13 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavorites, (state, action) => {
       state.favorites = action.payload;
+      state.offers.forEach((offer) => {
+        state.favorites.forEach((favorite) => {
+          if (favorite.id === offer.id) {
+            offer.isFavorite = favorite.isFavorite;
+          }
+        });
+      });
     })
     .addCase(setFavorite, (state, action) => {
       state.favorite = action.payload;
@@ -127,5 +134,11 @@ export const reducer = createReducer(initialState, (builder) => {
         state.loginError = concatErrors(errorLogin.details);
         toast.error(state.loginError);
       }
+    })
+    .addCase(setFavoritesOff, (state) => {
+      state.favorites.splice(0, state.favorites.length);
+      state.offers.map((item) => {
+        item.isFavorite = false;
+      });
     });
 });

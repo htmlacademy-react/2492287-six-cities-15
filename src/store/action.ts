@@ -16,3 +16,4 @@ export const saveUser = createAction<TUserData | null>('cities/saveUser');
 export const setOfferDataLoadingStatus = createAction<boolean>('data/setOfferDataLoadingStatus');
 export const loadReviews = createAction<TReviewFull[]>('data/loadReviews');
 export const addReview = createAction<TReviewFull>('data/addComment');
+export const setFavoritesOff = createAction('data/setFavoritesOff');

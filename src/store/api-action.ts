@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TAppDispatch, TAuthData, AuthorizationStatus, TState, TOffer, TOfferFull, TUserData, TReviewFull, TReview } from '../const';
 import { AxiosInstance } from 'axios';
-import { addReview, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, redirectToRoute, requireAuthorization, saveUser, setFavorite, setOffersDataLoadingStatus } from './action';
+import { addReview, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, redirectToRoute, requireAuthorization, saveUser, setFavorite, setOffersDataLoadingStatus, setFavoritesOff } from './action';
 import { ApiRoute, AppRoute } from '../app/routes';
 import { dropToken, saveToken } from '../services/token';
 import { generatePath } from 'react-router-dom';
@@ -92,6 +92,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {dispatch: TAppDis
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
       dispatch(saveUser(null));
       dispatch(redirectToRoute(AppRoute.Login));
+      dispatch(setFavoritesOff());
     }catch {
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     }
