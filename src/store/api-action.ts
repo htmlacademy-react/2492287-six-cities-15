@@ -114,7 +114,6 @@ export const fetchReviewsAction = createAsyncThunk<void, string, TActionUtils>(
 export const addReviewAction = createAsyncThunk<void, TReview, TActionUtils>(
   'data/addReview',
   async (review, {dispatch, extra: api}) => {
-    console.log(`${ApiRoute.Comments}/${review.offerId}/${review.rating}`)
     const {data} = await api.post<TReviewFull>(`${ApiRoute.Comments}/${review.offerId}`,
       {comment: review.comment, rating: review.rating});
     dispatch(addReview(data));
