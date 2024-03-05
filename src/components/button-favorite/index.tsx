@@ -1,1 +1,1 @@
-export { ButtonFavorite } from './button-favorite';
+export { ButtonFavorite, type TButtonFavoriteProps } from './button-favorite';

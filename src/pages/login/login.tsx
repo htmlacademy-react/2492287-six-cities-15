@@ -5,21 +5,19 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-action';
 import { AppRoute } from '../../app';
 import { useNavigate } from 'react-router-dom';
+import { getAuthorizationStatus } from '../../store/selectors';
 
 export const Login: FC = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  //const errorText = useAppSelector((state) => state.errorText);
-  const loginError = useAppSelector((state) => state.loginError);
-
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current && passwordRef.current) {
       dispatch(loginAction({
         login: loginRef.current.value,
         password: passwordRef.current.value
@@ -64,11 +62,6 @@ export const Login: FC = () => {
             <button className='login__submit form__submit button' type='submit'>
               Sign in
             </button>
-            <div style={{color:'red', marginTop: 10}}>
-              {loginError.split('\r\n').map((item) => (
-                <div key={item}>{item}</div>
-              ))}
-            </div>
           </form>
         </section>
         <section className='locations locations--login locations--current'>

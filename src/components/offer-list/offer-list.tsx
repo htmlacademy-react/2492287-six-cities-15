@@ -7,10 +7,11 @@ import { TOffer } from '../../const';
 export type TOfferListProps = {
   offers: TOffer[];
   offerCardType: OfferCardType;
-  setSelectedOffer?: (offer: TOffer | null) => void;
+  //setSelectedOffer?: (offer: TOffer | null) => void;
+  onHover: (offer: TOffer | null) => void ;
 }
 
-export const OfferList: FC<TOfferListProps> = ({offers, offerCardType, setSelectedOffer}) => {
+export const OfferList: FC<TOfferListProps> = ({offers, offerCardType, onHover}) => {
   if (!offers){
     return null;
   }
@@ -24,7 +25,7 @@ export const OfferList: FC<TOfferListProps> = ({offers, offerCardType, setSelect
           <OfferCard
             key={offer.id}
             offer={offer}
-            setSelectedOffer = {setSelectedOffer}
+            onHover = {onHover}
             offerCardType={offerCardType}
           />
         ))

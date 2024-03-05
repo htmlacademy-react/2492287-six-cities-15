@@ -4,6 +4,7 @@ import { TReview } from '../../const';
 import { validateSubmit } from './lib';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-action';
+import { getOffer } from '../../store/selectors';
 
 const raitings = [
   {value: 5, name: 'perfect'},
@@ -21,7 +22,7 @@ export const ReviewCreateCard: FC = () => {
   });
 
   const dispatch = useAppDispatch();
-  const offer = useAppSelector((state) => state.offer);
+  const offer = useAppSelector(getOffer);
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;

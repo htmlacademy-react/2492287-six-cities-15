@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { APP_TITLE, LogoLocation } from '../../const';
-import { FavoriteLocationList } from '../../components/favorite-location-list';
 import { Logo } from '../../components/logo';
 import { useAppSelector } from '../../hooks';
+import { getFavorites } from '../../store/selectors';
+import { FavoriteCityList } from '../../components/favorite-city-list';
 
 export const Favorites: FC = () => {
-  const favorites = useAppSelector((state) => state.favorites);
+  const favorites = useAppSelector(getFavorites);
 
   return (
     <>
@@ -15,7 +16,7 @@ export const Favorites: FC = () => {
       </Helmet>
       <main className='page__main page__main--favorites'>
         <div className='page__favorites-container container'>
-          {favorites.length > 0 && <FavoriteLocationList offers={favorites}/>}
+          {favorites.length > 0 && <FavoriteCityList offers={favorites}/>}
           {
             favorites.length === 0 &&
             <section className='favorites favorites--empty'>

@@ -1,16 +1,19 @@
 import { FC } from 'react';
 import { OfferSortType } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { setOfferSortType } from '../../store/action';
 
 export type TOfferCardProps = {
   sortType: OfferSortType;
   isActive: boolean;
-  setSelectedSort: (selectedSort: OfferSortType) => void;
 }
 
-export const OfferSortItem: FC<TOfferCardProps> = ({sortType, isActive, setSelectedSort}) => {
+export const OfferSortItem: FC<TOfferCardProps> = ({sortType, isActive}) => {
+  const dispatch = useAppDispatch();
+
   const sortTypeClickHandler = (event: React.MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
-    setSelectedSort(event.currentTarget.id as OfferSortType);
+    dispatch(setOfferSortType(event.currentTarget.id as OfferSortType));
   };
   return (
     <li className={`places__option ${isActive ? 'places__option--active' : ''}`}

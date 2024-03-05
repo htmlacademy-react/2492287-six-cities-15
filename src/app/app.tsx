@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppRoute } from './';
 import { PrivateRoute } from './private-route';
 import { Favorites } from '../pages/favorites';
@@ -15,10 +15,12 @@ import { useAppSelector } from '../hooks';
 import { Loading } from '../pages/loading';
 import { HistoryRouter } from '../components/history-route';
 import browserHistory from '../browser-history';
+import { getAuthorizationStatus, getIsOfferDataLoading } from '../store/selectors';
 
 export const App: FC = () => {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersDataLoading = useAppSelector(getIsOfferDataLoading);
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
@@ -32,7 +34,7 @@ export const App: FC = () => {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<Layout authorizationStatus={authorizationStatus}/>}
+            element={<Layout/>}
           >
             <Route index element={<Main/>}/>
             <Route
@@ -44,7 +46,7 @@ export const App: FC = () => {
               }
             />
             <Route path={AppRoute.Offer} element={<Offer nearOfferCardType={OfferCardType.Near}/>}/>
-            <Route path={AppRoute.Login} element={<Login/>}/>
+            <Route path={AppRoute.Login} element={isAuth ? <Navigate to={AppRoute.Root}/> : <Login/>}/>
             <Route path='*' element={<NotFound/>}/>
           </Route>
         </Routes>

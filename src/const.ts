@@ -22,7 +22,7 @@ export enum LogoLocation {
   Footer = 'Footer'
 }
 
-type TLocation = {
+export type TLocation = {
   latitude: number;
   longitude: number;
   zoom: number;
@@ -60,10 +60,6 @@ type TOfferAdditional = {
   maxAdults: number;
 }
 export type TOfferFull = TOffer & TOfferAdditional;
-
-export const URL_MARKER_DEFAULT = '/img/pin.svg';
-
-export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export type TPoint = Pick<TOffer, 'title' | 'location'>;
 

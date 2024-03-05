@@ -4,12 +4,11 @@ import { OfferSortItem } from '../offer-sort-item';
 
 export type TOfferCardProps = {
   selectedSort: OfferSortType;
-  setSelectedSort: (selectedSort: OfferSortType) => void;
 }
 
 type OfferSortTypeKey = keyof typeof OfferSortType;
 
-export const OfferSort: FC<TOfferCardProps> = ({selectedSort, setSelectedSort}) => {
+export const OfferSort: FC<TOfferCardProps> = ({selectedSort}) => {
   const [isShowOfferSort, setIsShowOfferSort] = useState<boolean>(false);
 
   const sortClickHandler = () => {
@@ -40,7 +39,6 @@ export const OfferSort: FC<TOfferCardProps> = ({selectedSort, setSelectedSort}) 
                   isActive={selectedSort === curSortType}
                   sortType={curSortType}
                   key={key}
-                  setSelectedSort={setSelectedSort}
                 />
               );
             })

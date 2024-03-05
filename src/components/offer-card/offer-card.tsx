@@ -4,31 +4,29 @@ import { Link } from 'react-router-dom';
 import { AuthorizationStatus, TOffer } from '../../const';
 import { ButtonFavorite } from '../button-favorite';
 import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/selectors';
 
 export type TOfferCardProps = {
   offer: TOffer;
   offerCardType: OfferCardType;
-  setSelectedOffer?: (offer: TOffer | null) => void;
+  //setSelectedOffer?: (offer: TOffer | null) => void;
+  onHover: (offer: TOffer | null) => void;
 }
 
-export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCardType}) => {
+export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
   const cardClass = getCardClassName(offerCardType);
   const cardImageClass = getCardImageClassName(offerCardType);
   const cardInfoClass = getCardInfoClassName(offerCardType);
   const imageSize = getCardImageSize(offerCardType);
   const offerLink = getOfferLinkById(offer.id);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handleOfferMouseOver = () => {
-    if (setSelectedOffer){
-      setSelectedOffer(offer);
-    }
+    onHover(offer);
   };
 
   const handleMouseOut = () => {
-    if (setSelectedOffer){
-      setSelectedOffer(null);
-    }
+    onHover(null);
   };
 
   return (

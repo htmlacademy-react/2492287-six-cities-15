@@ -1,57 +1,38 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { OfferList } from '../../components/offer-list';
-import { OfferCardType } from '../../components/offer-card/lib';
-import { APP_TITLE, OfferSortType, TCity, TOffer } from '../../const';
+import { APP_TITLE, TCity } from '../../const';
 import { CityTabList } from '../../components/city-tab-list/city-tab-list';
-import { Map } from '../../components/map';
-import { OfferSort } from '../../components/offer-sort';
 import { changeCity } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSortedOffers } from './lib';
+import { getActiveCity, getCityOffers } from '../../store/selectors';
+import { CityCard } from '../../components/city-card';
+import { CityCardEmpty } from '../../components/city-card-empty';
 
 export const Main: FC = () => {
-  const [offer, setOffer] = useState<TOffer | null>(null);
-  const [offerSortType, setOfferSort] = useState<OfferSortType>(OfferSortType.Popular);
-  const selectedCity = useAppSelector((state) => state.activeCity);
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state.offers);
-  const [sortedOffers, setSortedOffers] = useState<TOffer[]>([]);
+  const activeCity = useAppSelector(getActiveCity);
+  const offers = useAppSelector(getCityOffers);
+  const isEmpty = offers.length === 0;
+
   const handleChangeCity = (city: TCity) => {
     dispatch(changeCity({city}));
   };
 
-  useEffect(() => {
-    setSortedOffers(getSortedOffers(offerSortType, offers.filter((item) => item.city.name === selectedCity.name)));
-  }, [selectedCity, offers, offerSortType]);
-
   return (
-    <main className='page__main page__main--index'>
+    <main className={`page__main page__main--index${isEmpty ? ' page__main--index-empty' : ''}`}>
       <Helmet>
         <title>{APP_TITLE}</title>
       </Helmet>
       <h1 className='visually-hidden'>Cities</h1>
       <div className='tabs'>
         <section className='locations container'>
-          <CityTabList activeCity={selectedCity} onChangeCity={handleChangeCity}/>
+          <CityTabList activeCity={activeCity} onChangeCity={handleChangeCity}/>
         </section>
       </div>
       <div className='cities'>
-        <div className='cities__places-container container'>
-          <section className='cities__places places'>
-            <h2 className='visually-hidden'>Places</h2>
-            <b className='places__found'>{sortedOffers.length} places to stay in {selectedCity?.name}</b>
-            <OfferSort selectedSort={offerSortType} setSelectedSort={setOfferSort}/>
-            <div className='cities__places-list places__list tabs__content'>
-              <OfferList offers={sortedOffers} offerCardType={OfferCardType.City} setSelectedOffer={setOffer}/>
-            </div>
-          </section>
-          <div className='cities__right-section'>
-            <section style={{width: '100%'}}>
-              <Map city={selectedCity} selectedPoint={offer} points={sortedOffers}/>
-            </section>
-          </div>
-        </div>
+        {
+          isEmpty ? <CityCardEmpty city={activeCity}/> : <CityCard city={activeCity} offers={offers}/>
+        }
       </div>
     </main>
   );

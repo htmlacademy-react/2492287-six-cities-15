@@ -1,15 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addReview, changeCity, loadReviews, loadFavorites, loadNearOffers, loadOffer, loadOffers, requireAuthorization, setFavorite, setOfferDataLoadingStatus, setOffersDataLoadingStatus, saveUser, setFavoritesOff } from './action';
-import { AuthorizationStatus, TCity, TReviewFull, TOffer, TOfferFull, cities, TUserData } from '../const';
+import { addReview, changeCity, loadReviews, loadFavorites,
+  loadNearOffers, loadOffer, loadOffers, requireAuthorization,
+  setOfferDataLoadingStatus,
+  setOffersDataLoadingStatus, saveUser, setFavoritesOff, setOfferSortType,
+  setFavoriteOffer, setFavoriteInOffers, setFavoriteInNearOffers, addFavorite, delFavorite } from './action';
+import { AuthorizationStatus, TCity, TReviewFull, TOffer,
+  TOfferFull, cities, TUserData, OfferSortType } from '../const';
 import { fetchOfferAction, loginAction, setFavoriteAction } from './api-action';
 import { AxiosError, isAxiosError } from 'axios';
-import { concatErrors } from './lib';
+import { concatErrors, setOfferFavorite } from './lib';
 import { TErrorLogin } from './const';
 import { toast } from 'react-toastify';
 
 type TLoading = 'idle' | 'loading' | 'failed';
 
-type InitalState = {
+export type TInitialState = {
   activeCity: TCity;
   offers: TOffer[];
   authorizationStatus: AuthorizationStatus;
@@ -19,15 +24,15 @@ type InitalState = {
   isOfferDataLoading: boolean;
   reviews: TReviewFull[];
   offer: TOfferFull | null;
-  favorite?: TOfferFull;
   review?: TReviewFull;
   user: TUserData | null;
-  offerLoadingStatus: TLoading;
+  isOfferLoading: boolean;
   loginError: string;
   favoriteLoadingStatus: TLoading;
+  offerSortType: OfferSortType;
 }
 
-const initialState: InitalState = {
+const initialState: TInitialState = {
   activeCity: cities[0],
   offers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -38,9 +43,10 @@ const initialState: InitalState = {
   reviews: [],
   offer: null,
   user: null,
-  offerLoadingStatus: 'idle',
+  isOfferLoading: false,
   loginError: '',
-  favoriteLoadingStatus: 'idle'
+  favoriteLoadingStatus: 'idle',
+  offerSortType: OfferSortType.Popular
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -73,25 +79,29 @@ export const reducer = createReducer(initialState, (builder) => {
         });
       });
     })
-    .addCase(setFavorite, (state, action) => {
-      state.favorite = action.payload;
-
-      const favoriteIndex = state.favorites.findIndex((item) => item.id === action.payload.id);
-
-      if (favoriteIndex > -1){
-        state.favorites.splice(favoriteIndex, 1);
-      } else if (action.payload.isFavorite){
-        state.favorites.push(action.payload);
-      }
-
-      const offer = state.offers.find((item) => item.id === action.payload.id);
-      if (offer){
-        offer.isFavorite = action.payload.isFavorite;
-      }
-
-      if (state.offer && (state.offer.id === action.payload.id)){
+    .addCase(setFavoriteOffer, (state, action) => {
+      if (state?.offer?.id === action.payload.id){
         state.offer.isFavorite = action.payload.isFavorite;
       }
+    })
+    .addCase(setFavoriteInOffers, (state, action) => {
+      const offer = state.offers.find((item) => item.id === action.payload.id);
+      if (offer){
+        setOfferFavorite(offer, action.payload.isFavorite);
+      }
+    })
+    .addCase(setFavoriteInNearOffers, (state, action) => {
+      const offer = state.nearOffers.find((item) => item.id === action.payload.id);
+      if (offer){
+        setOfferFavorite(offer, action.payload.isFavorite);
+      }
+    })
+    .addCase(addFavorite, (state, action) => {
+      state.favorites.push(action.payload);
+    })
+    .addCase(delFavorite, (state, action) => {
+      const offerIndex = state.nearOffers.findIndex((item) => item.id === action.payload.id);
+      state.favorites.splice(offerIndex, 1);
     })
     .addCase(loadNearOffers, (state, action) => {
       state.nearOffers = action.payload;
@@ -106,13 +116,13 @@ export const reducer = createReducer(initialState, (builder) => {
       state.review = action.payload;
     })
     .addCase(fetchOfferAction.fulfilled, (state) => {
-      state.offerLoadingStatus = 'idle';
+      state.isOfferLoading = false;
     })
     .addCase(fetchOfferAction.pending, (state) => {
-      state.offerLoadingStatus = 'loading';
+      state.isOfferLoading = true;
     })
     .addCase(fetchOfferAction.rejected, (state) => {
-      state.offerLoadingStatus = 'failed';
+      state.isOfferLoading = false;
       state.offer = null;
     })
     .addCase(setFavoriteAction.fulfilled, (state) => {
@@ -140,5 +150,8 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offers.map((item) => {
         item.isFavorite = false;
       });
+    })
+    .addCase(setOfferSortType, (state, action) => {
+      state.offerSortType = action.payload;
     });
 });

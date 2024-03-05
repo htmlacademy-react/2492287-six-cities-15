@@ -5,20 +5,20 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SimpleSpinner } from '../simple-spinner';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app';
+import { getIsOfferLoading } from '../../store/selectors';
 
-type TButtonFavoriteProps = {
+export type TButtonFavoriteProps = {
   offer: TOffer;
   typeCard: 'offer' | 'place-card';
   width: number;
   height: number;
   isAuth: boolean;
-
 }
 
 export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offer, typeCard, width, height, isAuth}) => {
   const dispatch = useAppDispatch();
   const bookmarkClass = offer.isFavorite ? ` ${typeCard}__bookmark-button--active` : '';
-  const favoriteLoadingStatus = useAppSelector((state) => state.offerLoadingStatus);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
   const navigate = useNavigate();
 
   const handleFavoriteClick = () => {
@@ -29,7 +29,7 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offer, typeCard, width
     }
   };
 
-  if ((favoriteLoadingStatus === 'loading') && !offer){
+  if (isOfferLoading){
     return <SimpleSpinner/>;
   }
 
