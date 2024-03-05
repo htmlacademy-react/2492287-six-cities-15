@@ -9,7 +9,11 @@ export type TCityTabProps = {
 }
 export const CityTab: FC<TCityTabProps> = ({city, isActive, onChangeCity}) => (
   <li className='locations__item'>
-    <Link className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`} to='#' onClick={() => onChangeCity(city)}>
+    <Link
+      className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
+      to='#'
+      onClick={() => onChangeCity(city)}
+    >
       <span>{city.name}</span>
     </Link>
   </li>

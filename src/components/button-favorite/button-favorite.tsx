@@ -34,8 +34,16 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offer, typeCard, width
   }
 
   return (
-    <button className={`${typeCard}__bookmark-button button${bookmarkClass}`} type='button' onClick={handleFavoriteClick}>
-      <svg className={`${typeCard}__bookmark-icon`} width={width} height={height}>
+    <button
+      className={`${typeCard}__bookmark-button button${bookmarkClass}`}
+      type='button'
+      onClick={handleFavoriteClick}
+    >
+      <svg
+        className={`${typeCard}__bookmark-icon`}
+        width={width}
+        height={height}
+      >
         <use xlinkHref='#icon-bookmark' />
       </svg>
       <span className='visually-hidden'>{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>

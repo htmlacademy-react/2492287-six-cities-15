@@ -11,6 +11,9 @@ export const Rating: FC<TRatingProps> = ({rating, objectType}) => (
       <span style={{ width: `${Math.round(rating * 20)}%` }} />
       <span className='visually-hidden'>Rating</span>
     </div>
-    {objectType === 'offer' && <span className='offer__rating-value rating__value'>{rating}</span>}
+    {
+      objectType === 'offer' &&
+      <span className='offer__rating-value rating__value'>{rating}</span>
+    }
   </div>
 );

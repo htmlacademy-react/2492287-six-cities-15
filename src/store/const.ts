@@ -1,3 +1,6 @@
+import { AxiosInstance } from 'axios';
+import { TAppDispatch, TState } from '../const';
+
 export type TErrorLoginDetail = {
   property: string;
   value: string;
@@ -13,4 +16,10 @@ export type TErrorLogin = {
 export type TError = {
   errorType: string;
   message: string;
+}
+
+export type TActionUtils = {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
 }

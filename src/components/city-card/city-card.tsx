@@ -24,10 +24,16 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
     <div className='cities__places-container container'>
       <section className='cities__places places'>
         <h2 className='visually-hidden'>Places</h2>
-        <b className='places__found'>{sortedOffers.length} places to stay in {city.name}</b>
+        <b className='places__found'>
+          {sortedOffers.length} places to stay in {city.name}
+        </b>
         <OfferSort selectedSort={offerSortType}/>
         <div className='cities__places-list places__list tabs__content'>
-          <OfferList offers={sortedOffers} offerCardType={OfferCardType.City} onHover={handleOfferHover}/>
+          <OfferList
+            offers={sortedOffers}
+            offerCardType={OfferCardType.City}
+            onHover={handleOfferHover}
+          />
         </div>
       </section>
       <div className='cities__right-section'>

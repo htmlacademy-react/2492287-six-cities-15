@@ -39,14 +39,24 @@ export const ReviewCreateCard: FC = () => {
   };
 
   return (
-    <form className='reviews__form form' action='#' method='post' onSubmit={handleSubmit}>
+    <form
+      className='reviews__form form'
+      action='#'
+      method='post'
+      onSubmit={handleSubmit}
+    >
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
       </label>
       <div className='reviews__rating-form form__rating'>
         {
           raitings.map((raiting) => (
-            <ReviewStar key={raiting.value} defaultValue={raiting.value} name={raiting.name} onChange={inputChangeHandler}/>
+            <ReviewStar
+              key={raiting.value}
+              defaultValue={raiting.value}
+              name={raiting.name}
+              onChange={inputChangeHandler}
+            />
           ))
         }
       </div>

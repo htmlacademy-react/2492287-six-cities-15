@@ -26,12 +26,17 @@ export const Main: FC = () => {
       <h1 className='visually-hidden'>Cities</h1>
       <div className='tabs'>
         <section className='locations container'>
-          <CityTabList activeCity={activeCity} onChangeCity={handleChangeCity}/>
+          <CityTabList
+            activeCity={activeCity}
+            onChangeCity={handleChangeCity}
+          />
         </section>
       </div>
       <div className='cities'>
         {
-          isEmpty ? <CityCardEmpty city={activeCity}/> : <CityCard city={activeCity} offers={offers}/>
+          isEmpty
+            ? <CityCardEmpty city={activeCity}/>
+            : <CityCard city={activeCity} offers={offers}/>
         }
       </div>
     </main>

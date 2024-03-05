@@ -13,6 +13,6 @@ export const PrivateRoute: FC<PropsWithChildren<TPrivateRouteProps>> = (props) =
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ? children as JSX.Element
-      : <Navigate to={`${AppRoute.Login}`} />
+      : <Navigate to={AppRoute.Login} />
   );
 };

@@ -9,8 +9,7 @@ import { getAuthorizationStatus } from '../../store/selectors';
 export type TOfferCardProps = {
   offer: TOffer;
   offerCardType: OfferCardType;
-  //setSelectedOffer?: (offer: TOffer | null) => void;
-  onHover: (offer: TOffer | null) => void;
+  onHover?: (offer: TOffer | null) => void;
 }
 
 export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
@@ -22,16 +21,29 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handleOfferMouseOver = () => {
-    onHover(offer);
+    if (onHover){
+      onHover(offer);
+    }
   };
 
   const handleMouseOut = () => {
-    onHover(null);
+    if (onHover){
+      onHover(null);
+    }
   };
 
   return (
-    <article className={`${cardClass} place-card`} onMouseOver={handleOfferMouseOver} onMouseOut={handleMouseOut}>
-      {offer.isPremium && <div className='place-card__mark'> <span>Premium</span> </div>}
+    <article
+      className={`${cardClass} place-card`}
+      onMouseOver={handleOfferMouseOver}
+      onMouseOut={handleMouseOut}
+    >
+      {
+        offer.isPremium &&
+        <div className='place-card__mark'>
+          <span>Premium</span>
+        </div>
+      }
       <div className={`${cardImageClass} place-card__image-wrapper`}>
         <Link to={offerLink}>
           <img
@@ -51,7 +63,13 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) 
               /&nbsp;night
             </span>
           </div>
-          <ButtonFavorite offer={offer} typeCard='place-card' width={18} height={19} isAuth={authorizationStatus === AuthorizationStatus.Auth}/>
+          <ButtonFavorite
+            offer={offer}
+            typeCard='place-card'
+            width={18}
+            height={19}
+            isAuth={authorizationStatus === AuthorizationStatus.Auth}
+          />
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>

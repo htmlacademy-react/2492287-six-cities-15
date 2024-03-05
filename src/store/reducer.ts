@@ -27,7 +27,6 @@ export type TInitialState = {
   review?: TReviewFull;
   user: TUserData | null;
   isOfferLoading: boolean;
-  loginError: string;
   favoriteLoadingStatus: TLoading;
   offerSortType: OfferSortType;
 }
@@ -44,7 +43,6 @@ const initialState: TInitialState = {
   offer: null,
   user: null,
   isOfferLoading: false,
-  loginError: '',
   favoriteLoadingStatus: 'idle',
   offerSortType: OfferSortType.Popular
 };
@@ -134,15 +132,11 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setFavoriteAction.rejected, (state) => {
       state.favoriteLoadingStatus = 'failed';
     })
-    .addCase(loginAction.pending, (state) => {
-      state.loginError = '';
-    })
-    .addCase(loginAction.rejected, (state, action) => {
+    .addCase(loginAction.rejected, (_state, action) => {
       if (isAxiosError(action.payload)){
         const axiosErr = action.payload as AxiosError;
         const errorLogin = axiosErr.response?.data as TErrorLogin;
-        state.loginError = concatErrors(errorLogin.details);
-        toast.error(state.loginError);
+        toast.error(concatErrors(errorLogin.details));
       }
     })
     .addCase(setFavoritesOff, (state) => {

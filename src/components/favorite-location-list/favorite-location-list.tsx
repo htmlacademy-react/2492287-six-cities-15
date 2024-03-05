@@ -17,7 +17,10 @@ export const FavoriteLocationList: FC<TFavoriteLocationPlaceProps> = ({offers, c
         </a>
       </div>
     </div>
-    <OfferList offers={offers.filter((item) => item.city.name === city.name)} offerCardType={OfferCardType.Favorite} onHover={() => {}}/>
+    <OfferList
+      offers={offers.filter((item) => item.city.name === city.name)}
+      offerCardType={OfferCardType.Favorite}
+    />
   </li>
 );
 

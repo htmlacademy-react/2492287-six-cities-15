@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { APP_TITLE, LogoLocation } from '../../const';
 import { getLogoClassName, getLogoImgClassName, getLogoSize } from './lib';
 
-type TLogoProps = {
+export type TLogoProps = {
   logoLocation: LogoLocation;
 }
 export const Logo: FC<TLogoProps> = ({logoLocation = LogoLocation.Header}) => {

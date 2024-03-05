@@ -9,7 +9,7 @@ export const getIsOfferDataLoading = (state: TInitialState) => state.isOffersDat
 export const getNearOffers = (state: TInitialState) => state.nearOffers;
 export const getActiveCity = (state: TInitialState) => state.activeCity;
 export const getAuthorizationStatus = (state: TInitialState) => state.authorizationStatus;
-export const getReviews = (state: TInitialState) => state.reviews;
+
 export const getFavorites = (state: TInitialState) => state.favorites;
 export const getUser = (state: TInitialState) => state.user;
 export const getOfferSortType = (state: TInitialState) => state.offerSortType;
@@ -28,4 +28,11 @@ export const getSortedOffers = createSelector(
     getOfferSortType
   ],
   (offers, sort) => sortOffers(sort, offers)
+);
+
+export const getReviews = createSelector(
+  [
+    (state: TInitialState) => state.reviews
+  ],
+  (reviews) => [...reviews].sort((review1, review2) => new Date(review2?.date).getTime() - new Date(review1?.date).getTime())
 );

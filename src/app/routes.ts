@@ -7,11 +7,8 @@ export enum AppRoute {
 
 export enum ApiRoute {
   Offers = '/offers',
-  Offer = '/offers/:id',
   Login = '/login',
   Logout = '/logout',
-  NearOffers = '/offers/:offerId/nearby',
   Favorites = '/favorite',
-  FavoriteSet = 'favorite/:offerId/:status',
-  Comments = '/comments/:offerId'
+  Comments = '/comments'
 }
