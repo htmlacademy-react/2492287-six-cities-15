@@ -14,19 +14,17 @@ const raitings = [
   {value: 1, name: 'terrbly'}
 ];
 
+const initialValues = {rating: 0, comment: '', offerId: ''};
+
 export const ReviewCreateCard: FC = () => {
-  const [formdata, setFormdata] = useState<TReview>({
-    rating: 0,
-    comment: '',
-    offerId: ''
-  });
+  const [formdata, setFormdata] = useState<TReview>(initialValues);
 
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
 
   const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
-    setFormdata({...formdata, [name]: value});
+    const {value} = event.target;
+    setFormdata({...formdata, rating: Number(value)});
   };
 
   const textareaChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -34,8 +32,10 @@ export const ReviewCreateCard: FC = () => {
     setFormdata({...formdata, comment: value});
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(addReviewAction({comment: formdata.comment, rating: formdata.rating, offerId: offer ? offer.id : ''}));
+    setFormdata(initialValues);
   };
 
   return (
@@ -53,6 +53,7 @@ export const ReviewCreateCard: FC = () => {
           raitings.map((raiting) => (
             <ReviewStar
               key={raiting.value}
+              value = {formdata.rating}
               defaultValue={raiting.value}
               name={raiting.name}
               onChange={inputChangeHandler}
@@ -65,7 +66,7 @@ export const ReviewCreateCard: FC = () => {
         id='review'
         name='review'
         placeholder='Tell how was your stay, what you like and what can be improved'
-        defaultValue={formdata.comment}
+        value={formdata.comment}
         onChange={textareaChangeHandler}
       />
       <div className='reviews__button-wrapper'>
@@ -78,7 +79,7 @@ export const ReviewCreateCard: FC = () => {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled={!validateSubmit(formdata.comment)}
+          disabled={!validateSubmit(formdata.comment, formdata.rating)}
         >
           Submit
         </button>
