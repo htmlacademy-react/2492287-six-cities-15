@@ -15,55 +15,61 @@ export enum OfferTypes {
   Hotel = 'Hotel'
 }
 
-export type TCity = {
-  id: number;
-  name: string;
-  lat: number;
-  lng: number;
-}
+export type OfferType = keyof typeof OfferTypes;
 
 export enum LogoLocation {
   Header = 'Header',
   Footer = 'Footer'
 }
 
+export type TLocation = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+}
+
+export type TCity = {
+  name: string;
+  location: TLocation;
+}
+
 export type TOffer = {
-  id: number;
-  price: number;
+  id: string;
   title: string;
-  offerType: OfferTypes;
+  type: OfferType;
+  price: number;
+  previewImage: string;
+  city: TCity;
+  location: TLocation;
+  isFavorite: boolean;
+  isPremium: boolean;
   rating: number;
-  imageName: string;
-  cityId: number;
-  isBookmark?: boolean;
-  isPremium?: boolean;
-  lat: number;
-  lng: number;
 }
 
-export type TReview = {
-  id: number;
-  rating: number;
-  review: string;
-  avatar: string;
-  date: Date;
-  userName: string;
-  offerId: number;
+export type TUser = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
 }
+type TOfferAdditional = {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: TUser;
+  images: string[];
+  maxAdults: number;
+}
+export type TOfferFull = TOffer & TOfferAdditional;
 
-export const URL_MARKER_DEFAULT = '/img/pin.svg';
-
-export const URL_MARKER_CURRENT = '/img/pin-active.svg';
-
-export type TPoint = Pick<TOffer, 'title' | 'lat' | 'lng'>;
+export type TPoint = Pick<TOffer, 'title' | 'location'>;
 
 export const cities: TCity[] = [
-  {id: 0, name: 'Paris', lat: 48.8509553943508, lng: 2.35309666406198},
-  {id: 1, name: 'Cologne', lat: 50.9309553943508, lng: 6.94309666406198},
-  {id: 2, name: 'Brussels', lat: 50.8509553943508, lng: 4.35309666406198},
-  {id: 3, name: 'Amsterdam', lat: 52.3709553943508, lng: 4.91309666406198},
-  {id: 4, name: 'Hamburg', lat: 53.5509553943508, lng: 10.00309666406198},
-  {id: 5, name: 'Dusseldorf', lat: 51.2209553943508, lng: 6.77309666406198}
+  {name: 'Paris', location: {latitude: 48.85661, longitude: 2.351499, zoom: 13}},
+  {name: 'Cologne', location: {latitude: 50.938361, longitude: 6.959974, zoom: 13}},
+  {name: 'Brussels', location: {latitude: 50.846557, longitude: 4.351697, zoom: 13}},
+  {name: 'Amsterdam', location: {latitude: 52.37454, longitude: 4.897976, zoom: 13}},
+  {name: 'Hamburg', location: {latitude: 53.550341, longitude: 10.000654, zoom: 13}},
+  {name: 'Dusseldorf', location: {latitude: 51.225402, longitude: 6.776314, zoom: 13}}
 ];
 
 export enum OfferSortType{
@@ -73,6 +79,42 @@ export enum OfferSortType{
   TopRated = 'Top rated first'
 }
 
-export type State = ReturnType<typeof store.getState>;
+export type TState = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch;
+export type TAppDispatch = typeof store.dispatch;
+
+export type TAuthData = {
+  login: string;
+  password: string;
+};
+
+export type TUserData = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+  email: string;
+  token: string;
+};
+
+export type TErrorData = {
+  type: string;
+  message: string;
+}
+
+export type TLoginError = {
+    property: string;
+    value: string;
+    messages: string[];
+}
+
+export type TReview = {
+  comment: string;
+  rating: number;
+  offerId: string;
+}
+
+export type TReviewFull = TReview & {
+id: string;
+date: string;
+user: TUser;
+}

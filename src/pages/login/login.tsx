@@ -1,9 +1,34 @@
-import { FC } from 'react';
+import { FC, FormEvent, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { APP_TITLE } from '../../const';
+import { APP_TITLE, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loginAction } from '../../store/api-action';
+import { AppRoute } from '../../app';
+import { useNavigate } from 'react-router-dom';
+import { getAuthorizationStatus } from '../../store/selectors';
 
-export const Login: FC = () =>
-  (
+export const Login: FC = () => {
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (loginRef.current && passwordRef.current) {
+      dispatch(loginAction({
+        login: loginRef.current.value,
+        password: passwordRef.current.value
+      }));
+      if (authorizationStatus === AuthorizationStatus.Auth){
+        navigate(AppRoute.Root);
+      }
+    }
+  };
+
+  return (
     <main className='page__main page__main--login'>
       <Helmet>
         <title>{APP_TITLE}: authorization</title>
@@ -11,10 +36,16 @@ export const Login: FC = () =>
       <div className='page__login-container container'>
         <section className='login'>
           <h1 className='login__title'>Sign in</h1>
-          <form className='login__form form' action='#' method='post'>
+          <form
+            className='login__form form'
+            action='#'
+            method='post'
+            onSubmit={handleSubmit}
+          >
             <div className='login__input-wrapper form__input-wrapper'>
               <label className='visually-hidden'>E-mail</label>
               <input
+                ref={loginRef}
                 className='login__input form__input'
                 type='email'
                 name='email'
@@ -25,6 +56,7 @@ export const Login: FC = () =>
             <div className='login__input-wrapper form__input-wrapper'>
               <label className='visually-hidden'>Password</label>
               <input
+                ref={passwordRef}
                 className='login__input form__input'
                 type='password'
                 name='password'
@@ -47,3 +79,4 @@ export const Login: FC = () =>
       </div>
     </main>
   );
+};

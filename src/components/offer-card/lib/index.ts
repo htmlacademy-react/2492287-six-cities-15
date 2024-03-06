@@ -43,4 +43,4 @@ export const getCardImageSize = (offerCardType: OfferCardType): ImageSize => {
   }
 };
 
-export const getOfferLinkById = (id: number) => AppRoute.Offer.replace(':id', String(id));
+export const getOfferLinkById = (id: string) => AppRoute.Offer.replace(':id', id);

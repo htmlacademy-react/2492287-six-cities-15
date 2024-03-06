@@ -1,19 +1,19 @@
 import { FC } from 'react';
-import { TReview } from '../../const';
+import { TReviewFull } from '../../const';
 import { ReviewCard } from '../review-card';
 
 export type TOfferListProps = {
-  reviews: TReview[];
+  reviews: TReviewFull[];
 }
 
 export const ReviewList: FC<TOfferListProps> = ({reviews}) => (
-  <>
+  <section className='offer__reviews reviews'>
     <h2 className='reviews__title'>
         Reviews · <span className='reviews__amount'>{reviews.length}</span>
     </h2>
     <ul className='reviews__list'>
       {
-        reviews.sort((review1, review2) => review2.date.getTime() - review1.date.getTime()).map((review) => (
+        reviews.map((review) => (
           <ReviewCard
             key={review.id}
             review={review}
@@ -21,5 +21,5 @@ export const ReviewList: FC<TOfferListProps> = ({reviews}) => (
         ))
       }
     </ul>
-  </>
+  </section>
 );

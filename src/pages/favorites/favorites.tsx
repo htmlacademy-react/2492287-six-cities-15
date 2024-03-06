@@ -1,16 +1,13 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { APP_TITLE, LogoLocation, TOffer } from '../../const';
-import { FavoriteLocationList } from '../../components/favorite-location-list';
+import { APP_TITLE, LogoLocation } from '../../const';
 import { Logo } from '../../components/logo';
-import { getFavoriteOffers } from '../../mocks/favorites-offers';
+import { useAppSelector } from '../../hooks';
+import { getFavorites } from '../../store/selectors';
+import { FavoriteCityList } from '../../components/favorite-city-list';
 
 export const Favorites: FC = () => {
-  const [favoriteOffers, setFavoriteOffers] = useState<TOffer[]>([]);
-
-  useEffect(() => {
-    setFavoriteOffers(getFavoriteOffers());
-  }, []);
+  const favorites = useAppSelector(getFavorites);
 
   return (
     <>
@@ -19,7 +16,19 @@ export const Favorites: FC = () => {
       </Helmet>
       <main className='page__main page__main--favorites'>
         <div className='page__favorites-container container'>
-          <FavoriteLocationList offers={favoriteOffers}/>
+          {favorites.length > 0 && <FavoriteCityList offers={favorites}/>}
+          {
+            favorites.length === 0 &&
+            <section className='favorites favorites--empty'>
+              <h1 className='visually-hidden'>Favorites (empty)</h1>
+              <div className='favorites__status-wrapper'>
+                <b className='favorites__status'>Nothing yet saved.</b>
+                <p className='favorites__status-description'>
+                  Save properties to narrow down search or plan your future trips.
+                </p>
+              </div>
+            </section>
+          }
         </div>
       </main>
       <footer className='footer container'>

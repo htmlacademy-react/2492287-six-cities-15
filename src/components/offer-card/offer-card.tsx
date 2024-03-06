@@ -1,36 +1,54 @@
 import { FC } from 'react';
 import { OfferCardType, getCardClassName, getCardImageClassName, getCardImageSize, getCardInfoClassName, getOfferLinkById } from './lib';
 import { Link } from 'react-router-dom';
-import { TOffer } from '../../const';
+import { AuthorizationStatus, TOffer } from '../../const';
+import { ButtonFavorite } from '../button-favorite';
+import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/selectors';
 
 export type TOfferCardProps = {
   offer: TOffer;
   offerCardType: OfferCardType;
-  setSelectedOffer?: (offer: TOffer) => void;
+  onHover?: (offer: TOffer | null) => void;
 }
 
-export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCardType}) => {
-  const bookmarkClass = offer.isBookmark ? ' place-card__bookmark-button--active' : '';
+export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
   const cardClass = getCardClassName(offerCardType);
   const cardImageClass = getCardImageClassName(offerCardType);
   const cardInfoClass = getCardInfoClassName(offerCardType);
   const imageSize = getCardImageSize(offerCardType);
   const offerLink = getOfferLinkById(offer.id);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handleOfferMouseOver = () => {
-    if (setSelectedOffer){
-      setSelectedOffer(offer);
+    if (onHover){
+      onHover(offer);
+    }
+  };
+
+  const handleMouseOut = () => {
+    if (onHover){
+      onHover(null);
     }
   };
 
   return (
-    <article className={`${cardClass} place-card`} onMouseOver={handleOfferMouseOver}>
-      {offer.isPremium && <div className='place-card__mark'> <span>Premium</span> </div>}
+    <article
+      className={`${cardClass} place-card`}
+      onMouseOver={handleOfferMouseOver}
+      onMouseOut={handleMouseOut}
+    >
+      {
+        offer.isPremium &&
+        <div className='place-card__mark'>
+          <span>Premium</span>
+        </div>
+      }
       <div className={`${cardImageClass} place-card__image-wrapper`}>
         <Link to={offerLink}>
           <img
             className='place-card__image'
-            src={`img/${offer.imageName}`}
+            src={offer.previewImage}
             width={imageSize.width}
             height={imageSize.height}
             alt='Place image'
@@ -45,19 +63,13 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
               /&nbsp;night
             </span>
           </div>
-          <button
-            className={`place-card__bookmark-button button${bookmarkClass}`}
-            type='button'
-          >
-            <svg
-              className='place-card__bookmark-icon'
-              width={18}
-              height={19}
-            >
-              <use xlinkHref='#icon-bookmark' />
-            </svg>
-            <span className='visually-hidden'>{offer.isBookmark ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>
+          <ButtonFavorite
+            offer={offer}
+            typeCard='place-card'
+            width={18}
+            height={19}
+            isAuth={authorizationStatus === AuthorizationStatus.Auth}
+          />
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
@@ -68,7 +80,7 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, setSelectedOffer, offerCa
         <h2 className='place-card__name'>
           <Link to={offerLink}>{offer.title}</Link>
         </h2>
-        <p className='place-card__type'>{offer.offerType}</p>
+        <p className='place-card__type'>{offer.type}</p>
       </div>
     </article>
   );

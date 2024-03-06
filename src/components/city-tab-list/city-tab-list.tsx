@@ -11,7 +11,12 @@ export const CityTabList: FC<TCityTabListProps> = ({activeCity, onChangeCity}) =
   <ul className='locations__list tabs__list'>
     {
       cities.map((city) => (
-        <CityTab key={city.id} city={city} isActive={activeCity === city} onChangeCity={onChangeCity}/>
+        <CityTab
+          key={city.name}
+          city={city}
+          isActive={activeCity === city}
+          onChangeCity={onChangeCity}
+        />
       ))
     }
   </ul>
