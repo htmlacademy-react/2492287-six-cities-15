@@ -1,19 +1,19 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus, TCity, TReviewFull, TOffer, TOfferFull, TUserData, OfferSortType } from '../const';
+import { AuthorizationStatus, TCity, TReviewFull, TOffer, TUserData, OfferSortType, TOffers, TReviewFulls } from '../const';
 import { AppRoute } from '../app';
 
-export const changeCity = createAction<{city: TCity}>('cities/changeCity');
-export const fillOffers = createAction<{offers: TOffer[]}>('cities/fillOffers');
-export const loadOffers = createAction<TOffer[]>('data/loadOffers');
-export const loadOffer = createAction<TOfferFull | null>('data/loadOffer');
-export const loadNearOffers = createAction<TOffer[]>('data/loadNearOffers');
-export const loadFavorites = createAction<TOffer[]>('data/loadFavorites');
+export const changeCity = createAction<TCity>('cities/changeCity');
+export const fillOffers = createAction<TOffers>('cities/fillOffers');
+export const loadOffers = createAction<TOffers>('data/loadOffers');
+export const clearOffer = createAction('data/clearOffer');
+export const loadNearOffers = createAction<TOffers>('data/loadNearOffers');
+export const loadFavorites = createAction<TOffers>('data/loadFavorites');
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const redirectToRoute = createAction<AppRoute>('cities/redirectToRoute');
 export const saveUser = createAction<TUserData | null>('cities/saveUser');
 export const setOfferDataLoadingStatus = createAction<boolean>('data/setOfferDataLoadingStatus');
-export const loadReviews = createAction<TReviewFull[]>('data/loadReviews');
+export const loadReviews = createAction<TReviewFulls>('data/loadReviews');
 export const addReview = createAction<TReviewFull>('data/addComment');
 export const setFavoritesOff = createAction('data/setFavoritesOff');
 export const setOfferSortType = createAction<OfferSortType>('city/setOfferSortType');

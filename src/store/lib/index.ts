@@ -1,4 +1,4 @@
-import { OfferSortType, TOffer } from '../../const';
+import { OfferSortType, TOffer, TOffers } from '../../const';
 import { TErrorLoginDetail } from '../const';
 
 export const concatErrors = (errors: TErrorLoginDetail[]) => {
@@ -21,7 +21,9 @@ export const sortOffers = (offerSortType: OfferSortType, offers: TOffer[]) => {
     default: return offers;
   }
 };
-
-export const setOfferFavorite = (offer: TOffer, isFavorite: boolean) => {
-  offer.isFavorite = isFavorite;
+export const setOfferFavorite = (offers: TOffers, offerId: string, isFavorite: boolean) => {
+  const offer = offers.find((item) => item.id === offerId);
+  if (offer){
+    offer.isFavorite = isFavorite;
+  }
 };
