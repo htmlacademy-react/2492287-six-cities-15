@@ -4,17 +4,18 @@ import { ButtonFavorite } from '../button-favorite';
 import { OfferUser } from '../offer-user';
 import { ReviewList } from '../review-list';
 import { useAppSelector } from '../../hooks';
-import { getReviews } from '../../store/selectors';
 import { ReviewCreateCard } from '../review-create-card';
 import { Rating } from '../rating';
+import { getReviewsSorted } from '../../store/review-data/selectors';
+import { getAdultsText, getBedroomsText } from './lib';
 
-export type TOfferInfoProps = {
+export type TOfferFullCardProps = {
   offer: TOfferFull;
   isAuth: boolean;
 }
 
-export const OfferInfo: FC<TOfferInfoProps> = ({offer, isAuth}) => {
-  const reviews = useAppSelector(getReviews);
+export const OfferFullCard: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
+  const reviews = useAppSelector(getReviewsSorted);
 
   return (
     <div className='offer__container container'>
@@ -29,16 +30,16 @@ export const OfferInfo: FC<TOfferInfoProps> = ({offer, isAuth}) => {
           <h1 className='offer__name'>
             {offer.title}
           </h1>
-          <ButtonFavorite offer={offer} typeCard='offer' width={31} height={33} isAuth={isAuth}/>
+          <ButtonFavorite offer={offer} typeCard='offer' width={31} height={33} isAuth={isAuth} />
         </div>
-        <Rating objectType={'offer'} rating={offer.rating}/>
+        <Rating objectType={'offer'} rating={offer.rating} />
         <ul className='offer__features'>
           <li className='offer__feature offer__feature--entire'>Apartment</li>
           <li className='offer__feature offer__feature--bedrooms'>
-            {`${offer.bedrooms} ${offer.bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}`}
+            {getBedroomsText(offer.bedrooms)}
           </li>
           <li className='offer__feature offer__feature--adults'>
-            {`Max ${offer.maxAdults} ${offer.maxAdults > 1 ? 'adults' : 'adult'}`}
+            {getAdultsText(offer.maxAdults)}
           </li>
         </ul>
         <div className='offer__price'>
@@ -55,11 +56,12 @@ export const OfferInfo: FC<TOfferInfoProps> = ({offer, isAuth}) => {
         </div>
         <div className='offer__host'>
           <h2 className='offer__host-title'>Meet the host</h2>
-          <OfferUser user={offer.host}/>
+          <OfferUser user={offer.host} />
         </div>
-        <ReviewList reviews={reviews}/>
-        {isAuth && <ReviewCreateCard/>}
+        <ReviewList reviews={reviews} />
+        {isAuth && <ReviewCreateCard />}
       </div>
     </div>
   );
 };
+

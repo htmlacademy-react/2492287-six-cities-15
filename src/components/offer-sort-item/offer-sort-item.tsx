@@ -11,14 +11,14 @@ export type TOfferCardProps = {
 export const OfferSortItem: FC<TOfferCardProps> = ({sortType, isActive}) => {
   const dispatch = useAppDispatch();
 
-  const sortTypeClickHandler = (event: React.MouseEvent<HTMLLIElement>) => {
+  const handleSortTypeClick = (event: React.MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     dispatch(setOfferSortType(event.currentTarget.id as OfferSortType));
   };
   return (
     <li className={`places__option ${isActive ? 'places__option--active' : ''}`}
       tabIndex={0}
-      onClick={sortTypeClickHandler}
+      onClick={handleSortTypeClick}
       id={sortType}
     >
       {sortType}

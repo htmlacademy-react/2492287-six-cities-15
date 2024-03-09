@@ -5,7 +5,6 @@ import type {BrowserHistory} from 'history';
 export type THistoryRouterProps = {
   history: BrowserHistory;
   basename?: string;
-  children?: React.ReactNode;
 }
 
 export const HistoryRouter: FC<PropsWithChildren<THistoryRouterProps>> = ({basename, history, children}) => {

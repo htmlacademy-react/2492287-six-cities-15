@@ -3,49 +3,49 @@ import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
 import { OfferCardType } from '../../components/offer-card/lib';
 import { useParams } from 'react-router-dom';
-import { APP_TITLE, AuthorizationStatus } from '../../const';
+import { APP_TITLE } from '../../const';
 import { NotFound } from '../not-found';
 import { Map } from '../../components/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchNearOffersAction, fetchOfferAction,
-  fetchReviewsAction } from '../../store/api-action';
+import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-action';
 import { Loading } from '../loading';
-import { loadOffer } from '../../store/action';
-import { getAuthorizationStatus, getNearOffers,
-  getOffer, getIsOfferLoading } from '../../store/selectors';
-import { OfferInfo } from '../../components/offer-info';
+import { OfferFullCard } from '../../components/offer-card-full';
 import { OfferGallery } from '../../components/offer-gallery/';
+import { getIsOfferDataLoading, getNearOffers, getOffer } from '../../store/offer-data/selectors';
+import { getIsAuth } from '../../store/user-process/selectors';
+import { clearOffer } from '../../store/action';
 
 export type TOfferProps = {
   nearOfferCardType: OfferCardType;
 }
 
-export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType}) => {
+export const Offer: FC<TOfferProps> = ({nearOfferCardType}) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
   const nearOffers = useAppSelector(getNearOffers);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const isAuth = useAppSelector(getIsAuth);
+  const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
+  const offerId = id?.trim() ?? '';
 
   useEffect(() => {
-    dispatch(fetchOfferAction((id?.trim()) ?? ''));
+    dispatch(fetchOfferAction(offerId));
     return () => {
-      dispatch(loadOffer(null));
+      dispatch(clearOffer());
     };
-  }, [id, dispatch]);
+  }, [dispatch, offerId]);
 
   useEffect(() => {
     if (offer){
-      dispatch(fetchNearOffersAction(id ?? ''));
-      dispatch(fetchReviewsAction(id ?? ''));
+      dispatch(fetchNearOffersAction(offerId));
+      dispatch(fetchReviewsAction(offerId));
     }
-  }, [id, dispatch, offer]);
+  }, [offerId, dispatch, offer]);
 
-  if(id?.trim() === '') {
+  if(offerId === '') {
     return <NotFound/>;
   }
-  if (isOfferLoading) {
+  if (isOfferDataLoading) {
     return <Loading/>;
   }
   if (!offer) {
@@ -59,12 +59,12 @@ export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType}) => {
       </Helmet>
       <section className='offer'>
         <OfferGallery images={offer.images}/>
-        <OfferInfo
+        <OfferFullCard
           offer={offer}
-          isAuth={authorizationStatus === AuthorizationStatus.Auth}
+          isAuth={isAuth}
         />
         <section style={{margin: 'auto', marginBottom: 50, width: 1144, height: 579}} >
-          <Map city={offer.city} selectedPoint={null} points={nearOffers}/>
+          <Map city={offer.city} points={nearOffers}/>
         </section>
       </section>
       <div className='container'>
@@ -74,7 +74,7 @@ export const Offer: FC<TOfferProps> = ({nearOfferCardType: offerCardType}) => {
           </h2>
           <OfferList
             offers={nearOffers}
-            offerCardType={offerCardType}
+            offerCardType={nearOfferCardType}
           />
         </section>
       </div>

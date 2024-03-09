@@ -1,10 +1,12 @@
-import { FC } from 'react';
-import { OfferCardType, getCardClassName, getCardImageClassName, getCardImageSize, getCardInfoClassName, getOfferLinkById } from './lib';
+import { FC, memo } from 'react';
+import { OfferCardType, getCardClassName, getCardImageClassName,
+  getCardImageSize, getCardInfoClassName, getOfferLinkById } from './lib';
 import { Link } from 'react-router-dom';
-import { AuthorizationStatus, TOffer } from '../../const';
-import { ButtonFavorite } from '../button-favorite';
+import { TOffer } from '../../const';
+import {ButtonFavorite }from '../button-favorite';
 import { useAppSelector } from '../../hooks';
-import { getAuthorizationStatus } from '../../store/selectors';
+import PropTypes from 'prop-types';
+import { getIsAuth } from '../../store/user-process/selectors';
 
 export type TOfferCardProps = {
   offer: TOffer;
@@ -12,21 +14,21 @@ export type TOfferCardProps = {
   onHover?: (offer: TOffer | null) => void;
 }
 
-export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
+export const OfferCard: FC<TOfferCardProps> = memo(({offer, onHover, offerCardType}) => {
   const cardClass = getCardClassName(offerCardType);
   const cardImageClass = getCardImageClassName(offerCardType);
   const cardInfoClass = getCardInfoClassName(offerCardType);
   const imageSize = getCardImageSize(offerCardType);
   const offerLink = getOfferLinkById(offer.id);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuth = useAppSelector(getIsAuth);
 
-  const handleOfferMouseOver = () => {
+  const handleOfferMouseEnter = () => {
     if (onHover){
       onHover(offer);
     }
   };
 
-  const handleMouseOut = () => {
+  const handleOfferMouseLeave = () => {
     if (onHover){
       onHover(null);
     }
@@ -35,8 +37,8 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) 
   return (
     <article
       className={`${cardClass} place-card`}
-      onMouseOver={handleOfferMouseOver}
-      onMouseOut={handleMouseOut}
+      onMouseEnter={handleOfferMouseEnter}
+      onMouseLeave={handleOfferMouseLeave}
     >
       {
         offer.isPremium &&
@@ -68,7 +70,7 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) 
             typeCard='place-card'
             width={18}
             height={19}
-            isAuth={authorizationStatus === AuthorizationStatus.Auth}
+            isAuth={isAuth}
           />
         </div>
         <div className='place-card__rating rating'>
@@ -84,4 +86,12 @@ export const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) 
       </div>
     </article>
   );
+});
+
+OfferCard.displayName = 'OfferCard';
+
+OfferCard.propTypes = {
+  offer: PropTypes.any.isRequired,
+  offerCardType:  PropTypes.any.isRequired,
+  onHover: PropTypes.func
 };

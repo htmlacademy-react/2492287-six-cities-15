@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { OfferCardType } from '../offer-card/lib';
-import { OfferCard } from '../offer-card';
 import { getCardListClassName } from './lib';
 import { TOffer } from '../../const';
+import { OfferCard } from '../offer-card';
 
 export type TOfferListProps = {
   offers: TOffer[];

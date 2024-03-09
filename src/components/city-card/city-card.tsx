@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { TCity, TOffer } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getOfferSortType, getSortedOffers } from '../../store/selectors';
 import { OfferCardType } from '../offer-card/lib';
 import { OfferSort } from '../offer-sort';
 import { OfferList } from '../offer-list';
 import { Map } from '../../components/map';
+import { getOfferSortType, getSortedOffers } from '../../store/offer-data/selectors';
 
 export type TCityCardProps = {
   city: TCity;
@@ -17,9 +17,10 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
   const sortedOffers = useAppSelector(getSortedOffers);
   const offerSortType = useAppSelector(getOfferSortType);
 
-  const handleOfferHover = (offer: TOffer | null) => {
+  const handleOfferHover = useCallback((offer: TOffer | null) => {
     setActiveOffer(offer);
-  };
+  }, []);
+
   return (
     <div className='cities__places-container container'>
       <section className='cities__places places'>

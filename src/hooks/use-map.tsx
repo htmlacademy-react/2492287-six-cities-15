@@ -1,7 +1,7 @@
 import {useEffect, useState, MutableRefObject, useRef} from 'react';
 import {Map, TileLayer} from 'leaflet';
 import { TCity } from '../const';
-import { TILE_LAYER_ATTRIBUTE, URL_TEMPLATE, ZOOM_MAP_DEFAULT } from './const';
+import { MapConfig } from './const';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
@@ -11,23 +11,30 @@ function useMap(
   const isRenderedRef = useRef<boolean>(false);
 
   useEffect(() => {
+    let mounted = true;
+
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,
           lng: city.location.longitude
         },
-        zoom: ZOOM_MAP_DEFAULT
+        zoom: MapConfig.ZoomMapDefault
       });
 
       const layer = new TileLayer(
-        URL_TEMPLATE, { attribution: TILE_LAYER_ATTRIBUTE }
+        MapConfig.UrlTemplate, { attribution: MapConfig.TileLayerAttribute }
       );
 
       instance.addLayer(layer);
 
-      setMap(instance);
-      isRenderedRef.current = true;
+      if(mounted){
+        setMap(instance);
+        isRenderedRef.current = true;
+      }
+      return () => {
+        mounted = false;
+      };
     }
   }, [mapRef, city]);
 

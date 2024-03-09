@@ -7,7 +7,7 @@ export type TFavoriteLocationProps = {
 }
 
 export const FavoriteCityList: FC<TFavoriteLocationProps> = ({offers}) => {
-  const cityList: string[] = [...new Set(offers.map((offer) => offer.city.name))];
+  const cityList = [...new Set(offers.map((offer) => offer.city.name))];
 
   return (
     <section className='favorites'>

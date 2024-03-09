@@ -1,20 +1,29 @@
-import { FC, FormEvent, useRef } from 'react';
+import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { APP_TITLE, AuthorizationStatus } from '../../const';
+import { APP_TITLE, cities } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-action';
 import { AppRoute } from '../../app';
 import { useNavigate } from 'react-router-dom';
-import { getAuthorizationStatus } from '../../store/selectors';
+import { randomInt } from './lib';
+import { changeCity } from '../../store/action';
+import { CityTab } from '../../components/city-tab';
+import { getIsAuth } from '../../store/user-process/selectors';
 
 export const Login: FC = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuth = useAppSelector(getIsAuth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [randomCity, setRandomCity] = useState(cities[0]);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    const city = cities[randomInt(0, cities.length - 1)];
+    setRandomCity(city);
+  }, []);
+
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current && passwordRef.current) {
@@ -22,7 +31,7 @@ export const Login: FC = () => {
         login: loginRef.current.value,
         password: passwordRef.current.value
       }));
-      if (authorizationStatus === AuthorizationStatus.Auth){
+      if (isAuth){
         navigate(AppRoute.Root);
       }
     }
@@ -40,7 +49,7 @@ export const Login: FC = () => {
             className='login__form form'
             action='#'
             method='post'
-            onSubmit={handleSubmit}
+            onSubmit={handleFormSubmit}
           >
             <div className='login__input-wrapper form__input-wrapper'>
               <label className='visually-hidden'>E-mail</label>
@@ -70,10 +79,13 @@ export const Login: FC = () => {
           </form>
         </section>
         <section className='locations locations--login locations--current'>
+
           <div className='locations__item'>
-            <a className='locations__item-link' href='#'>
-              <span>Amsterdam</span>
-            </a>
+            <CityTab
+              city={randomCity}
+              isActive={false}
+              onChangeCity={() => dispatch(changeCity(randomCity))}
+            />
           </div>
         </section>
       </div>

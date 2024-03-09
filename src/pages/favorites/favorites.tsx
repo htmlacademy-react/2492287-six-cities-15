@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { APP_TITLE, LogoLocation } from '../../const';
 import { Logo } from '../../components/logo';
 import { useAppSelector } from '../../hooks';
-import { getFavorites } from '../../store/selectors';
 import { FavoriteCityList } from '../../components/favorite-city-list';
+import { getFavorites } from '../../store/offer-data/selectors';
 
 export const Favorites: FC = () => {
   const favorites = useAppSelector(getFavorites);

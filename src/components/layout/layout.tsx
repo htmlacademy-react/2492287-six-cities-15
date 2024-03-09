@@ -4,14 +4,13 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
 import { LogoLocation } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getUser } from '../../store/selectors';
-import { UserInfo } from '../user-data';
+import { UserInfo } from '../user-info';
+import { getUser } from '../../store/user-process/selectors';
 
 export const Layout: FC = () => {
   const user = useAppSelector(getUser);
   const location = useLocation();
   const isLoginPath = getIsLoginPath(location.pathname);
-
   return (
     <div className={`page ${getClassName(location.pathname)}`}>
       <header className='header'>

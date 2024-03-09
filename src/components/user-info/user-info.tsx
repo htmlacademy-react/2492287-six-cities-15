@@ -4,7 +4,7 @@ import { AppRoute } from '../../app';
 import { TUserData } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-action';
-import { getFavorites } from '../../store/selectors';
+import { getFavorites } from '../../store/offer-data/selectors';
 
 export type TUserInfoProps = {
   user: TUserData | null;
@@ -15,7 +15,7 @@ export const UserInfo: FC<TUserInfoProps> = ({user}) => {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(getFavorites);
 
-  const handleLoginClick = () => {
+  const handleLoginButtonClick = () => {
     if (isAuth){
       dispatch(logoutAction());
     }
@@ -42,7 +42,7 @@ export const UserInfo: FC<TUserInfoProps> = ({user}) => {
           </li>
         }
         <li className='header__nav-item'>
-          <Link className='header__nav-link' to={AppRoute.Login} onClick={handleLoginClick}>
+          <Link className='header__nav-link' to={AppRoute.Login} onClick={handleLoginButtonClick}>
             <span className='header__signout'>{isAuth ? 'Log out' : 'Login'}</span>
           </Link>
         </li>
