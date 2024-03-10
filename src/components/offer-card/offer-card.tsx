@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { TOffer } from '../../const';
 import {ButtonFavorite }from '../button-favorite';
 import { useAppSelector } from '../../hooks';
-import PropTypes from 'prop-types';
 import { getIsAuth } from '../../store/user-process/selectors';
 
 export type TOfferCardProps = {
@@ -14,7 +13,7 @@ export type TOfferCardProps = {
   onHover?: (offer: TOffer | null) => void;
 }
 
-export const OfferCard: FC<TOfferCardProps> = memo(({offer, onHover, offerCardType}) => {
+const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
   const cardClass = getCardClassName(offerCardType);
   const cardImageClass = getCardImageClassName(offerCardType);
   const cardInfoClass = getCardInfoClassName(offerCardType);
@@ -86,12 +85,8 @@ export const OfferCard: FC<TOfferCardProps> = memo(({offer, onHover, offerCardTy
       </div>
     </article>
   );
-});
-
-OfferCard.displayName = 'OfferCard';
-
-OfferCard.propTypes = {
-  offer: PropTypes.any.isRequired,
-  offerCardType:  PropTypes.any.isRequired,
-  onHover: PropTypes.func
 };
+
+const MemoOfferCard = memo(OfferCard);
+
+export {MemoOfferCard as OfferCard};
