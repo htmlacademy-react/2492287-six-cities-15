@@ -1,5 +1,3 @@
-import { store } from './store';
-
 export const APP_TITLE = '6 cities';
 
 export enum AuthorizationStatus {
@@ -8,14 +6,14 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum OfferTypes {
+export enum OfferType {
   Room = 'Room',
   Apartment = 'Apartment',
   House = 'House',
   Hotel = 'Hotel'
 }
 
-export type OfferType = keyof typeof OfferTypes;
+export type TOfferType = keyof typeof OfferType;
 
 export enum LogoLocation {
   Header = 'Header',
@@ -36,7 +34,7 @@ export type TCity = {
 export type TOffer = {
   id: string;
   title: string;
-  type: OfferType;
+  type: TOfferType;
   price: number;
   previewImage: string;
   city: TCity;
@@ -45,12 +43,8 @@ export type TOffer = {
   isPremium: boolean;
   rating: number;
 }
+export type TOffers = TOffer[];
 
-export type TUser = {
-  name: string;
-  avatarUrl: string;
-  isPro: boolean;
-}
 type TOfferAdditional = {
   description: string;
   bedrooms: number;
@@ -61,7 +55,11 @@ type TOfferAdditional = {
 }
 export type TOfferFull = TOffer & TOfferAdditional;
 
-export type TPoint = Pick<TOffer, 'title' | 'location'>;
+export type TUser = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+}
 
 export const cities: TCity[] = [
   {name: 'Paris', location: {latitude: 48.85661, longitude: 2.351499, zoom: 13}},
@@ -79,15 +77,6 @@ export enum OfferSortType{
   TopRated = 'Top rated first'
 }
 
-export type TState = ReturnType<typeof store.getState>;
-
-export type TAppDispatch = typeof store.dispatch;
-
-export type TAuthData = {
-  login: string;
-  password: string;
-};
-
 export type TUserData = {
   name: string;
   avatarUrl: string;
@@ -95,17 +84,6 @@ export type TUserData = {
   email: string;
   token: string;
 };
-
-export type TErrorData = {
-  type: string;
-  message: string;
-}
-
-export type TLoginError = {
-    property: string;
-    value: string;
-    messages: string[];
-}
 
 export type TReview = {
   comment: string;
@@ -117,4 +95,13 @@ export type TReviewFull = TReview & {
 id: string;
 date: string;
 user: TUser;
+}
+
+export type TReviewFulls = TReviewFull[];
+
+export enum NameSpace {
+  Offer = 'Offer',
+  Favorite = 'Favorite',
+  User = 'User',
+  Review = 'Review'
 }

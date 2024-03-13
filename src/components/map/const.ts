@@ -1,16 +1,18 @@
 import { Icon } from 'leaflet';
 
-export const URL_MARKER_DEFAULT = '/img/pin.svg';
-export const URL_MARKER_CURRENT = '/img/pin-active.svg';
+export enum MarkerUrl{
+  Default = '/img/pin.svg',
+  Current = '/img/pin-active.svg'
+}
 
 export const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
+  iconUrl: MarkerUrl.Default,
   iconSize: [40, 40],
   iconAnchor: [20, 40]
 });
 
 export const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
+  iconUrl: MarkerUrl.Current,
   iconSize: [40, 40],
   iconAnchor: [20, 40]
 });

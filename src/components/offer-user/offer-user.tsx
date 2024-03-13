@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { TUser } from '../../const';
 
-type TOfferUserProps = {
+export type TOfferUserProps = {
   user: TUser;
 }
 

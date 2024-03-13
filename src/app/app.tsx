@@ -15,11 +15,12 @@ import { useAppSelector } from '../hooks';
 import { Loading } from '../pages/loading';
 import { HistoryRouter } from '../components/history-route';
 import browserHistory from '../browser-history';
-import { getAuthorizationStatus, getIsOfferDataLoading } from '../store/selectors';
+import { getAuthorizationStatus } from '../store/user-process/selectors';
+import { getIsOffersDataLoading } from '../store/offer-data/selectors';
 
 export const App: FC = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isOffersDataLoading = useAppSelector(getIsOfferDataLoading);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
@@ -32,15 +33,12 @@ export const App: FC = () => {
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route
-            path={AppRoute.Root}
-            element={<Layout/>}
-          >
+          <Route path={AppRoute.Root} element={<Layout/>}>
             <Route index element={<Main/>}/>
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute authorizationStatus={authorizationStatus}>
+                <PrivateRoute>
                   <Favorites/>
                 </PrivateRoute>
               }

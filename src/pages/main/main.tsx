@@ -4,9 +4,9 @@ import { APP_TITLE, TCity } from '../../const';
 import { CityTabList } from '../../components/city-tab-list/city-tab-list';
 import { changeCity } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getActiveCity, getCityOffers } from '../../store/selectors';
 import { CityCard } from '../../components/city-card';
 import { CityCardEmpty } from '../../components/city-card-empty';
+import { getActiveCity, getCityOffers } from '../../store/offer-data/selectors';
 
 export const Main: FC = () => {
   const dispatch = useAppDispatch();
@@ -14,8 +14,8 @@ export const Main: FC = () => {
   const offers = useAppSelector(getCityOffers);
   const isEmpty = offers.length === 0;
 
-  const handleChangeCity = (city: TCity) => {
-    dispatch(changeCity({city}));
+  const handleCityChange = (city: TCity) => {
+    dispatch(changeCity(city));
   };
 
   return (
@@ -28,7 +28,7 @@ export const Main: FC = () => {
         <section className='locations container'>
           <CityTabList
             activeCity={activeCity}
-            onChangeCity={handleChangeCity}
+            onChangeCity={handleCityChange}
           />
         </section>
       </div>

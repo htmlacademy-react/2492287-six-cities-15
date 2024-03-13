@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SimpleSpinner } from '../simple-spinner';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app';
-import { getIsOfferLoading } from '../../store/selectors';
+import { getIsOfferDataLoading } from '../../store/offer-data/selectors';
 
 export type TButtonFavoriteProps = {
   offer: TOffer;
@@ -18,10 +18,10 @@ export type TButtonFavoriteProps = {
 export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offer, typeCard, width, height, isAuth}) => {
   const dispatch = useAppDispatch();
   const bookmarkClass = offer.isFavorite ? ` ${typeCard}__bookmark-button--active` : '';
-  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const navigate = useNavigate();
 
-  const handleFavoriteClick = () => {
+  const handleButtonClick = () => {
     if (isAuth){
       dispatch(setFavoriteAction({offerId: offer.id, status: !offer.isFavorite}));
     } else {
@@ -29,7 +29,7 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offer, typeCard, width
     }
   };
 
-  if (isOfferLoading){
+  if (isOfferDataLoading){
     return <SimpleSpinner/>;
   }
 
@@ -37,7 +37,7 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offer, typeCard, width
     <button
       className={`${typeCard}__bookmark-button button${bookmarkClass}`}
       type='button'
-      onClick={handleFavoriteClick}
+      onClick={handleButtonClick}
     >
       <svg
         className={`${typeCard}__bookmark-icon`}

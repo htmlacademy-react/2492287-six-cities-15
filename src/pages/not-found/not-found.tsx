@@ -19,8 +19,7 @@ export const NotFound: FC = () =>
       </svg>
       <div style={{textAlign: 'center'}}>Page not found</div>
       <div style={{textAlign: 'center'}}>
-        Please come back to
-        <Link to={AppRoute.Root} className="header__logo-link" style={{color: 'blue'}}>main</Link> page
+        Please come back to <Link to={AppRoute.Root} className="header__logo-link" style={{color: 'blue'}}>main</Link> page
       </div>
     </div>
   );

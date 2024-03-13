@@ -1,1 +1,1 @@
-export { OfferUser } from './offer-user';
+export { OfferUser, type TOfferUserProps } from './offer-user';

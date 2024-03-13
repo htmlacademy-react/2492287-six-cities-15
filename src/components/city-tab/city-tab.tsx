@@ -1,6 +1,7 @@
 import {FC} from 'react';
 import { Link } from 'react-router-dom';
 import { TCity } from '../../const';
+import { AppRoute } from '../../app';
 
 export type TCityTabProps = {
   city: TCity;
@@ -8,13 +9,11 @@ export type TCityTabProps = {
   onChangeCity: (city: TCity) => void;
 }
 export const CityTab: FC<TCityTabProps> = ({city, isActive, onChangeCity}) => (
-  <li className='locations__item'>
-    <Link
-      className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
-      to='#'
-      onClick={() => onChangeCity(city)}
-    >
-      <span>{city.name}</span>
-    </Link>
-  </li>
+  <Link
+    className={`locations__item-link ${isActive ? 'tabs__item--active' : ''}`}
+    to={AppRoute.Root}
+    onClick={() => onChangeCity(city)}
+  >
+    <span>{city.name}</span>
+  </Link>
 );

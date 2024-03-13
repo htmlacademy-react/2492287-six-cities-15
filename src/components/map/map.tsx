@@ -1,28 +1,35 @@
 import {useRef, useEffect, FC} from 'react';
 import { Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
-import {TCity, TPoint} from '../../const';
+import {TCity, TOffer} from '../../const';
 import 'leaflet/dist/leaflet.css';
-import { ZOOM_MAP_DEFAULT } from '../../hooks/const';
 import { currentCustomIcon, defaultCustomIcon } from './const';
+import { MapConfig } from '../../hooks/const';
 
-type MapProps = {
+export type TMapProps = {
   city: TCity;
-  points: TPoint[];
-  selectedPoint: TPoint | null;
+  points: TOffer[];
+  selectedPoint?: TOffer | null;
 };
 
-export const Map: FC<MapProps> = ({city, points, selectedPoint}) => {
+export const Map: FC<TMapProps> = ({city, points, selectedPoint}) => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
-    map?.panTo({lat: city.location.latitude, lng: city.location.longitude});
-    map?.setZoom(ZOOM_MAP_DEFAULT);
+    let mounted = true;
+    if (mounted){
+      map?.panTo({lat: city.location.latitude, lng: city.location.longitude});
+      map?.setZoom(MapConfig.ZoomMapDefault);
+    }
+    return () => {
+      mounted = false;
+    };
   }, [city, map]);
 
   useEffect(() => {
-    if (map) {
+    let mounted = true;
+    if (map && mounted) {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
@@ -39,8 +46,10 @@ export const Map: FC<MapProps> = ({city, points, selectedPoint}) => {
 
       return () => {
         map.removeLayer(markerLayer);
+        mounted = false;
       };
     }
+
   }, [map, points, selectedPoint]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;

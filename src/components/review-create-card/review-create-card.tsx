@@ -4,7 +4,7 @@ import { TReview } from '../../const';
 import { validateSubmit } from './lib';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-action';
-import { getOffer } from '../../store/selectors';
+import { getOffer } from '../../store/offer-data/selectors';
 
 const raitings = [
   {value: 5, name: 'perfect'},
@@ -22,17 +22,17 @@ export const ReviewCreateCard: FC = () => {
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
 
-  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
     setFormdata({...formdata, rating: Number(value)});
   };
 
-  const textareaChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const {value} = event.target;
     setFormdata({...formdata, comment: value});
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(addReviewAction({comment: formdata.comment, rating: formdata.rating, offerId: offer ? offer.id : ''}));
     setFormdata(initialValues);
@@ -43,7 +43,7 @@ export const ReviewCreateCard: FC = () => {
       className='reviews__form form'
       action='#'
       method='post'
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
     >
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
@@ -56,7 +56,7 @@ export const ReviewCreateCard: FC = () => {
               value = {formdata.rating}
               defaultValue={raiting.value}
               name={raiting.name}
-              onChange={inputChangeHandler}
+              onChange={handleInputChange}
             />
           ))
         }
@@ -67,7 +67,7 @@ export const ReviewCreateCard: FC = () => {
         name='review'
         placeholder='Tell how was your stay, what you like and what can be improved'
         value={formdata.comment}
-        onChange={textareaChangeHandler}
+        onChange={handleTextareaChange}
       />
       <div className='reviews__button-wrapper'>
         <p className='reviews__help'>
