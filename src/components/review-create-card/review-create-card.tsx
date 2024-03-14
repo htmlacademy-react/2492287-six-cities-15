@@ -44,6 +44,7 @@ export const ReviewCreateCard: FC = () => {
       action='#'
       method='post'
       onSubmit={handleFormSubmit}
+      data-testid='review-create-card'
     >
       <label className='reviews__label form__label' htmlFor='review'>
         Your review

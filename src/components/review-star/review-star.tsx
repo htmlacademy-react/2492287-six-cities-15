@@ -4,7 +4,7 @@ export type TReviewStarProps = {
   defaultValue: number;
   value: number;
   name: string;
-  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const ReviewStar: FC<TReviewStarProps> = ({defaultValue, value, name, onChange}) => {
@@ -18,6 +18,7 @@ export const ReviewStar: FC<TReviewStarProps> = ({defaultValue, value, name, onC
         id={id}
         type='radio'
         onChange={onChange}
+        data-testid='review-star'
       />
       <label
         htmlFor={id}

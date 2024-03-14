@@ -1,7 +1,6 @@
 import { FC, useCallback, useState } from 'react';
 import { TCity, TOffer } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { OfferCardType } from '../offer-card/lib';
 import { OfferSort } from '../offer-sort';
 import { OfferList } from '../offer-list';
 import { Map } from '../../components/map';
@@ -22,7 +21,7 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
   }, []);
 
   return (
-    <div className='cities__places-container container'>
+    <div className='cities__places-container container' data-testid='city-card'>
       <section className='cities__places places'>
         <h2 className='visually-hidden'>Places</h2>
         <b className='places__found'>
@@ -32,7 +31,7 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
         <div className='cities__places-list places__list tabs__content'>
           <OfferList
             offers={sortedOffers}
-            offerCardType={OfferCardType.City}
+            offerCardType='City'
             onHover={handleOfferHover}
           />
         </div>

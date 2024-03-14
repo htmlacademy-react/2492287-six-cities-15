@@ -6,7 +6,7 @@ export type TOfferUserProps = {
 }
 
 export const OfferUser: FC<TOfferUserProps> = ({user}) => (
-  <div className='offer__host-user user'>
+  <div className='offer__host-user user' data-testid='offer-user'>
     <div className={`offer__avatar-wrapper ${user.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
       <img
         className='offer__avatar user__avatar'

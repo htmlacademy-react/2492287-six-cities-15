@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import { TCity, TOffer } from '../../const';
 import { OfferList } from '../offer-list';
-import { OfferCardType } from '../offer-card/lib';
-import { CityTab } from '../city-tab';
+import { CityLink } from '../city-link';
 import { useAppDispatch } from '../../hooks';
 import { changeCity } from '../../store/action';
 
@@ -13,16 +12,17 @@ export type TFavoriteLocationPlaceProps = {
 
 export const FavoriteLocationList: FC<TFavoriteLocationPlaceProps> = ({offers, city}) => {
   const dispatch = useAppDispatch();
+  const handleChangeCity = () => dispatch(changeCity(city));
   return (
-    <li className='favorites__locations-items'>
+    <li className='favorites__locations-items' data-testid='favorite-location-list'>
       <div className='favorites__locations locations locations--current'>
         <div className='locations__item'>
-          <CityTab city={city} isActive={false} onChangeCity={() => dispatch(changeCity(city))} />
+          <CityLink city={city} isActive={false} onChangeCity={handleChangeCity} />
         </div>
       </div>
       <OfferList
         offers={offers}
-        offerCardType={OfferCardType.Favorite}
+        offerCardType='Favorite'
       />
     </li>
   );

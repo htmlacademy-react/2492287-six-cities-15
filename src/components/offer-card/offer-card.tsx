@@ -1,20 +1,22 @@
 import { FC, memo } from 'react';
-import { OfferCardType, getCardClassName, getCardImageClassName,
+import { getCardClassName, getCardImageClassName,
   getCardImageSize, getCardInfoClassName, getOfferLinkById } from './lib';
 import { Link } from 'react-router-dom';
 import { TOffer } from '../../const';
 import {ButtonFavorite }from '../button-favorite';
 import { useAppSelector } from '../../hooks';
 import { getIsAuth } from '../../store/user-process/selectors';
+import { OfferCardType, TOfferCardType } from './const';
+import { Rating } from '../rating';
 
 export type TOfferCardProps = {
   offer: TOffer;
-  offerCardType: OfferCardType;
+  offerCardType: TOfferCardType;
   onHover?: (offer: TOffer | null) => void;
 }
 
 const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
-  const cardClass = getCardClassName(offerCardType);
+  const cardClass = getCardClassName(OfferCardType[offerCardType]);
   const cardImageClass = getCardImageClassName(offerCardType);
   const cardInfoClass = getCardInfoClassName(offerCardType);
   const imageSize = getCardImageSize(offerCardType);
@@ -38,6 +40,7 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
       className={`${cardClass} place-card`}
       onMouseEnter={handleOfferMouseEnter}
       onMouseLeave={handleOfferMouseLeave}
+      data-testid='offer-card'
     >
       {
         offer.isPremium &&
@@ -65,19 +68,15 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
             </span>
           </div>
           <ButtonFavorite
-            offer={offer}
+            offerId={offer.id}
+            isFavorite={offer.isFavorite}
             typeCard='place-card'
             width={18}
             height={19}
             isAuth={isAuth}
           />
         </div>
-        <div className='place-card__rating rating'>
-          <div className='place-card__stars rating__stars'>
-            <span style={{ width: `${offer.rating * 20}%` }} />
-            <span className='visually-hidden'>Rating</span>
-          </div>
-        </div>
+        <Rating objectType='place-card' rating={offer.rating} />
         <h2 className='place-card__name'>
           <Link to={offerLink}>{offer.title}</Link>
         </h2>
