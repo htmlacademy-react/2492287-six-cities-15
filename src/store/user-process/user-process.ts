@@ -33,6 +33,7 @@ export const userProcess = createSlice({
       })
       .addCase(loginAction.rejected, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.user = null;
         if (isAxiosError(action.payload)){
           const axiosErr = action.payload as AxiosError;
           const errorLogin = axiosErr.response?.data as TErrorLogin;
@@ -45,6 +46,7 @@ export const userProcess = createSlice({
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.user = null;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;

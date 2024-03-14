@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { OfferSortType, TCity, TOfferFull, TOffers, cities } from '../../const';
-import { changeCity, clearOffer, setFavoritesOff, setOfferSortType } from '../action';
+import { changeCity, clearFavoriteOffer, clearOffer, setFavoritesOff, setOfferSortType } from '../action';
 import { fetchFavoritesAction, fetchNearOffersAction,
   fetchOfferAction, fetchOffersAction, setFavoriteAction } from '../api-action';
 import { setOfferFavorite } from '../lib';
 
-type TOfferState = {
+export type TOfferState = {
   activeCity: TCity;
   offer: TOfferFull | null;
   isOfferDataLoading: boolean;
@@ -62,21 +62,10 @@ export const offerData = createSlice({
         state.isOfferDataLoading = false;
         state.offer = null;
       })
-      .addCase(fetchNearOffersAction.pending, (state) => {
-        state.isNearOffersDataLoading = true;
-      })
       .addCase(fetchNearOffersAction.fulfilled, (state, action) => {
-        state.isNearOffersDataLoading = false;
         state.nearOffers = action.payload;
       })
-      .addCase(fetchNearOffersAction.rejected, (state) => {
-        state.isNearOffersDataLoading = false;
-      })
-      .addCase(fetchFavoritesAction.pending, (state) => {
-        state.isFavoritesDataLoading = true;
-      })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
-        state.isFavoritesDataLoading = false;
         state.favorites = action.payload;
 
         state.offers.forEach((offer) => {
@@ -86,9 +75,6 @@ export const offerData = createSlice({
             }
           });
         });
-      })
-      .addCase(fetchFavoritesAction.rejected, (state) => {
-        state.isFavoritesDataLoading = false;
       })
       .addCase(setFavoriteAction.fulfilled, (state, action) => {
         if (state?.offer?.id === action.payload.id){
@@ -101,7 +87,7 @@ export const offerData = createSlice({
         if (action.payload.isFavorite) {
           state.favorites.push(action.payload);
         } else {
-          const offerIndex = state.nearOffers.findIndex((item) => item.id === action.payload.id);
+          const offerIndex = state.favorites.findIndex((item) => item.id === action.payload.id);
           state.favorites.splice(offerIndex, 1);
         }
       })
@@ -110,12 +96,20 @@ export const offerData = createSlice({
         state.offers.map((item) => {
           item.isFavorite = false;
         });
+        state.nearOffers.map((item) => {
+          item.isFavorite = false;
+        });
       })
       .addCase(setOfferSortType, (state, action) => {
         state.offerSortType = action.payload;
       })
       .addCase(clearOffer, (state) => {
         state.offer = null;
+      })
+      .addCase(clearFavoriteOffer, (state) => {
+        if (state.offer){
+          state.offer.isFavorite = false;
+        }
       });
   }
 });

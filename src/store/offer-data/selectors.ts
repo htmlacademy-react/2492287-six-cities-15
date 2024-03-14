@@ -1,7 +1,7 @@
 import { sortOffers } from '../lib';
 import { createSelector } from 'reselect';
 import { TState } from '../const';
-import { NameSpace } from '../../const';
+import { NameSpace, TOffer, TOffers } from '../../const';
 
 export const getOffer = (state: TState) => state[NameSpace.Offer].offer;
 export const getOffers = (state: TState) => state[NameSpace.Offer].offers;
@@ -26,4 +26,19 @@ export const getSortedOffers = createSelector(
     getOfferSortType
   ],
   (offers, sort) => sortOffers(sort, offers)
+);
+
+export const getNearOffersForMap = createSelector(
+  [
+    getOffer,
+    getNearOffers
+  ],
+  (offer, nearOffers) => {
+    const offers: TOffers = [offer as TOffer];
+
+    for (let i = 0; i < nearOffers.length && i < 3; i++) {
+      offers.push(nearOffers[i]);
+    }
+    return offers;
+  }
 );

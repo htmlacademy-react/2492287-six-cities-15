@@ -4,8 +4,7 @@ import {FC, PropsWithChildren } from 'react';
 import { useAppSelector } from '../../hooks';
 import { getIsAuth } from '../../store/user-process/selectors';
 
-export const PrivateRoute: FC<PropsWithChildren> = (props) => {
-  const {children} = props;
+export const PrivateRoute: FC<PropsWithChildren> = ({children}) => {
   const isAuth = useAppSelector(getIsAuth);
 
   return (

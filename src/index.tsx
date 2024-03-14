@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { checkAuthAction, fetchOffersAction } from './store/api-action';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { HistoryRouter } from './components/history-route';
+import browserHistory from './browser-history';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,7 +20,9 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
       <ToastContainer />
-      <App />
+      <HistoryRouter history={browserHistory}>
+        <App />
+      </HistoryRouter>
     </React.StrictMode>
   </Provider>
 );

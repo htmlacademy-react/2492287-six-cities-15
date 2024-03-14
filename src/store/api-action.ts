@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TOffer, TOfferFull, TUserData, TReviewFull,
   TReview, TOffers, TReviewFulls } from '../const';
-import { redirectToRoute, setFavoritesOff } from './action';
+import { clearFavoriteOffer, redirectToRoute, setFavoritesOff } from './action';
 import { ApiRoute, AppRoute } from '../app/routes';
 import { dropToken, saveToken } from '../services/token';
 import { TActionUtils, TAuthData } from './const';
@@ -89,6 +89,7 @@ export const logoutAction = createAsyncThunk<void, undefined, TActionUtils>(
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(ApiRoute.Logout);
     dispatch(setFavoritesOff());
+    dispatch(clearFavoriteOffer());
     dropToken();
   },
 );

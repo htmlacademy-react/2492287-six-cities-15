@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { APP_TITLE, LogoLocation } from '../../const';
 import { Logo } from '../../components/logo';
 import { useAppSelector } from '../../hooks';
 import { FavoriteCityList } from '../../components/favorite-city-list';
 import { getFavorites } from '../../store/offer-data/selectors';
+import { APP_TITLE } from '../../const';
 
 export const Favorites: FC = () => {
   const favorites = useAppSelector(getFavorites);
@@ -14,7 +14,10 @@ export const Favorites: FC = () => {
       <Helmet>
         <title>{APP_TITLE}: favorites</title>
       </Helmet>
-      <main className='page__main page__main--favorites'>
+      <main
+        className='page__main page__main--favorites'
+        data-testid='favorites'
+      >
         <div className='page__favorites-container container'>
           {favorites.length > 0 && <FavoriteCityList offers={favorites}/>}
           {
@@ -32,7 +35,7 @@ export const Favorites: FC = () => {
         </div>
       </main>
       <footer className='footer container'>
-        <Logo logoLocation={LogoLocation.Footer}/>
+        <Logo logoLocation='Footer'/>
       </footer>
     </>
   );

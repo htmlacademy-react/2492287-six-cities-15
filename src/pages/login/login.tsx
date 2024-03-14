@@ -1,21 +1,16 @@
 import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { APP_TITLE, cities } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-action';
-import { AppRoute } from '../../app';
-import { useNavigate } from 'react-router-dom';
 import { randomInt } from './lib';
 import { changeCity } from '../../store/action';
-import { CityTab } from '../../components/city-tab';
-import { getIsAuth } from '../../store/user-process/selectors';
+import { CityLink } from '../../components/city-link';
 
 export const Login: FC = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const isAuth = useAppSelector(getIsAuth);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [randomCity, setRandomCity] = useState(cities[0]);
 
   useEffect(() => {
@@ -31,20 +26,17 @@ export const Login: FC = () => {
         login: loginRef.current.value,
         password: passwordRef.current.value
       }));
-      if (isAuth){
-        navigate(AppRoute.Root);
-      }
     }
   };
 
   return (
-    <main className='page__main page__main--login'>
+    <main className='page__main page__main--login' data-testid='login'>
       <Helmet>
         <title>{APP_TITLE}: authorization</title>
       </Helmet>
       <div className='page__login-container container'>
         <section className='login'>
-          <h1 className='login__title'>Sign in</h1>
+          <h1 className='login__title'>Log in</h1>
           <form
             className='login__form form'
             action='#'
@@ -74,14 +66,14 @@ export const Login: FC = () => {
               />
             </div>
             <button className='login__submit form__submit button' type='submit'>
-              Sign in
+              Log in
             </button>
           </form>
         </section>
         <section className='locations locations--login locations--current'>
 
           <div className='locations__item'>
-            <CityTab
+            <CityLink
               city={randomCity}
               isActive={false}
               onChangeCity={() => dispatch(changeCity(randomCity))}

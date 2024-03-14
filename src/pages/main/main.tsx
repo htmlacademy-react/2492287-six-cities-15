@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { APP_TITLE, TCity } from '../../const';
-import { CityTabList } from '../../components/city-tab-list/city-tab-list';
+import { CityLinkList } from '../../components/city-link-list/city-link-list';
 import { changeCity } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CityCard } from '../../components/city-card';
@@ -19,14 +19,17 @@ export const Main: FC = () => {
   };
 
   return (
-    <main className={`page__main page__main--index${isEmpty ? ' page__main--index-empty' : ''}`}>
+    <main
+      className={`page__main page__main--index${isEmpty ? ' page__main--index-empty' : ''}`}
+      data-testid='main'
+    >
       <Helmet>
         <title>{APP_TITLE}</title>
       </Helmet>
       <h1 className='visually-hidden'>Cities</h1>
       <div className='tabs'>
         <section className='locations container'>
-          <CityTabList
+          <CityLinkList
             activeCity={activeCity}
             onChangeCity={handleCityChange}
           />
