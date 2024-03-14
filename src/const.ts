@@ -15,11 +15,6 @@ export enum OfferType {
 
 export type TOfferType = keyof typeof OfferType;
 
-export enum LogoLocation {
-  Header = 'Header',
-  Footer = 'Footer'
-}
-
 export type TLocation = {
   latitude: number;
   longitude: number;
@@ -29,6 +24,10 @@ export type TLocation = {
 export type TCity = {
   name: string;
   location: TLocation;
+}
+
+export function xxx(xx: string) {
+  return xx;
 }
 
 export type TOffer = {
