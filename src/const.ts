@@ -104,3 +104,9 @@ export enum NameSpace {
   User = 'User',
   Review = 'Review'
 }
+
+export const OfferConfig = {
+  imagesCount: 6,
+  nearOffersCount: 3,
+  reviewsCount: 10
+} as const;

@@ -1,10 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { ReviewStar } from '../review-star';
 import { TReview } from '../../const';
 import { validateSubmit } from './lib';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-action';
 import { getOffer } from '../../store/offer-data/selectors';
+import { getAddReviewStatus } from '../../store/review-data/selectors';
 
 const raitings = [
   {value: 5, name: 'perfect'},
@@ -14,13 +15,15 @@ const raitings = [
   {value: 1, name: 'terrbly'}
 ];
 
-const initialValues = {rating: 0, comment: '', offerId: ''};
+const initialState = { rating: 0, comment: '', offerId: ''};
 
 export const ReviewCreateCard: FC = () => {
-  const [formdata, setFormdata] = useState<TReview>(initialValues);
+  const [formdata, setFormdata] = useState<TReview>(initialState);
 
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
+
+  const addReviewStatus = useAppSelector(getAddReviewStatus);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
@@ -32,11 +35,16 @@ export const ReviewCreateCard: FC = () => {
     setFormdata({...formdata, comment: value});
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     dispatch(addReviewAction({comment: formdata.comment, rating: formdata.rating, offerId: offer ? offer.id : ''}));
-    setFormdata(initialValues);
   };
+
+  useEffect(() => {
+    if (addReviewStatus !== 'loading') {
+      setFormdata(initialState);
+    }
+  }, [addReviewStatus]);
 
   return (
     <form
@@ -51,12 +59,12 @@ export const ReviewCreateCard: FC = () => {
       </label>
       <div className='reviews__rating-form form__rating'>
         {
-          raitings.map((raiting) => (
+          raitings.map((rating) => (
             <ReviewStar
-              key={raiting.value}
-              value = {formdata.rating}
-              defaultValue={raiting.value}
-              name={raiting.name}
+              key={rating.value}
+              isChecked={formdata.rating === rating.value}
+              defaultValue={rating.value}
+              name={rating.name}
               onChange={handleInputChange}
             />
           ))
@@ -80,7 +88,7 @@ export const ReviewCreateCard: FC = () => {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled={!validateSubmit(formdata.comment, formdata.rating)}
+          disabled={!validateSubmit(formdata.comment, formdata.rating) || addReviewStatus === 'loading'}
         >
           Submit
         </button>

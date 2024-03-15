@@ -6,7 +6,7 @@ import { ReviewList } from '../review-list';
 import { useAppSelector } from '../../hooks';
 import { ReviewCreateCard } from '../review-create-card';
 import { Rating } from '../rating';
-import { getReviewsSorted } from '../../store/review-data/selectors';
+import { getReviewsForOffer } from '../../store/review-data/selectors';
 import { getAdultsText, getBedroomsText } from './lib';
 
 export type TOfferFullCardProps = {
@@ -15,7 +15,7 @@ export type TOfferFullCardProps = {
 }
 
 export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
-  const reviews = useAppSelector(getReviewsSorted);
+  const reviews = useAppSelector(getReviewsForOffer);
 
   return (
     <div className='offer__container container' data-testid='offer-card-container'>

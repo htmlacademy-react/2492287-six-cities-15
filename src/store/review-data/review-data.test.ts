@@ -1,12 +1,12 @@
 import { datatype, image, lorem, name } from 'faker';
-import { reviewData } from './review-data';
+import { TReviewState, reviewData } from './review-data';
 import { addReviewAction, fetchReviewsAction } from '../api-action';
 
 describe('ReviewData Slice', () => {
   it('should return initial state with empty action', () => {
-    const initialState = {
+    const initialState: TReviewState = {
       reviews: [],
-      isReviewsDataLoading: false
+      addReviewStatus: 'none'
     };
     const emptyAction = { type: '' };
     const result = reviewData.reducer(initialState, emptyAction);
@@ -14,8 +14,9 @@ describe('ReviewData Slice', () => {
   });
 
   it('should return default initial state with empty action', () => {
-    const initialState = {
-      reviews: []
+    const initialState: TReviewState = {
+      reviews: [],
+      addReviewStatus: 'none'
     };
     const emptyAction = { type: '' };
     const result = reviewData.reducer(undefined, emptyAction);
@@ -23,11 +24,12 @@ describe('ReviewData Slice', () => {
   });
 
   it('should set reviews with "fetchReviewsAction.fulfilled"', () => {
-    const initialState = {
-      reviews: []
+    const initialState: TReviewState = {
+      reviews: [],
+      addReviewStatus: 'none'
     };
 
-    const expectedState = {
+    const expectedState: TReviewState = {
       reviews: [{
         comment: lorem.word(),
         rating: datatype.number(5),
@@ -39,17 +41,19 @@ describe('ReviewData Slice', () => {
           avatarUrl: image.imageUrl(),
           isPro: datatype.boolean()
         }
-      }]
+      }],
+      addReviewStatus: 'none'
     };
 
     const result = reviewData.reducer(initialState, fetchReviewsAction.fulfilled(expectedState.reviews, '', ''));
 
-    expect(result).toEqual(expectedState);
+    expect(result.reviews).toEqual(expectedState.reviews);
   });
 
   it('should set "review" with "addReviewAction.fulfilled"', () => {
-    const initialState = {
-      reviews: []
+    const initialState: TReviewState = {
+      reviews: [],
+      addReviewStatus: 'none'
     };
 
     const review = {
@@ -65,13 +69,36 @@ describe('ReviewData Slice', () => {
       }
     };
 
-    const expectedState = {
+    const expectedState: TReviewState = {
       reviews: [review],
-      review: review
+      review: review,
+      addReviewStatus: 'none'
     };
 
     const result = reviewData.reducer(initialState, addReviewAction.fulfilled(review, '', review));
 
     expect(result).toEqual(expectedState);
   });
+
+  it('should set "addReviewStatus" to "loading" with "addReviewAction.pending"', () => {
+    const initialState: TReviewState = {
+      reviews: [],
+      addReviewStatus: 'none'
+    };
+    const result = reviewData.reducer(initialState, addReviewAction.pending);
+
+    expect(result.addReviewStatus).toBe('loading');
+  });
+
+  it('should set "addReviewStatus" to "rejected" with "addReviewAction.rejected"', () => {
+    const initialState: TReviewState = {
+      reviews: [],
+      addReviewStatus: 'none'
+    };
+    const result = reviewData.reducer(initialState, addReviewAction.rejected);
+
+    expect(result.reviews.length).toBe(0);
+    expect(result.addReviewStatus).toBe('rejected');
+  });
+
 });

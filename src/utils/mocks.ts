@@ -318,7 +318,8 @@ export const makeFakeStore = (initialState?: Partial<TState>): TState => ({
     offerSortType: OfferSortType.Popular
   },
   Review: {
-    reviews: []
+    reviews: [],
+    addReviewStatus: 'none'
   },
   ...initialState ?? {},
 });
