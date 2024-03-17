@@ -1,1 +1,1 @@
-export { OfferFullCard, type TOfferFullCardProps } from './offer-card-full';
+export { OfferCardFull, type TOfferFullCardProps } from './offer-card-full';

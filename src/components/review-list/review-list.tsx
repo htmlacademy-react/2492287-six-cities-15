@@ -7,7 +7,7 @@ export type TOfferListProps = {
 }
 
 export const ReviewList: FC<TOfferListProps> = ({reviews}) => (
-  <section className='offer__reviews reviews'>
+  <section className='offer__reviews reviews' data-testid='review-list'>
     <h2 className='reviews__title'>
         Reviews · <span className='reviews__amount'>{reviews.length}</span>
     </h2>

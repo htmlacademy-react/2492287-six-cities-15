@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { OfferList } from '../../components/offer-list';
-import { OfferCardType } from '../../components/offer-card/lib';
 import { useParams } from 'react-router-dom';
 import { APP_TITLE } from '../../const';
 import { NotFound } from '../not-found';
@@ -9,47 +8,53 @@ import { Map } from '../../components/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-action';
 import { Loading } from '../loading';
-import { OfferFullCard } from '../../components/offer-card-full';
+import { OfferCardFull } from '../../components/offer-card-full';
 import { OfferGallery } from '../../components/offer-gallery/';
-import { getIsOfferDataLoading, getNearOffers, getOffer } from '../../store/offer-data/selectors';
+import { getImagesForOffer, getIsOfferDataLoading, getNearOffers, getNearOffersForMap, getOffer } from '../../store/offer-data/selectors';
 import { getIsAuth } from '../../store/user-process/selectors';
 import { clearOffer } from '../../store/action';
 
-export type TOfferProps = {
-  nearOfferCardType: OfferCardType;
-}
-
-export const Offer: FC<TOfferProps> = ({nearOfferCardType}) => {
+export const Offer: FC = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
+  const images = useAppSelector(getImagesForOffer);
   const nearOffers = useAppSelector(getNearOffers);
+  const nearOffersForMap = useAppSelector(getNearOffersForMap);
   const isAuth = useAppSelector(getIsAuth);
   const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const offerId = id?.trim() ?? '';
-
   useEffect(() => {
-    dispatch(fetchOfferAction(offerId));
+    let mounted = true;
+    if (mounted){
+      dispatch(fetchOfferAction(offerId));
+
+    }
     return () => {
       dispatch(clearOffer());
+      mounted = false;
     };
   }, [dispatch, offerId]);
 
   useEffect(() => {
-    if (offer){
+    let mounted = true;
+    if (offer && mounted){
       dispatch(fetchNearOffersAction(offerId));
       dispatch(fetchReviewsAction(offerId));
     }
+    return () => {
+      mounted = false;
+    };
   }, [offerId, dispatch, offer]);
 
   if(offerId === '') {
-    return <NotFound/>;
+    return <div><NotFound/><p>test1</p></div>;
   }
   if (isOfferDataLoading) {
-    return <Loading/>;
+    return <div><Loading/><p>test2</p></div>;
   }
   if (!offer) {
-    return <NotFound/>;
+    return <div><NotFound/><p>test3</p></div>;
   }
 
   return (
@@ -58,13 +63,13 @@ export const Offer: FC<TOfferProps> = ({nearOfferCardType}) => {
         <title>{`${APP_TITLE}: ${offer?.title}`}</title>
       </Helmet>
       <section className='offer'>
-        <OfferGallery images={offer.images}/>
-        <OfferFullCard
+        <OfferGallery images={images}/>
+        <OfferCardFull
           offer={offer}
           isAuth={isAuth}
         />
-        <section style={{margin: 'auto', marginBottom: 50, width: 1144, height: 579}} >
-          <Map city={offer.city} points={nearOffers}/>
+        <section style={{margin: 'auto', marginTop: 10, marginBottom: 50, width: 1144, height: 579}} >
+          <Map city={offer.city} points={nearOffersForMap} selectedPoint={offer}/>
         </section>
       </section>
       <div className='container'>
@@ -74,7 +79,7 @@ export const Offer: FC<TOfferProps> = ({nearOfferCardType}) => {
           </h2>
           <OfferList
             offers={nearOffers}
-            offerCardType={nearOfferCardType}
+            offerCardType={'Near'}
           />
         </section>
       </div>

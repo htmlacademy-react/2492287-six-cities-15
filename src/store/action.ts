@@ -6,6 +6,7 @@ export const changeCity = createAction<TCity>('cities/changeCity');
 export const fillOffers = createAction<TOffers>('cities/fillOffers');
 export const loadOffers = createAction<TOffers>('data/loadOffers');
 export const clearOffer = createAction('data/clearOffer');
+export const clearFavoriteOffer = createAction('data/clearFavoriteOffer');
 export const loadNearOffers = createAction<TOffers>('data/loadNearOffers');
 export const loadFavorites = createAction<TOffers>('data/loadFavorites');
 export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');

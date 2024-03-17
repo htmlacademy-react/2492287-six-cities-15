@@ -5,15 +5,19 @@ import { TUserData } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-action';
 import { getFavorites } from '../../store/offer-data/selectors';
+import { getIsAuth } from '../../store/user-process/selectors';
 
 export type TUserInfoProps = {
   user: TUserData | null;
+  location: string;
 }
 
-export const UserInfo: FC<TUserInfoProps> = ({user}) => {
-  const isAuth = user !== null;
+export const UserInfo: FC<TUserInfoProps> = ({user, location}) => {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(getFavorites);
+  const isAuth = useAppSelector(getIsAuth);
+
+  const linkUrl = isAuth ? location : AppRoute.Login;
 
   const handleLoginButtonClick = () => {
     if (isAuth){
@@ -22,7 +26,7 @@ export const UserInfo: FC<TUserInfoProps> = ({user}) => {
   };
 
   return (
-    <nav className='header__nav'>
+    <nav className='header__nav' data-testid='user-info'>
       <ul className='header__nav-list'>
         {
           isAuth &&
@@ -42,7 +46,7 @@ export const UserInfo: FC<TUserInfoProps> = ({user}) => {
           </li>
         }
         <li className='header__nav-item'>
-          <Link className='header__nav-link' to={AppRoute.Login} onClick={handleLoginButtonClick}>
+          <Link className='header__nav-link' to={linkUrl} onClick={handleLoginButtonClick}>
             <span className='header__signout'>{isAuth ? 'Log out' : 'Login'}</span>
           </Link>
         </li>

@@ -8,13 +8,10 @@ import { NotFound } from '../pages/not-found';
 import { Offer } from '../pages/offer';
 import { Login } from '../pages/login';
 import { Main } from '../pages/main';
-import { OfferCardType } from '../components/offer-card/lib';
 import { Layout } from '../components/layout';
 import { AuthorizationStatus } from '../const';
 import { useAppSelector } from '../hooks';
 import { Loading } from '../pages/loading';
-import { HistoryRouter } from '../components/history-route';
-import browserHistory from '../browser-history';
 import { getAuthorizationStatus } from '../store/user-process/selectors';
 import { getIsOffersDataLoading } from '../store/offer-data/selectors';
 
@@ -31,24 +28,25 @@ export const App: FC = () => {
 
   return (
     <HelmetProvider>
-      <HistoryRouter history={browserHistory}>
-        <Routes>
-          <Route path={AppRoute.Root} element={<Layout/>}>
-            <Route index element={<Main/>}/>
-            <Route
-              path={AppRoute.Favorites}
-              element={
-                <PrivateRoute>
-                  <Favorites/>
-                </PrivateRoute>
-              }
-            />
-            <Route path={AppRoute.Offer} element={<Offer nearOfferCardType={OfferCardType.Near}/>}/>
-            <Route path={AppRoute.Login} element={isAuth ? <Navigate to={AppRoute.Root}/> : <Login/>}/>
-            <Route path='*' element={<NotFound/>}/>
-          </Route>
-        </Routes>
-      </HistoryRouter>
+      <Routes>
+        <Route path={AppRoute.Root} element={<Layout/>}>
+          <Route index element={<Main/>}/>
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute>
+                <Favorites/>
+              </PrivateRoute>
+            }
+          />
+          <Route path={AppRoute.Offer} element={<Offer/>}/>
+          <Route
+            path={AppRoute.Login}
+            element={isAuth ? <Navigate to={AppRoute.Root}/> : <Login/>}
+          />
+          <Route path='*' element={<NotFound/>}/>
+        </Route>
+      </Routes>
     </HelmetProvider>
   );
 };

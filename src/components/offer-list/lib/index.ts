@@ -1,10 +1,10 @@
-import { OfferCardType } from '../../offer-card/lib';
+import { TOfferCardType } from '../../offer-card/const';
 
-export const getCardListClassName = (offerCardType: OfferCardType) => {
+export const getCardListClassName = (offerCardType: TOfferCardType) => {
   switch(offerCardType){
-    case OfferCardType.City: return 'cities__places-list places__list tabs__content';
-    case OfferCardType.Favorite: return 'favorites__places';
-    case OfferCardType.Near: return 'near-places__list places__list';
+    case 'City': return 'cities__places-list places__list tabs__content';
+    case 'Favorite': return 'favorites__places';
+    case 'Near': return 'near-places__list places__list';
     default: return '';
   }
 };

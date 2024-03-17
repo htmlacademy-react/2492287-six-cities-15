@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { Logo } from '../logo';
 import { Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
-import { LogoLocation } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { UserInfo } from '../user-info';
 import { getUser } from '../../store/user-process/selectors';
@@ -12,14 +11,14 @@ export const Layout: FC = () => {
   const location = useLocation();
   const isLoginPath = getIsLoginPath(location.pathname);
   return (
-    <div className={`page ${getClassName(location.pathname)}`}>
+    <div className={`page ${getClassName(location.pathname)}`} data-testid='layout-container'>
       <header className='header'>
         <div className='container'>
           <div className='header__wrapper'>
             <div className='header__left'>
-              <Logo logoLocation={LogoLocation.Header}/>
+              <Logo logoLocation='Header'/>
             </div>
-            { !isLoginPath && <UserInfo user={user}/> }
+            { !isLoginPath && <UserInfo user={user} location={location.pathname}/> }
           </div>
         </div>
       </header>

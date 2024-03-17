@@ -6,7 +6,7 @@ export type TReviewUserProps = {
 }
 
 export const ReviewUser: FC<TReviewUserProps> = ({user}) => (
-  <div className='reviews__user user'>
+  <div className='reviews__user user' data-testid='review-user'>
     <div className='reviews__avatar-wrapper user__avatar-wrapper'>
       <img
         className='reviews__avatar user__avatar'

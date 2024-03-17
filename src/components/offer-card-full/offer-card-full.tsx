@@ -6,7 +6,7 @@ import { ReviewList } from '../review-list';
 import { useAppSelector } from '../../hooks';
 import { ReviewCreateCard } from '../review-create-card';
 import { Rating } from '../rating';
-import { getReviewsSorted } from '../../store/review-data/selectors';
+import { getReviewsForOffer } from '../../store/review-data/selectors';
 import { getAdultsText, getBedroomsText } from './lib';
 
 export type TOfferFullCardProps = {
@@ -14,11 +14,11 @@ export type TOfferFullCardProps = {
   isAuth: boolean;
 }
 
-export const OfferFullCard: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
-  const reviews = useAppSelector(getReviewsSorted);
+export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
+  const reviews = useAppSelector(getReviewsForOffer);
 
   return (
-    <div className='offer__container container'>
+    <div className='offer__container container' data-testid='offer-card-container'>
       <div className='offer__wrapper'>
         {
           offer.isPremium &&
@@ -30,9 +30,16 @@ export const OfferFullCard: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
           <h1 className='offer__name'>
             {offer.title}
           </h1>
-          <ButtonFavorite offer={offer} typeCard='offer' width={31} height={33} isAuth={isAuth} />
+          <ButtonFavorite
+            offerId={offer.id}
+            isFavorite={offer.isFavorite}
+            typeCard='offer'
+            width={31}
+            height={33}
+            isAuth={isAuth}
+          />
         </div>
-        <Rating objectType={'offer'} rating={offer.rating} />
+        <Rating objectType={'offer'} rating={offer.rating} isRound/>
         <ul className='offer__features'>
           <li className='offer__feature offer__feature--entire'>Apartment</li>
           <li className='offer__feature offer__feature--bedrooms'>

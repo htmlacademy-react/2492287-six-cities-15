@@ -5,10 +5,10 @@ export type TOfferGalleryProps = {
 }
 
 export const OfferGallery: FC<TOfferGalleryProps> = ({images}) => (
-  <div className='offer__gallery-container container'>
+  <div className='offer__gallery-container container' data-testid='offer-gallery'>
     <div className='offer__gallery'>
       {images.map((imageSrc) => (
-        <div className='offer__image-wrapper' key={imageSrc}>
+        <div className='offer__image-wrapper' key={imageSrc} data-testid='offer-image'>
           <img
             className='offer__image'
             src={imageSrc}
