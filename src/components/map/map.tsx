@@ -4,7 +4,6 @@ import useMap from '../../hooks/use-map';
 import {TCity, TOffer} from '../../const';
 import 'leaflet/dist/leaflet.css';
 import { currentCustomIcon, defaultCustomIcon } from './const';
-import { MapConfig } from '../../hooks/const';
 
 export type TMapProps = {
   city: TCity;
@@ -20,7 +19,7 @@ export const Map: FC<TMapProps> = ({city, points, selectedPoint}) => {
     let mounted = true;
     if (mounted){
       map?.panTo({lat: city.location.latitude, lng: city.location.longitude});
-      map?.setZoom(MapConfig.ZoomMapDefault);
+      map?.setZoom(city.location.zoom);
     }
     return () => {
       mounted = false;
@@ -52,5 +51,9 @@ export const Map: FC<TMapProps> = ({city, points, selectedPoint}) => {
 
   }, [map, points, selectedPoint]);
 
-  return <div style={{height: '100%'}} ref={mapRef}></div>;
+  return (
+    <section className='offer__map map' style={{height: '100%'}} data-testid='map'>
+      <div style={{height: '100%'}} ref={mapRef}></div>
+    </section>
+  );
 };

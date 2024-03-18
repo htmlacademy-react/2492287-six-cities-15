@@ -2,12 +2,13 @@ import { FC } from 'react';
 
 export type TReviewStarProps = {
   defaultValue: number;
-  isChecked: boolean;
+  checked: boolean;
   name: string;
+  disabled?: boolean;
   onChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const ReviewStar: FC<TReviewStarProps> = ({defaultValue, isChecked, name, onChange}) => {
+export const ReviewStar: FC<TReviewStarProps> = ({defaultValue, checked, name, onChange, disabled}) => {
   const id = `${defaultValue}-stars`;
 
   return(
@@ -20,7 +21,8 @@ export const ReviewStar: FC<TReviewStarProps> = ({defaultValue, isChecked, name,
         type="radio"
         onChange={onChange}
         data-testid='review-star'
-        checked={isChecked}
+        checked={checked}
+        disabled={disabled}
       />
       <label
         htmlFor={id}

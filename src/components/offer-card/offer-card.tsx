@@ -40,6 +40,7 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
       className={`${cardClass} place-card`}
       onMouseEnter={handleOfferMouseEnter}
       onMouseLeave={handleOfferMouseLeave}
+      //onFocus={handleOfferMouseEnter}
       data-testid='offer-card'
     >
       {

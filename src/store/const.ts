@@ -14,6 +14,8 @@ export type TErrorLogin = {
   details: TErrorLoginDetail[];
 }
 
+export type TState = ReturnType<typeof store.getState>;
+
 export type TActionUtils = {
   dispatch: TAppDispatch;
   state: TState;
@@ -25,4 +27,4 @@ export type TAuthData = {
   password: string;
 };
 
-export type TState = ReturnType<typeof store.getState>;
+

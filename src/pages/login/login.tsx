@@ -2,7 +2,7 @@ import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { APP_TITLE, cities } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { loginAction } from '../../store/api-action';
+import { loginAction } from '../../store/api-actions';
 import { randomInt } from './lib';
 import { changeCity } from '../../store/action';
 import { CityLink } from '../../components/city-link';
@@ -48,9 +48,9 @@ export const Login: FC = () => {
               <input
                 ref={loginRef}
                 className='login__input form__input'
-                type='email'
-                name='email'
-                placeholder='Email'
+                type="email"
+                name="email"
+                placeholder="Email"
                 required
               />
             </div>

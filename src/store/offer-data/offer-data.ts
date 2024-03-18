@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { OfferSortType, TCity, TOfferFull, TOffers, cities } from '../../const';
 import { changeCity, clearFavoriteOffer, clearOffer, setFavoritesOff, setOfferSortType } from '../action';
 import { fetchFavoritesAction, fetchNearOffersAction,
-  fetchOfferAction, fetchOffersAction, setFavoriteAction } from '../api-action';
+  fetchOfferAction, fetchOffersAction, addFavoriteAction } from '../api-actions';
 import { setOfferFavorite } from '../lib';
 
 export type TOfferState = {
@@ -76,11 +76,10 @@ export const offerData = createSlice({
           });
         });
       })
-      .addCase(setFavoriteAction.fulfilled, (state, action) => {
+      .addCase(addFavoriteAction.fulfilled, (state, action) => {
         if (state?.offer?.id === action.payload.id){
           state.offer.isFavorite = action.payload.isFavorite;
         }
-
         setOfferFavorite(state.offers, action.payload.id, action.payload.isFavorite);
         setOfferFavorite(state.nearOffers, action.payload.id, action.payload.isFavorite);
 

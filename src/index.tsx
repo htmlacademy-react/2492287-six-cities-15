@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { App } from './app';
 import { store } from './store';
 import { Provider } from 'react-redux';
-import { checkAuthAction, fetchOffersAction } from './store/api-action';
+import { checkAuthAction, fetchOffersAction } from './store/api-actions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { HistoryRouter } from './components/history-route';

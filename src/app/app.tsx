@@ -12,17 +12,19 @@ import { Layout } from '../components/layout';
 import { AuthorizationStatus } from '../const';
 import { useAppSelector } from '../hooks';
 import { Loading } from '../pages/loading';
-import { getAuthorizationStatus } from '../store/user-process/selectors';
+import { getAuthorizationStatus, getIsAuth } from '../store/user-process/selectors';
 import { getIsOffersDataLoading } from '../store/offer-data/selectors';
 
 export const App: FC = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const isAuth = useAppSelector(getIsAuth);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
-      <Loading/>
+      <div>
+        <Loading/>
+      </div>
     );
   }
 
@@ -34,7 +36,7 @@ export const App: FC = () => {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
                 <Favorites/>
               </PrivateRoute>
             }

@@ -1,12 +1,14 @@
 import {Navigate} from 'react-router-dom';
 import { AppRoute } from '..';
 import {FC, PropsWithChildren } from 'react';
-import { useAppSelector } from '../../hooks';
-import { getIsAuth } from '../../store/user-process/selectors';
+import { AuthorizationStatus } from '../../const';
 
-export const PrivateRoute: FC<PropsWithChildren> = ({children}) => {
-  const isAuth = useAppSelector(getIsAuth);
+export type TPrivateRouteProps = {
+  authorizationStatus: AuthorizationStatus;
+}
 
+export const PrivateRoute: FC<PropsWithChildren<TPrivateRouteProps>> = ({authorizationStatus, children}) => {
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   return (
     isAuth
       ? children as JSX.Element

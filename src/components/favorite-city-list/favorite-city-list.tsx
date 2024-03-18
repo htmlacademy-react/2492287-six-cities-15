@@ -7,17 +7,17 @@ export type TFavoriteLocationProps = {
 }
 
 export const FavoriteCityList: FC<TFavoriteLocationProps> = ({offers}) => {
-  const cityList = [...new Set(offers.map((offer) => offer.city.name))];
+  const offerCities = [...new Set(offers.map((offer) => offer.city.name))];
 
   return (
     <section className='favorites'>
       <h1 className='favorites__title'>Saved listing</h1>
       <ul className='favorites__list'>
-        {cityList.map((cityName) => (
+        {offerCities.map((offerCity) => (
           <FavoriteLocationList
-            key={cityName}
-            offers={offers.filter((item) => item.city.name === cityName)}
-            city={cities.find((item) => item.name === cityName) || cities[0]}
+            key={offerCity}
+            offers={offers.filter((offer) => offer.city.name === offerCity)}
+            city={cities.find((city) => city.name === offerCity) || cities[0]}
           />
         ))}
       </ul>

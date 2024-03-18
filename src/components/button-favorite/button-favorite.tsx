@@ -1,16 +1,17 @@
 import { FC } from 'react';
-import { setFavoriteAction } from '../../store/api-action';
+import { addFavoriteAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SimpleSpinner } from '../simple-spinner';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app';
 import { getIsOfferDataLoading } from '../../store/offer-data/selectors';
 import { getBookmarkClass } from './lib';
+import { TButtonType } from './const';
 
 export type TButtonFavoriteProps = {
   offerId: string;
   isFavorite: boolean;
-  typeCard: 'offer' | 'place-card';
+  typeCard: TButtonType;
   width: number;
   height: number;
   isAuth: boolean;
@@ -24,7 +25,7 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite: o
 
   const handleButtonClick = () => {
     if (isAuth){
-      dispatch(setFavoriteAction({offerId: offerId, status: !offerIsFavorite}));
+      dispatch(addFavoriteAction({offerId: offerId, status: !offerIsFavorite}));
     } else {
       navigate(AppRoute.Login);
     }

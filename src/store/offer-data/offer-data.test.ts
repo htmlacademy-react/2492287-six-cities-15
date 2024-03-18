@@ -1,7 +1,7 @@
 import { OfferSortType, cities } from '../../const';
 import { expectedEmptyOfferState, expectedFavorites, expectedOfferFavoritesState, expectedOfferFull, expectedOfferState } from '../../utils/mocks';
 import { changeCity, clearFavoriteOffer, setFavoritesOff, setOfferSortType } from '../action';
-import { fetchFavoritesAction, fetchNearOffersAction, fetchOfferAction, fetchOffersAction, setFavoriteAction } from '../api-action';
+import { fetchFavoritesAction, fetchNearOffersAction, fetchOfferAction, fetchOffersAction, addFavoriteAction } from '../api-actions';
 import { offers } from '../lib/mocks';
 import { offerData } from './offer-data';
 
@@ -93,20 +93,20 @@ describe('OfferData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "offer.isFavorite" to true, find and set offer in (offers, nearOffers) and set "isFavorite" to true, add to favorites with "setFavoriteAction.fulfilled"', () => {
+  it('should set "offer.isFavorite" to true, find and set offer in (offers, nearOffers) and set "isFavorite" to true, add to favorites with addtFavoriteAction.fulfilled"', () => {
     const state = structuredClone(expectedOfferState);
     const expectedState = structuredClone(expectedOfferState);
     expectedState.favorites = [expectedState.offers[0]];
 
-    const result = offerData.reducer(state, setFavoriteAction.fulfilled(state.offers[0], '', {offerId: state.offers[0].id, status: true}));
+    const result = offerData.reducer(state, addFavoriteAction.fulfilled(state.offers[0], '', {offerId: state.offers[0].id, status: true}));
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "offer.isFavorite" to false, find and set offer in (offers, nearOffers) and set "isFavorite" to false, del from favorites with "setFavoriteAction.fulfilled"', () => {
+  it('should set "offer.isFavorite" to false, find and set offer in (offers, nearOffers) and set "isFavorite" to false, del from favorites with "addFavoriteAction.fulfilled"', () => {
     const state = structuredClone(expectedOfferFavoritesState);
     const expectedState = structuredClone(state);
     expectedState.favorites = [];
-    const result = offerData.reducer(state, setFavoriteAction.fulfilled(state.favorites[0], '', {offerId: state.favorites[0].id, status: false}));
+    const result = offerData.reducer(state, addFavoriteAction.fulfilled(state.favorites[0], '', {offerId: state.favorites[0].id, status: false}));
     expect(result?.favorites).toEqual(expectedState?.favorites);
   });
 

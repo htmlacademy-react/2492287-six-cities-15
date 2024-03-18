@@ -17,6 +17,6 @@ export const OfferUser: FC<TOfferUserProps> = ({user}) => (
       />
     </div>
     <span className='offer__user-name'>{user.name}</span>
-    <span className='offer__user-status'>{user.isPro ? 'Pro' : ''}</span>
+    {user.isPro && <span className='offer__user-status'> Pro</span>}
   </div>
 );

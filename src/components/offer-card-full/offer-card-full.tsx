@@ -6,7 +6,7 @@ import { ReviewList } from '../review-list';
 import { useAppSelector } from '../../hooks';
 import { ReviewCreateCard } from '../review-create-card';
 import { Rating } from '../rating';
-import { getReviewsForOffer } from '../../store/review-data/selectors';
+import { getReviewsCount, getReviewsForOffer } from '../../store/review-data/selectors';
 import { getAdultsText, getBedroomsText } from './lib';
 
 export type TOfferFullCardProps = {
@@ -16,6 +16,7 @@ export type TOfferFullCardProps = {
 
 export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
   const reviews = useAppSelector(getReviewsForOffer);
+  const reviewCount = useAppSelector(getReviewsCount);
 
   return (
     <div className='offer__container container' data-testid='offer-card-container'>
@@ -39,9 +40,9 @@ export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
             isAuth={isAuth}
           />
         </div>
-        <Rating objectType={'offer'} rating={offer.rating} isRound/>
+        <Rating objectType={'offer'} rating={offer.rating}/>
         <ul className='offer__features'>
-          <li className='offer__feature offer__feature--entire'>Apartment</li>
+          <li className='offer__feature offer__feature--entire'>{offer.type}</li>
           <li className='offer__feature offer__feature--bedrooms'>
             {getBedroomsText(offer.bedrooms)}
           </li>
@@ -64,8 +65,16 @@ export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
         <div className='offer__host'>
           <h2 className='offer__host-title'>Meet the host</h2>
           <OfferUser user={offer.host} />
+          <div className="offer__description">
+            <p className="offer__text">
+              {offer.title}
+            </p>
+            <p className="offer__text">
+              {offer.description}
+            </p>
+          </div>
         </div>
-        <ReviewList reviews={reviews} />
+        <ReviewList reviewCount={reviewCount} reviews={reviews} />
         {isAuth && <ReviewCreateCard />}
       </div>
     </div>

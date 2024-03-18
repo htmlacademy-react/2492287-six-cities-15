@@ -5,6 +5,13 @@ import { TState } from '../const';
 export const getReviews = (state: TState) => state[NameSpace.Review].reviews;
 export const getAddReviewStatus = (state: TState) => state[NameSpace.Review].addReviewStatus;
 
+export const getReviewsCount = createSelector(
+  [
+    getReviews
+  ],
+  (reviews) => reviews.length
+);
+
 export const getReviewsForOffer = createSelector(
   [
     getReviews

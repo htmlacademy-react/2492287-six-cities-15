@@ -1,6 +1,6 @@
 import { datatype, image, lorem, name } from 'faker';
 import { TReviewState, reviewData } from './review-data';
-import { addReviewAction, fetchReviewsAction } from '../api-action';
+import { addReviewAction, fetchReviewsAction } from '../api-actions';
 
 describe('ReviewData Slice', () => {
   it('should return initial state with empty action', () => {

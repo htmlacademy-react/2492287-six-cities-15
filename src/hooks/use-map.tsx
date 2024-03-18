@@ -14,6 +14,7 @@ function useMap(
     let mounted = true;
 
     if (mapRef.current !== null && !isRenderedRef.current) {
+
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,

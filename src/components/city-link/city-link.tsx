@@ -8,17 +8,20 @@ export type TCityLinkProps = {
   isActive: boolean;
   onChangeCity?: (city: TCity) => void;
 }
-export const CityLink: FC<TCityLinkProps> = ({city, isActive, onChangeCity}) => (
-  <Link
-    className={`locations__item-link ${isActive ? 'tabs__item--active' : ''}`}
-    to={AppRoute.Root}
-    onClick={() => {
-      if(onChangeCity){
-        return onChangeCity(city);
-      }
-    }}
-    data-testid='city-link'
-  >
-    <span>{city.name}</span>
-  </Link>
-);
+export const CityLink: FC<TCityLinkProps> = ({city, isActive, onChangeCity}) => {
+  const handleLinkClick = () => {
+    if(onChangeCity){
+      return onChangeCity(city);
+    }
+  };
+  return (
+    <Link
+      className={`locations__item-link ${isActive ? 'tabs__item--active' : ''}`}
+      to={AppRoute.Root}
+      onClick={handleLinkClick}
+      data-testid='city-link'
+    >
+      <span>{city.name}</span>
+    </Link>
+  );
+};

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TReviewFull, TReviewFulls } from '../../const';
-import { addReviewAction, fetchReviewsAction } from '../api-action';
+import { addReviewAction, fetchReviewsAction } from '../api-actions';
 
 export type TReviewState = {
   reviews: TReviewFulls;

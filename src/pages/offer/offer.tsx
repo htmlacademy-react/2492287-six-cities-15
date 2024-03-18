@@ -6,11 +6,11 @@ import { APP_TITLE } from '../../const';
 import { NotFound } from '../not-found';
 import { Map } from '../../components/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-action';
+import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
 import { Loading } from '../loading';
 import { OfferCardFull } from '../../components/offer-card-full';
 import { OfferGallery } from '../../components/offer-gallery/';
-import { getImagesForOffer, getIsOfferDataLoading, getNearOffers, getNearOffersForMap, getOffer } from '../../store/offer-data/selectors';
+import { getImagesForOffer, getIsOfferDataLoading, getNearOffersForList, getNearOffersForMap, getOffer } from '../../store/offer-data/selectors';
 import { getIsAuth } from '../../store/user-process/selectors';
 import { clearOffer } from '../../store/action';
 
@@ -19,8 +19,8 @@ export const Offer: FC = () => {
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
   const images = useAppSelector(getImagesForOffer);
-  const nearOffers = useAppSelector(getNearOffers);
   const nearOffersForMap = useAppSelector(getNearOffersForMap);
+  const nearOffersForList = useAppSelector(getNearOffersForList);
   const isAuth = useAppSelector(getIsAuth);
   const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const offerId = id?.trim() ?? '';
@@ -71,6 +71,8 @@ export const Offer: FC = () => {
         <section style={{margin: 'auto', marginTop: 10, marginBottom: 50, width: 1144, height: 579}} >
           <Map city={offer.city} points={nearOffersForMap} selectedPoint={offer}/>
         </section>
+
+
       </section>
       <div className='container'>
         <section className='near-places places'>
@@ -78,7 +80,7 @@ export const Offer: FC = () => {
             Other places in the neighbourhood
           </h2>
           <OfferList
-            offers={nearOffers}
+            offers={nearOffersForList}
             offerCardType={'Near'}
           />
         </section>

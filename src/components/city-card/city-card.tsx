@@ -25,10 +25,10 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
       <section className='cities__places places'>
         <h2 className='visually-hidden'>Places</h2>
         <b className='places__found'>
-          {sortedOffers.length} places to stay in {city.name}
+          {sortedOffers.length} {sortedOffers.length > 1 ? 'places' : 'place'} to stay in {city.name}
         </b>
         <OfferSort selectedSort={offerSortType}/>
-        <div className='cities__places-list places__list tabs__content'>
+        <div className='cities__places-list places__list tabs__content' onMouseEnter={() => handleOfferHover(null)}>
           <OfferList
             offers={sortedOffers}
             offerCardType='City'
@@ -37,9 +37,7 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
         </div>
       </section>
       <div className='cities__right-section'>
-        <section style={{width: '100%'}}>
-          <Map city={city} selectedPoint={activeOffer} points={offers}/>
-        </section>
+        <Map city={city} selectedPoint={activeOffer} points={offers}/>
       </div>
     </div>
   );
