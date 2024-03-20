@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getOffer } from '../../../store/offer-data/selectors';
+import { getOffer } from '../../../store/offer-data/offer-data.selectors';
 import { fetchOfferAction } from '../../../store/api-actions';
 import { clearOffer } from '../../../store/action';
 

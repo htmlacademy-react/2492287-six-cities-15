@@ -64,6 +64,13 @@ export const offerData = createSlice({
       })
       .addCase(fetchNearOffersAction.fulfilled, (state, action) => {
         state.nearOffers = action.payload;
+        state.isNearOffersDataLoading = false;
+      })
+      .addCase(fetchNearOffersAction.pending, (state) => {
+        state.isNearOffersDataLoading = true;
+      })
+      .addCase(fetchNearOffersAction.rejected, (state) => {
+        state.isNearOffersDataLoading = false;
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
@@ -92,7 +99,6 @@ export const offerData = createSlice({
           if (offerIndex > -1){
             state.favorites.splice(offerIndex, 1);
           }
-          
         }
       })
       .addCase(setFavoritesOff, (state) => {

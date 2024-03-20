@@ -6,7 +6,7 @@ import { changeCity } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CityCard } from '../../components/city-card';
 import { CityCardEmpty } from '../../components/city-card-empty';
-import { getActiveCity, getCityOffers } from '../../store/offer-data/selectors';
+import { getActiveCity, getCityOffers } from '../../store/offer-data/offer-data.selectors';
 
 export const Main: FC = () => {
   const dispatch = useAppDispatch();

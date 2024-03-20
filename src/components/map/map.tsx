@@ -3,15 +3,16 @@ import { Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import {TCity, TOffer} from '../../const';
 import 'leaflet/dist/leaflet.css';
-import { currentCustomIcon, defaultCustomIcon } from './const';
+import { TMapPositionType, currentCustomIcon, defaultCustomIcon } from './const';
 
 export type TMapProps = {
   city: TCity;
   points: TOffer[];
   selectedPoint?: TOffer | null;
+  mapPositionType: TMapPositionType;
 };
 
-export const Map: FC<TMapProps> = ({city, points, selectedPoint}) => {
+export const Map: FC<TMapProps> = ({city, points, selectedPoint, mapPositionType: mapType}) => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -52,7 +53,11 @@ export const Map: FC<TMapProps> = ({city, points, selectedPoint}) => {
   }, [map, points, selectedPoint]);
 
   return (
-    <section className='offer__map map' style={{height: '100%'}} data-testid='map'>
+    <section
+      className={`${mapType}__map map`}
+      //style={{height: '100%'}}
+      data-testid='map'
+    >
       <div style={{height: '100%'}} ref={mapRef}></div>
     </section>
   );

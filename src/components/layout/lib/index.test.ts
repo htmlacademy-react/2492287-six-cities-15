@@ -10,7 +10,7 @@ describe('Function: getClassName', () => {
   it('should return page--main page__main--favorites-empty', () => {
     const path = '/';
     const result = getClassName(path, 0);
-    expect(result).toBe('page--main page__main--favorites-empty');
+    expect(result).toBe('page--main page--gray page__main--favorites-empty');
   });
   it('should return page--gray page--main', () => {
     const path = '/';

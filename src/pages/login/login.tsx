@@ -6,8 +6,8 @@ import { loginAction } from '../../store/api-actions';
 import { randomInt } from './lib';
 import { changeCity } from '../../store/action';
 import { CityLink } from '../../components/city-link';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { getIsAuth } from '../../store/user-process/selectors';
+import { Navigate } from 'react-router-dom';
+import { getIsAuth } from '../../store/user-process/user-process.selectors';
 import { AppRoute } from '../../app';
 
 export const Login: FC = () => {
@@ -45,7 +45,7 @@ export const Login: FC = () => {
       </Helmet>
       <div className='page__login-container container'>
         <section className='login'>
-          <h1 className='login__title'>Log in</h1>
+          <h1 className='login__title'>Sign in</h1>
           <form
             className='login__form form'
             action='#'
@@ -73,6 +73,7 @@ export const Login: FC = () => {
                 placeholder='Password'
                 required
                 pattern="(?=^.{2,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Za-z]).*"
+                title="need minimum one letter and one number"
               />
             </div>
             <button className='login__submit form__submit button' type='submit'>

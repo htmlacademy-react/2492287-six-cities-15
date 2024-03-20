@@ -6,13 +6,16 @@ import { APP_TITLE } from '../../const';
 import { NotFound } from '../not-found';
 import { Map } from '../../components/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
+import { fetchNearOffersAction, fetchOfferAction,
+  fetchReviewsAction } from '../../store/api-actions';
 import { Loading } from '../loading';
 import { OfferCardFull } from '../../components/offer-card-full';
 import { OfferGallery } from '../../components/offer-gallery/';
-import { getImagesForOffer, getIsOfferDataLoading, getNearOffersForList, getNearOffersForMap, getOffer } from '../../store/offer-data/selectors';
-import { getIsAuth } from '../../store/user-process/selectors';
+import { getImagesForOffer, getIsNearOffersDataLoading, getIsOfferDataLoading, getNearOffersForList,
+  getNearOffersForMap, getOffer } from '../../store/offer-data/offer-data.selectors';
+import { getIsAuth } from '../../store/user-process/user-process.selectors';
 import { clearOffer } from '../../store/action';
+import { SimpleSpinner } from '../../components/simple-spinner';
 
 export const Offer: FC = () => {
   const { id } = useParams();
@@ -24,6 +27,11 @@ export const Offer: FC = () => {
   const isAuth = useAppSelector(getIsAuth);
   const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const offerId = id?.trim() ?? '';
+  const isNearOffersLoading = useAppSelector(getIsNearOffersDataLoading);
+  const nearOffersComponent = isNearOffersLoading
+    ? <SimpleSpinner/>
+    : <OfferList offers={nearOffersForList} offerCardType={'Near'}/>;
+
   useEffect(() => {
     let mounted = true;
     if (mounted){
@@ -65,24 +73,23 @@ export const Offer: FC = () => {
       <section className='offer'>
         <OfferGallery images={images}/>
         <OfferCardFull
+
           offer={offer}
           isAuth={isAuth}
         />
-        <section className='offer__map map'/*style={{margin: 'auto', marginTop: 10, marginBottom: 50, width: 1144, height: 579}}*/ >
-          <Map city={offer.city} points={nearOffersForMap} selectedPoint={offer}/>
-        </section>
-
-
+        <Map
+          city={offer.city}
+          points={nearOffersForMap}
+          selectedPoint={offer}
+          mapPositionType='offer'
+        />
       </section>
       <div className='container'>
         <section className='near-places places'>
           <h2 className='near-places__title'>
             Other places in the neighbourhood
           </h2>
-          <OfferList
-            offers={nearOffersForList}
-            offerCardType={'Near'}
-          />
+          {nearOffersComponent}
         </section>
       </div>
     </main>

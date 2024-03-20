@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SimpleSpinner } from '../simple-spinner';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app';
-import { getIsOfferDataLoading } from '../../store/offer-data/selectors';
+import { getIsOfferDataLoading } from '../../store/offer-data/offer-data.selectors';
 import { getBookmarkClass } from './lib';
 import { TButtonType } from './const';
 

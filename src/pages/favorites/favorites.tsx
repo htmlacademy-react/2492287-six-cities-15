@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Logo } from '../../components/logo';
 import { useAppSelector } from '../../hooks';
 import { FavoriteCityList } from '../../components/favorite-city-list';
-import { getFavorites } from '../../store/offer-data/selectors';
+import { getFavorites } from '../../store/offer-data/offer-data.selectors';
 import { APP_TITLE } from '../../const';
 import { FavoritesEmpty } from '../../components/favorites-empty';
 

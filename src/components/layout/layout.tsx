@@ -4,8 +4,8 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { getClassName, getIsLoginPath } from './lib';
 import { useAppSelector } from '../../hooks';
 import { UserInfo } from '../user-info';
-import { getUser } from '../../store/user-process/selectors';
-import { getFavorites } from '../../store/offer-data/selectors';
+import { getUser } from '../../store/user-process/user-process.selectors';
+import { getFavorites } from '../../store/offer-data/offer-data.selectors';
 
 export const Layout: FC = () => {
   const user = useAppSelector(getUser);

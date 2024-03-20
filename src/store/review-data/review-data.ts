@@ -1,16 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TReviewFull, TReviewFulls } from '../../const';
 import { addReviewAction, fetchReviewsAction } from '../api-actions';
+import { TFethcStatus } from './const';
 
 export type TReviewState = {
   reviews: TReviewFulls;
   review?: TReviewFull;
-  addReviewStatus: 'loading' |'rejected' | 'none';
+  addReviewStatus: TFethcStatus;
+  isFetchReviewsLoading: boolean;
 }
 
 const initialState: TReviewState = {
   reviews: [],
-  addReviewStatus: 'none'
+  addReviewStatus: 'none',
+  isFetchReviewsLoading: false
 };
 
 export const reviewData = createSlice({
@@ -21,6 +24,13 @@ export const reviewData = createSlice({
     builder
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+        state.isFetchReviewsLoading = false;
+      })
+      .addCase(fetchReviewsAction.pending, (state) => {
+        state.isFetchReviewsLoading = true;
+      })
+      .addCase(fetchReviewsAction.rejected, (state) => {
+        state.isFetchReviewsLoading = false;
       })
       .addCase(addReviewAction.pending, (state) => {
         state.addReviewStatus = 'loading';

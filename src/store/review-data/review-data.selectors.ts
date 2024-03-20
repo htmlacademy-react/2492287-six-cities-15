@@ -4,6 +4,7 @@ import { TState } from '../const';
 
 export const getReviews = (state: TState) => state[NameSpace.Review].reviews;
 export const getAddReviewStatus = (state: TState) => state[NameSpace.Review].addReviewStatus;
+export const getIsFetchReviewsLoading = (state: TState) => state[NameSpace.Review].isFetchReviewsLoading;
 
 export const getReviewsCount = createSelector(
   [

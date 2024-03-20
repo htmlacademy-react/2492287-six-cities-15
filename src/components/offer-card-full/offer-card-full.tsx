@@ -6,8 +6,10 @@ import { ReviewList } from '../review-list';
 import { useAppSelector } from '../../hooks';
 import { ReviewCreateCard } from '../review-create-card';
 import { Rating } from '../rating';
-import { getReviewsCount, getReviewsForOffer } from '../../store/review-data/selectors';
+import { getIsFetchReviewsLoading, getReviewsCount,
+  getReviewsForOffer } from '../../store/review-data/review-data.selectors';
 import { getAdultsText, getBedroomsText } from './lib';
+import { SimpleSpinner } from '../simple-spinner';
 
 export type TOfferFullCardProps = {
   offer: TOfferFull;
@@ -17,9 +19,17 @@ export type TOfferFullCardProps = {
 export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
   const reviews = useAppSelector(getReviewsForOffer);
   const reviewCount = useAppSelector(getReviewsCount);
+  const isFetchReviewsLoading = useAppSelector(getIsFetchReviewsLoading);
+  const reviewsComponent = isFetchReviewsLoading
+    ? <SimpleSpinner/>
+    : <ReviewList reviewCount={reviewCount} reviews={reviews} />;
 
   return (
-    <div className='offer__container container' data-testid='offer-card-container'>
+    <div
+      className='offer__container container'
+      data-testid='offer-card-container'
+      style={{marginBottom: 10}}
+    >
       <div className='offer__wrapper'>
         {
           offer.isPremium &&
@@ -74,7 +84,7 @@ export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
             </p>
           </div>
         </div>
-        <ReviewList reviewCount={reviewCount} reviews={reviews} />
+        {reviewsComponent}
         {isAuth && <ReviewCreateCard />}
       </div>
     </div>

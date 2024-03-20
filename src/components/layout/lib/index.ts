@@ -3,7 +3,7 @@ export const getClassName = (pathname: string, favoritesCount: number): string =
     case '/login': return 'page--login';
     case '/':
       if (favoritesCount === 0) {
-        return 'page--main page__main--favorites-empty';
+        return 'page--main page--gray page__main--favorites-empty';
       }
       return 'page--gray page--main';
     case '/favorites':

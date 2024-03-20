@@ -4,8 +4,8 @@ import { TReview } from '../../const';
 import { validateSubmit } from './lib';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-actions';
-import { getOffer } from '../../store/offer-data/selectors';
-import { getAddReviewStatus } from '../../store/review-data/selectors';
+import { getOffer } from '../../store/offer-data/offer-data.selectors';
+import { getAddReviewStatus } from '../../store/review-data/review-data.selectors';
 import { raitings, reviewInitialState } from './const';
 
 export const ReviewCreateCard: FC = () => {
@@ -27,7 +27,13 @@ export const ReviewCreateCard: FC = () => {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(addReviewAction({comment: formdata.comment, rating: formdata.rating, offerId: offer ? offer.id : ''}));
+    dispatch(
+      addReviewAction({
+        comment: formdata.comment,
+        rating: formdata.rating,
+        offerId: offer ? offer.id : ''
+      })
+    );
   };
 
   useEffect(() => {

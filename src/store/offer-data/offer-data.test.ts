@@ -84,6 +84,24 @@ describe('OfferData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
+  it('should set "nearOffers" to array with TOffer with "fetchNearOffersAction.pending"', () => {
+    const state = structuredClone(expectedEmptyOfferState);
+    const expectedState = structuredClone(expectedEmptyOfferState);
+    expectedState.nearOffers = [];
+
+    const result = offerData.reducer(state, fetchNearOffersAction.pending);
+    expect(result.isNearOffersDataLoading).toBeTruthy();
+  });
+
+  it('should set "nearOffers" to array with TOffer with "fetchNearOffersAction.rejected"', () => {
+    const state = structuredClone(expectedEmptyOfferState);
+    const expectedState = structuredClone(expectedEmptyOfferState);
+    expectedState.nearOffers = [];
+
+    const result = offerData.reducer(state, fetchNearOffersAction.rejected);
+    expect(result.isNearOffersDataLoading).toBeFalsy();
+  });
+
   it('should set "favorites" to array TOffer, set "isFavorite" in offers from favorites with "fetchFavoritesAction.fulfilled"', () => {
     const state = structuredClone(expectedOfferState);
     const expectedState = structuredClone(expectedOfferState);

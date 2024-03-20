@@ -4,8 +4,8 @@ import { AppRoute } from '../../app';
 import { TUserData } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
-import { getFavorites } from '../../store/offer-data/selectors';
-import { getIsAuth } from '../../store/user-process/selectors';
+import { getFavorites } from '../../store/offer-data/offer-data.selectors';
+import { getIsAuth } from '../../store/user-process/user-process.selectors';
 
 export type TUserInfoProps = {
   user: TUserData | null;
@@ -35,16 +35,18 @@ export const UserInfo: FC<TUserInfoProps> = ({user, location}) => {
             to={AppRoute.Favorites}
           >
 
-            <div className='header__avatar-wrapper user__avatar-wrapper'>
-              <img src={user?.avatarUrl} style={{borderRadius: 20}}/>
-            </div>
             {
               isAuth &&
-                  <span className='header__user-name user__name'>
-                    {user?.email}
-                  </span>
+              <>
+                <div className='header__avatar-wrapper user__avatar-wrapper'>
+                  <img src={user?.avatarUrl} style={{borderRadius: 20}}/>
+                </div>
+                <span className='header__user-name user__name'>
+                  {user?.email}
+                </span>
+                <span className='header__favorite-count'>{favorites.length}</span>
+              </>
             }
-            <span className='header__favorite-count'>{favorites.length}</span>
           </Link>
         </li>
 
@@ -55,7 +57,7 @@ export const UserInfo: FC<TUserInfoProps> = ({user, location}) => {
             onClick={handleLoginButtonClick}
           >
             <span className={`${isAuth ? 'header__signout' : 'header__login'}`}>
-              {isAuth ? 'Sign out' : 'Sign in'}
+              {isAuth ? 'Sign Out' : 'Sign In'}
             </span>
           </Link>
         </li>

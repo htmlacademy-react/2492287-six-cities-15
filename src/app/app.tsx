@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from './';
 import { PrivateRoute } from './private-route';
 import { Favorites } from '../pages/favorites';
@@ -12,19 +12,16 @@ import { Layout } from '../components/layout';
 import { AuthorizationStatus } from '../const';
 import { useAppSelector } from '../hooks';
 import { Loading } from '../pages/loading';
-import { getAuthorizationStatus, getIsAuth } from '../store/user-process/selectors';
-import { getIsOffersDataLoading } from '../store/offer-data/selectors';
+import { getAuthorizationStatus } from '../store/user-process/user-process.selectors';
+import { getIsOffersDataLoading } from '../store/offer-data/offer-data.selectors';
 
 export const App: FC = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
-  const isAuth = useAppSelector(getIsAuth);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
-      <div>
-        <Loading/>
-      </div>
+      <Loading/>
     );
   }
 
