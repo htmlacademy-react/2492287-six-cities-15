@@ -48,13 +48,13 @@ export const Offer: FC = () => {
   }, [offerId, dispatch, offer]);
 
   if(offerId === '') {
-    return <div><NotFound/><p>test1</p></div>;
+    return <NotFound/>;
   }
   if (isOfferDataLoading) {
-    return <div><Loading/><p>test2</p></div>;
+    return <Loading/>;
   }
   if (!offer) {
-    return <div><NotFound/><p>test3</p></div>;
+    return <NotFound/>;
   }
 
   return (
@@ -68,7 +68,7 @@ export const Offer: FC = () => {
           offer={offer}
           isAuth={isAuth}
         />
-        <section style={{margin: 'auto', marginTop: 10, marginBottom: 50, width: 1144, height: 579}} >
+        <section className='offer__map map'/*style={{margin: 'auto', marginTop: 10, marginBottom: 50, width: 1144, height: 579}}*/ >
           <Map city={offer.city} points={nearOffersForMap} selectedPoint={offer}/>
         </section>
 

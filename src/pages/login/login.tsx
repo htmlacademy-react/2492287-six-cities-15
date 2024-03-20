@@ -1,17 +1,21 @@
 import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { APP_TITLE, cities } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { randomInt } from './lib';
 import { changeCity } from '../../store/action';
 import { CityLink } from '../../components/city-link';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { getIsAuth } from '../../store/user-process/selectors';
+import { AppRoute } from '../../app';
 
 export const Login: FC = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
   const [randomCity, setRandomCity] = useState(cities[0]);
+  const isAuth = useAppSelector(getIsAuth);
 
   useEffect(() => {
     const city = cities[randomInt(0, cities.length - 1)];
@@ -29,6 +33,11 @@ export const Login: FC = () => {
     }
   };
 
+  if (isAuth){
+    return (
+      <Navigate to={AppRoute.Root} />
+    );
+  }
   return (
     <main className='page__main page__main--login' data-testid='login'>
       <Helmet>
@@ -63,6 +72,7 @@ export const Login: FC = () => {
                 name='password'
                 placeholder='Password'
                 required
+                pattern="(?=^.{2,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Za-z]).*"
               />
             </div>
             <button className='login__submit form__submit button' type='submit'>

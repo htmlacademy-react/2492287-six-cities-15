@@ -84,10 +84,15 @@ export const offerData = createSlice({
         setOfferFavorite(state.nearOffers, action.payload.id, action.payload.isFavorite);
 
         if (action.payload.isFavorite) {
-          state.favorites.push(action.payload);
+          if (!state.favorites.includes(action.payload)){
+            state.favorites.push(action.payload);
+          }
         } else {
           const offerIndex = state.favorites.findIndex((item) => item.id === action.payload.id);
-          state.favorites.splice(offerIndex, 1);
+          if (offerIndex > -1){
+            state.favorites.splice(offerIndex, 1);
+          }
+          
         }
       })
       .addCase(setFavoritesOff, (state) => {

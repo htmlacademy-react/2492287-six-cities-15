@@ -17,15 +17,15 @@ export type TButtonFavoriteProps = {
   isAuth: boolean;
 }
 
-export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite: offerIsFavorite, typeCard, width, height, isAuth}) => {
+export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, typeCard, width, height, isAuth}) => {
   const dispatch = useAppDispatch();
-  const bookmarkClass = getBookmarkClass(offerIsFavorite, typeCard);
+  const bookmarkClass = getBookmarkClass(isFavorite, typeCard);
   const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     if (isAuth){
-      dispatch(addFavoriteAction({offerId: offerId, status: !offerIsFavorite}));
+      dispatch(addFavoriteAction({offerId: offerId, status: !isFavorite}));
     } else {
       navigate(AppRoute.Login);
     }
@@ -49,7 +49,8 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite: o
       >
         <use xlinkHref='#icon-bookmark' />
       </svg>
-      <span className='visually-hidden'>{offerIsFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+      <span className='visually-hidden'>{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+      <div>{isFavorite}</div>
     </button>
   );
 };

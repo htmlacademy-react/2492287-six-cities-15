@@ -44,7 +44,7 @@ export const App: FC = () => {
           <Route path={AppRoute.Offer} element={<Offer/>}/>
           <Route
             path={AppRoute.Login}
-            element={isAuth ? <Navigate to={AppRoute.Root}/> : <Login/>}
+            element={<Login/>}
           />
           <Route path='*' element={<NotFound/>}/>
         </Route>
