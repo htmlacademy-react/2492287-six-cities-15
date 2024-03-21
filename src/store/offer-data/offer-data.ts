@@ -79,9 +79,6 @@ export const offerData = createSlice({
         if (state?.offer?.id === action.payload.id){
           state.offer.isFavorite = action.payload.isFavorite;
         }
-        console.log(action.payload);
-        console.log(state.offers.length);
-        console.log(state.favorites.length);
         setOfferFavorite(state.offers, action.payload.id, action.payload.isFavorite);
         setOfferFavorite(state.nearOffers, action.payload.id, action.payload.isFavorite);
 
