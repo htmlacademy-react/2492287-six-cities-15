@@ -74,14 +74,6 @@ export const offerData = createSlice({
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
-
-        /*state.offers.forEach((offer) => {
-          state.favorites.forEach((favorite) => {
-            if (favorite.id === offer.id) {
-              offer.isFavorite = favorite.isFavorite;
-            }
-          });
-        });*/
       })
       .addCase(addFavoriteAction.fulfilled, (state, action) => {
         if (state?.offer?.id === action.payload.id){

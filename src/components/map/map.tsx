@@ -55,7 +55,6 @@ export const Map: FC<TMapProps> = ({city, points, selectedPoint, mapPositionType
   return (
     <section
       className={`${mapType}__map map`}
-      //style={{height: '100%'}}
       data-testid='map'
     >
       <div style={{height: '100%'}} ref={mapRef}></div>
