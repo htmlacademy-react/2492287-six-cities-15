@@ -26,6 +26,7 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, t
   const handleButtonClick = () => {
     if (isAuth){
       dispatch(addFavoriteAction({offerId: offerId, status: !isFavorite}));
+      
     } else {
       navigate(AppRoute.Login);
     }

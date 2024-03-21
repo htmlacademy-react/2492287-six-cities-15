@@ -42,6 +42,7 @@ export const addFavoriteAction = createAsyncThunk<TOffer,
   {offerId: string; status: boolean}, TActionUtils>(
     'data/addFavorite',
     async ({offerId, status}, {extra: api}) => {
+      console.log('addFavoriteAction', offerId, status);
       const {data} = await api.post<TOfferFull>(`${ApiRoute.Favorite}/${offerId}/${status ? '1' : '0'}`);
       return data;
     },
