@@ -1,1 +1,5 @@
-export const getBookmarkClass = (offerIsFavorite: boolean, typeCard: 'offer' | 'place-card') => offerIsFavorite ? ` ${typeCard}__bookmark-button--active` : '';
+import { TButtonType } from '../const';
+
+export const getBookmarkClass = (offerIsFavorite: boolean, typeCard: TButtonType) => (
+  offerIsFavorite ? ` ${typeCard}__bookmark-button--active` : ''
+);

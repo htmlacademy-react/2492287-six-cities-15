@@ -1,7 +1,7 @@
 import { datatype, image, internet, name } from 'faker';
 import { AuthorizationStatus } from '../../const';
 import { userProcess } from './user-process';
-import { checkAuthAction, loginAction, logoutAction } from '../api-action';
+import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 import { expectedUserData } from '../../utils/mocks';
 
 describe('UserProcess Slice', () => {

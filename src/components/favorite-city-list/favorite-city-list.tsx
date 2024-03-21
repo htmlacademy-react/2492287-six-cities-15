@@ -1,23 +1,27 @@
 import { FC } from 'react';
 import { TOffer, cities } from '../../const';
 import { FavoriteLocationList } from '../favorite-location-list';
+import { FavoritesEmpty } from '../favorites-empty';
 
 export type TFavoriteLocationProps = {
   offers: TOffer[];
 }
 
 export const FavoriteCityList: FC<TFavoriteLocationProps> = ({offers}) => {
-  const cityList = [...new Set(offers.map((offer) => offer.city.name))];
+  const offerCities = [...new Set(offers.map((offer) => offer.city.name))];
+  if (offers.length === 0){
+    return <FavoritesEmpty/>;
+  }
 
   return (
     <section className='favorites'>
       <h1 className='favorites__title'>Saved listing</h1>
       <ul className='favorites__list'>
-        {cityList.map((cityName) => (
+        {offerCities.map((offerCity) => (
           <FavoriteLocationList
-            key={cityName}
-            offers={offers.filter((item) => item.city.name === cityName)}
-            city={cities.find((item) => item.name === cityName) || cities[0]}
+            key={offerCity}
+            offers={offers.filter((offer) => offer.city.name === offerCity)}
+            city={cities.find((city) => city.name === offerCity) || cities[0]}
           />
         ))}
       </ul>

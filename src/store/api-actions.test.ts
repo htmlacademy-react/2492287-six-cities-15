@@ -7,7 +7,7 @@ import { clearFavoriteOffer, redirectToRoute, setFavoritesOff } from './action';
 import * as tokenStorage from '../services/token';
 import { TAuthData, TState } from './const';
 import { ApiRoute } from '../app/routes';
-import { addReviewAction, checkAuthAction, fetchFavoritesAction, fetchNearOffersAction, fetchOfferAction, fetchOffersAction, fetchReviewsAction, loginAction, logoutAction, setFavoriteAction } from './api-action';
+import { addReviewAction, checkAuthAction, fetchFavoritesAction, fetchNearOffersAction, fetchOfferAction, fetchOffersAction, fetchReviewsAction, loginAction, logoutAction, addFavoriteAction } from './api-actions';
 import { extractActionsTypes } from '../utils/mocks';
 import { AuthorizationStatus } from '../const';
 
@@ -61,6 +61,7 @@ describe('Async actions', () => {
 
       expect(actions).toEqual([
         loginAction.pending.type,
+        fetchOffersAction.pending.type,
         fetchFavoritesAction.pending.type,
         redirectToRoute.type,
         loginAction.fulfilled.type,
@@ -186,7 +187,7 @@ describe('Async actions', () => {
 
   describe('fetchFavoritesAction', () => {
     it('should dispatch "fetchFavoritesAction.pending", "fetchFavoritesAction.fulfilled" when server response 200', async() => {
-      mockAxiosAdapter.onGet(ApiRoute.Favorites).reply(200);
+      mockAxiosAdapter.onGet(ApiRoute.Favorite).reply(200);
 
       await store.dispatch(fetchFavoritesAction());
       const actions = extractActionsTypes(store.getActions());
@@ -198,7 +199,7 @@ describe('Async actions', () => {
     });
 
     it('should dispatch "fetchFavoritesAction.pending", "fetchFavoritesAction.rejected" when server response 401', async() => {
-      mockAxiosAdapter.onGet(ApiRoute.Favorites).reply(401);
+      mockAxiosAdapter.onGet(ApiRoute.Favorite).reply(401);
 
       await store.dispatch(fetchFavoritesAction());
       const actions = extractActionsTypes(store.getActions());
@@ -210,64 +211,64 @@ describe('Async actions', () => {
     });
   });
 
-  describe('setFavoriteAction', () => {
-    it('should dispatch "setFavoriteAction.pending", "setFavoriteAction.fulfilled" when server response 200', async() => {
-      mockAxiosAdapter.onPost(`${ApiRoute.Favorites}/xxx/1`).reply(200);
+  describe('addFavoriteAction', () => {
+    it('should dispatch "addFavoriteAction.pending", "addFavoriteAction.fulfilled" when server response 200', async() => {
+      mockAxiosAdapter.onPost(`${ApiRoute.Favorite}/xxx/1`).reply(200);
 
-      await store.dispatch(setFavoriteAction({offerId: 'xxx', status: true}));
+      await store.dispatch(addFavoriteAction({offerId: 'xxx', status: true}));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([
-        setFavoriteAction.pending.type,
-        setFavoriteAction.fulfilled.type
+        addFavoriteAction.pending.type,
+        addFavoriteAction.fulfilled.type
       ]);
     });
 
-    it('should dispatch "setFavoriteAction.pending", "setFavoriteAction.rejected" when server response 400', async() => {
-      mockAxiosAdapter.onPost(`${ApiRoute.Favorites}/xxx/1`).reply(400);
+    it('should dispatch "addFavoriteAction.pending", "addFavoriteAction.rejected" when server response 400', async() => {
+      mockAxiosAdapter.onPost(`${ApiRoute.Favorite}/xxx/1`).reply(400);
 
-      await store.dispatch(setFavoriteAction({offerId: 'xxx', status: true}));
+      await store.dispatch(addFavoriteAction({offerId: 'xxx', status: true}));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([
-        setFavoriteAction.pending.type,
-        setFavoriteAction.rejected.type
+        addFavoriteAction.pending.type,
+        addFavoriteAction.rejected.type
       ]);
     });
 
-    it('should dispatch "setFavoriteAction.pending", "setFavoriteAction.rejected" when server response 401', async() => {
-      mockAxiosAdapter.onPost(`${ApiRoute.Favorites}/xxx/1`).reply(401);
+    it('should dispatch "addFavoriteAction.pending", "addFavoriteAction.rejected" when server response 401', async() => {
+      mockAxiosAdapter.onPost(`${ApiRoute.Favorite}/xxx/1`).reply(401);
 
-      await store.dispatch(setFavoriteAction({offerId: 'xxx', status: true}));
+      await store.dispatch(addFavoriteAction({offerId: 'xxx', status: true}));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([
-        setFavoriteAction.pending.type,
-        setFavoriteAction.rejected.type
+        addFavoriteAction.pending.type,
+        addFavoriteAction.rejected.type
       ]);
     });
 
-    it('should dispatch "setFavoriteAction.pending", "setFavoriteAction.rejected" when server response 404', async() => {
-      mockAxiosAdapter.onPost(`${ApiRoute.Favorites}/xxx/1`).reply(404);
+    it('should dispatch "addFavoriteAction.pending", "addFavoriteAction.rejected" when server response 404', async() => {
+      mockAxiosAdapter.onPost(`${ApiRoute.Favorite}/xxx/1`).reply(404);
 
-      await store.dispatch(setFavoriteAction({offerId: 'xxx', status: true}));
+      await store.dispatch(addFavoriteAction({offerId: 'xxx', status: true}));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([
-        setFavoriteAction.pending.type,
-        setFavoriteAction.rejected.type
+        addFavoriteAction.pending.type,
+        addFavoriteAction.rejected.type
       ]);
     });
 
-    it('should dispatch "setFavoriteAction.pending", "setFavoriteAction.rejected" when server response 409', async() => {
-      mockAxiosAdapter.onPost(`${ApiRoute.Favorites}/xxx/1`).reply(409);
+    it('should dispatch "addFavoriteAction.pending", "addFavoriteAction.rejected" when server response 409', async() => {
+      mockAxiosAdapter.onPost(`${ApiRoute.Favorite}/xxx/1`).reply(409);
 
-      await store.dispatch(setFavoriteAction({offerId: 'xxx', status: true}));
+      await store.dispatch(addFavoriteAction({offerId: 'xxx', status: true}));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([
-        setFavoriteAction.pending.type,
-        setFavoriteAction.rejected.type
+        addFavoriteAction.pending.type,
+        addFavoriteAction.rejected.type
       ]);
     });
   });

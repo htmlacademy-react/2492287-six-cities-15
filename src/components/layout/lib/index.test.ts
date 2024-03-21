@@ -2,19 +2,24 @@ import { getClassName, getIsLoginPath } from '.';
 import { internet, random } from 'faker';
 
 describe('Function: getClassName', () => {
-  it('should return page--gray page--login', () => {
+  it('should return page--login', () => {
     const path = '/login';
-    const result = getClassName(path);
-    expect(result).toBe('page--gray page--login');
+    const result = getClassName(path, 0);
+    expect(result).toBe('page--login');
+  });
+  it('should return page--main page__main--favorites-empty', () => {
+    const path = '/';
+    const result = getClassName(path, 0);
+    expect(result).toBe('page--main page--gray page__main--favorites-empty');
   });
   it('should return page--gray page--main', () => {
     const path = '/';
-    const result = getClassName(path);
+    const result = getClassName(path, 1);
     expect(result).toBe('page--gray page--main');
   });
   it('should return empty row', () => {
     const path = internet.url();
-    const result = getClassName(path);
+    const result = getClassName(path, 0);
     expect(result).toBe('');
   });
 });

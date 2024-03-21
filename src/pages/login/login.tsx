@@ -1,17 +1,21 @@
 import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { APP_TITLE, cities } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { loginAction } from '../../store/api-action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loginAction } from '../../store/api-actions';
 import { randomInt } from './lib';
 import { changeCity } from '../../store/action';
 import { CityLink } from '../../components/city-link';
+import { Navigate } from 'react-router-dom';
+import { getIsAuth } from '../../store/user-process/user-process.selectors';
+import { AppRoute } from '../../app';
 
 export const Login: FC = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
   const [randomCity, setRandomCity] = useState(cities[0]);
+  const isAuth = useAppSelector(getIsAuth);
 
   useEffect(() => {
     const city = cities[randomInt(0, cities.length - 1)];
@@ -29,6 +33,11 @@ export const Login: FC = () => {
     }
   };
 
+  if (isAuth){
+    return (
+      <Navigate to={AppRoute.Root} />
+    );
+  }
   return (
     <main className='page__main page__main--login' data-testid='login'>
       <Helmet>
@@ -36,7 +45,7 @@ export const Login: FC = () => {
       </Helmet>
       <div className='page__login-container container'>
         <section className='login'>
-          <h1 className='login__title'>Log in</h1>
+          <h1 className='login__title'>Sign in</h1>
           <form
             className='login__form form'
             action='#'
@@ -48,9 +57,9 @@ export const Login: FC = () => {
               <input
                 ref={loginRef}
                 className='login__input form__input'
-                type='email'
-                name='email'
-                placeholder='Email'
+                type="email"
+                name="email"
+                placeholder="Email"
                 required
               />
             </div>
@@ -63,6 +72,8 @@ export const Login: FC = () => {
                 name='password'
                 placeholder='Password'
                 required
+                pattern="(?=^.{2,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Za-z]).*"
+                title="need minimum one letter and one number"
               />
             </div>
             <button className='login__submit form__submit button' type='submit'>

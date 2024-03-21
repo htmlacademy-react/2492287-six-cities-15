@@ -12,7 +12,7 @@ export const CityCardEmpty: FC<TCityCardEmptyProps> = ({city}) => (
         <b className='cities__status'>No places to stay available</b>
         <p className='cities__status-description'>
           We could not find any property available at the moment in
-          {city.name}
+          {' '}{city.name}
         </p>
       </div>
     </section>

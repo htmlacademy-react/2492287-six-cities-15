@@ -3,27 +3,17 @@ import { ReviewStar } from '../review-star';
 import { TReview } from '../../const';
 import { validateSubmit } from './lib';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addReviewAction } from '../../store/api-action';
-import { getOffer } from '../../store/offer-data/selectors';
-import { getAddReviewStatus } from '../../store/review-data/selectors';
-
-const raitings = [
-  {value: 5, name: 'perfect'},
-  {value: 4, name: 'good'},
-  {value: 3, name: 'not bad'},
-  {value: 2, name: 'badly'},
-  {value: 1, name: 'terrbly'}
-];
-
-const initialState = { rating: 0, comment: '', offerId: ''};
+import { addReviewAction } from '../../store/api-actions';
+import { getOffer } from '../../store/offer-data/offer-data.selectors';
+import { getAddReviewStatus } from '../../store/review-data/review-data.selectors';
+import { raitings, reviewInitialState } from './const';
 
 export const ReviewCreateCard: FC = () => {
-  const [formdata, setFormdata] = useState<TReview>(initialState);
-
+  const [formdata, setFormdata] = useState<TReview>(reviewInitialState);
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
-
   const addReviewStatus = useAppSelector(getAddReviewStatus);
+  const isLoading = addReviewStatus === 'loading';
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
@@ -37,12 +27,18 @@ export const ReviewCreateCard: FC = () => {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(addReviewAction({comment: formdata.comment, rating: formdata.rating, offerId: offer ? offer.id : ''}));
+    dispatch(
+      addReviewAction({
+        comment: formdata.comment,
+        rating: formdata.rating,
+        offerId: offer ? offer.id : ''
+      })
+    );
   };
 
   useEffect(() => {
-    if (addReviewStatus !== 'loading') {
-      setFormdata(initialState);
+    if (addReviewStatus === 'none') {
+      setFormdata(reviewInitialState);
     }
   }, [addReviewStatus]);
 
@@ -62,10 +58,11 @@ export const ReviewCreateCard: FC = () => {
           raitings.map((rating) => (
             <ReviewStar
               key={rating.value}
-              isChecked={formdata.rating === rating.value}
+              checked={formdata.rating === rating.value}
               defaultValue={rating.value}
               name={rating.name}
               onChange={handleInputChange}
+              disabled={isLoading}
             />
           ))
         }
@@ -77,6 +74,7 @@ export const ReviewCreateCard: FC = () => {
         placeholder='Tell how was your stay, what you like and what can be improved'
         value={formdata.comment}
         onChange={handleTextareaChange}
+        disabled={isLoading}
       />
       <div className='reviews__button-wrapper'>
         <p className='reviews__help'>
@@ -88,7 +86,7 @@ export const ReviewCreateCard: FC = () => {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled={!validateSubmit(formdata.comment, formdata.rating) || addReviewStatus === 'loading'}
+          disabled={!validateSubmit(formdata.comment, formdata.rating) || isLoading}
         >
           Submit
         </button>

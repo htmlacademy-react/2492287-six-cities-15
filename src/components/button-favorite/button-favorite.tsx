@@ -1,30 +1,32 @@
 import { FC } from 'react';
-import { setFavoriteAction } from '../../store/api-action';
+import { addFavoriteAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SimpleSpinner } from '../simple-spinner';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app';
-import { getIsOfferDataLoading } from '../../store/offer-data/selectors';
+import { getIsOfferDataLoading } from '../../store/offer-data/offer-data.selectors';
 import { getBookmarkClass } from './lib';
+import { TButtonType } from './const';
 
 export type TButtonFavoriteProps = {
   offerId: string;
   isFavorite: boolean;
-  typeCard: 'offer' | 'place-card';
+  typeCard: TButtonType;
   width: number;
   height: number;
   isAuth: boolean;
 }
 
-export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite: offerIsFavorite, typeCard, width, height, isAuth}) => {
+export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, typeCard, width, height, isAuth}) => {
   const dispatch = useAppDispatch();
-  const bookmarkClass = getBookmarkClass(offerIsFavorite, typeCard);
+  const bookmarkClass = getBookmarkClass(isFavorite, typeCard);
   const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     if (isAuth){
-      dispatch(setFavoriteAction({offerId: offerId, status: !offerIsFavorite}));
+      dispatch(addFavoriteAction({offerId: offerId, status: !isFavorite}));
+
     } else {
       navigate(AppRoute.Login);
     }
@@ -48,7 +50,8 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite: o
       >
         <use xlinkHref='#icon-bookmark' />
       </svg>
-      <span className='visually-hidden'>{offerIsFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+      <span className='visually-hidden'>{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+      <div>{isFavorite}</div>
     </button>
   );
 };

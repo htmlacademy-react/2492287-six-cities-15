@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, TUserData } from '../../const';
 import { requireAuthorization, saveUser } from '../action';
-import { checkAuthAction, loginAction, logoutAction } from '../api-action';
-import { AxiosError, isAxiosError } from 'axios';
-import { concatErrors } from '../lib';
-import { toast } from 'react-toastify';
-import { TErrorLogin } from '../const';
+import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 
 export type TUserState = {
   user: TUserData | null;
@@ -28,17 +24,9 @@ export const userProcess = createSlice({
         state.user = action.payload;
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
-      .addCase(loginAction.pending, (state) => {
-        state.authorizationStatus = AuthorizationStatus.Unknown;
-      })
-      .addCase(loginAction.rejected, (state, action) => {
+      .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.user = null;
-        if (isAxiosError(action.payload)){
-          const axiosErr = action.payload as AxiosError;
-          const errorLogin = axiosErr.response?.data as TErrorLogin;
-          toast.error(concatErrors(errorLogin.details));
-        }
       })
       .addCase(checkAuthAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;

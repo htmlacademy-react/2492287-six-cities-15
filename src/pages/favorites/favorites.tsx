@@ -3,11 +3,15 @@ import { Helmet } from 'react-helmet-async';
 import { Logo } from '../../components/logo';
 import { useAppSelector } from '../../hooks';
 import { FavoriteCityList } from '../../components/favorite-city-list';
-import { getFavorites } from '../../store/offer-data/selectors';
+import { getFavorites, getIsFavoritesDataLoading } from '../../store/offer-data/offer-data.selectors';
 import { APP_TITLE } from '../../const';
+import { Spinner } from '../../components/spinner';
+import { FAVORITES_LOADING_TEXT } from './const';
 
 export const Favorites: FC = () => {
   const favorites = useAppSelector(getFavorites);
+  const isFavoritesDataLoading = useAppSelector(getIsFavoritesDataLoading);
+  const favoritesBlock = isFavoritesDataLoading ? <Spinner text={FAVORITES_LOADING_TEXT}/> : <FavoriteCityList offers={favorites}/>;
 
   return (
     <>
@@ -19,19 +23,7 @@ export const Favorites: FC = () => {
         data-testid='favorites'
       >
         <div className='page__favorites-container container'>
-          {favorites.length > 0 && <FavoriteCityList offers={favorites}/>}
-          {
-            favorites.length === 0 &&
-            <section className='favorites favorites--empty'>
-              <h1 className='visually-hidden'>Favorites (empty)</h1>
-              <div className='favorites__status-wrapper'>
-                <b className='favorites__status'>Nothing yet saved.</b>
-                <p className='favorites__status-description'>
-                  Save properties to narrow down search or plan your future trips.
-                </p>
-              </div>
-            </section>
-          }
+          {favoritesBlock}
         </div>
       </main>
       <footer className='footer container'>

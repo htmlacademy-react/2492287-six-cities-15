@@ -15,21 +15,6 @@ export enum OfferType {
 
 export type TOfferType = keyof typeof OfferType;
 
-export type TLocation = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-}
-
-export type TCity = {
-  name: string;
-  location: TLocation;
-}
-
-export function xxx(xx: string) {
-  return xx;
-}
-
 export type TOffer = {
   id: string;
   title: string;
@@ -53,6 +38,17 @@ type TOfferAdditional = {
   maxAdults: number;
 }
 export type TOfferFull = TOffer & TOfferAdditional;
+
+export type TLocation = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+}
+
+export type TCity = {
+  name: string;
+  location: TLocation;
+}
 
 export type TUser = {
   name: string;

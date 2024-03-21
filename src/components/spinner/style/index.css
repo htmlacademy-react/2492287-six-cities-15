@@ -74,6 +74,11 @@
     background-position: 0px -220px;
     animation: textureSpin 8s linear infinite;
 }
+
+.spinner-text {
+  font-size: 2em;
+  margin-top: 20px;
+}
  
 @keyframes textureSpin {
     from {

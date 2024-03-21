@@ -2,7 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-component';
 import { ButtonFavorite } from '.';
 import { makeFakeStore } from '../../utils/mocks';
+
 describe('Component: ButtonFavorite', () => {
+
+
   it('should render correctly', () => {
     const buttonFavoriteTestId = 'button-favorite';
     const withHistoryComponent = withHistory(

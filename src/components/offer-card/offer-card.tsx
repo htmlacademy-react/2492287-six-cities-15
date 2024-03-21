@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { TOffer } from '../../const';
 import {ButtonFavorite }from '../button-favorite';
 import { useAppSelector } from '../../hooks';
-import { getIsAuth } from '../../store/user-process/selectors';
+import { getIsAuth } from '../../store/user-process/user-process.selectors';
 import { OfferCardType, TOfferCardType } from './const';
 import { Rating } from '../rating';
 

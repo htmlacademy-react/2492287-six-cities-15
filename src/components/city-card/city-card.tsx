@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks';
 import { OfferSort } from '../offer-sort';
 import { OfferList } from '../offer-list';
 import { Map } from '../../components/map';
-import { getOfferSortType, getSortedOffers } from '../../store/offer-data/selectors';
+import { getOfferSortType, getSortedOffers } from '../../store/offer-data/offer-data.selectors';
 
 export type TCityCardProps = {
   city: TCity;
@@ -25,10 +25,13 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
       <section className='cities__places places'>
         <h2 className='visually-hidden'>Places</h2>
         <b className='places__found'>
-          {sortedOffers.length} places to stay in {city.name}
+          {sortedOffers.length} {sortedOffers.length > 1 ? 'places' : 'place'} to stay in {city.name}
         </b>
         <OfferSort selectedSort={offerSortType}/>
-        <div className='cities__places-list places__list tabs__content'>
+        <div
+          className='cities__places-list places__list tabs__content'
+          onMouseEnter={() => handleOfferHover(null)}
+        >
           <OfferList
             offers={sortedOffers}
             offerCardType='City'
@@ -37,9 +40,12 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
         </div>
       </section>
       <div className='cities__right-section'>
-        <section style={{width: '100%'}}>
-          <Map city={city} selectedPoint={activeOffer} points={offers}/>
-        </section>
+        <Map
+          city={city}
+          selectedPoint={activeOffer}
+          points={offers}
+          mapPositionType='cities'
+        />
       </div>
     </div>
   );

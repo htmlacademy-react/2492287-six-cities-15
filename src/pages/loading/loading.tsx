@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Spinner } from '../../components/spinner';
-import { APP_TITLE } from '../../const';
+import { MainLoadingSettings } from './const';
 
 export const Loading: FC = () => (
-  <div style={{margin: 20}}>
-    <Spinner text={`${APP_TITLE} data is loading...`}/>
+  <div style={MainLoadingSettings.style}>
+    <Spinner text={MainLoadingSettings.text}/>
   </div>
 );

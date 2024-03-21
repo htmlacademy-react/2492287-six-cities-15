@@ -42,9 +42,10 @@ export const OfferSort: FC<TOfferCardProps> = ({selectedSort}) => {
         </svg>
       </span>
       {
-        isShowOfferSort &&
-        <ul className='places__options places__options--custom places__options--opened'>
+
+        <ul className={`places__options places__options--custom ${isShowOfferSort ? 'places__options--opened' : ''}`}>
           {
+            isShowOfferSort &&
             Object.keys(OfferSortType).map((key: string) => {
               const curSortType = OfferSortType[key as OfferSortTypeKey];
               return (

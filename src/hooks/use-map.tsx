@@ -13,7 +13,8 @@ function useMap(
   useEffect(() => {
     let mounted = true;
 
-    if (mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef && mapRef.current !== null && !isRenderedRef.current) {
+
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,

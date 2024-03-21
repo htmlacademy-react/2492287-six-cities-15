@@ -9,6 +9,6 @@ export enum ApiRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
-  Favorites = '/favorite',
+  Favorite = '/favorite',
   Comments = '/comments'
 }

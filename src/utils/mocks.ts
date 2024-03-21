@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { company, datatype, image, random, lorem, name, internet } from 'faker';
-import { AuthorizationStatus, OfferSortType, TOffer, TOfferFull, cities } from '../const';
+import { AuthorizationStatus, OfferSortType, TOffer, TOfferFull, TReviewFull, cities } from '../const';
 import { TOfferState } from '../store/offer-data/offer-data';
 import { ThunkDispatch } from 'redux-thunk';
 import { TState } from '../store/const';
@@ -157,14 +157,7 @@ export const expectedOfferState: TOfferState = {
     type: 'Room',
     price: 10,
     previewImage: image.imageUrl(),
-    city: {
-      name: company.companyName(),
-      location: {
-        latitude: datatype.float(),
-        longitude: datatype.float(),
-        zoom: datatype.number(),
-      }
-    },
+    city: cities[0],
     location: {
       latitude: datatype.float(),
       longitude: datatype.float(),
@@ -181,14 +174,7 @@ export const expectedOfferState: TOfferState = {
     type: 'Room',
     price: 10,
     previewImage: image.imageUrl(),
-    city: {
-      name: company.companyName(),
-      location: {
-        latitude: datatype.float(),
-        longitude: datatype.float(),
-        zoom: datatype.number(),
-      }
-    },
+    city: cities[0],
     location: {
       latitude: datatype.float(),
       longitude: datatype.float(),
@@ -319,7 +305,93 @@ export const makeFakeStore = (initialState?: Partial<TState>): TState => ({
   },
   Review: {
     reviews: [],
-    addReviewStatus: 'none'
+    addReviewStatus: 'none',
+    isFetchReviewsLoading: false
   },
   ...initialState ?? {},
 });
+
+export const expectedReview: TReviewFull = {
+  id: '',
+  date: new Date().toISOString(),
+  comment: 'review text',
+  rating: 1,
+  offerId: datatype.uuid(),
+  user: {
+    name: '',
+    avatarUrl: '',
+    isPro: false
+  }
+};
+
+export const expectedOffers: TOffer[] = [
+  {
+    id: datatype.uuid(),
+    title: lorem.text(),
+    type: 'Room',
+    price: 10,
+    previewImage: image.imageUrl(),
+    city: {
+      name: company.companyName(),
+      location: {
+        latitude: datatype.float(),
+        longitude: datatype.float(),
+        zoom: datatype.number(),
+      }
+    },
+    location: {
+      latitude: datatype.float(),
+      longitude: datatype.float(),
+      zoom: datatype.number(),
+    },
+    isFavorite: false,
+    isPremium: datatype.boolean(),
+    rating: 2
+  },
+  {
+    id: datatype.uuid(),
+    title: lorem.text(),
+    type: 'Room',
+    price: 14,
+    previewImage: image.imageUrl(),
+    city: {
+      name: company.companyName(),
+      location: {
+        latitude: datatype.float(),
+        longitude: datatype.float(),
+        zoom: datatype.number(),
+      }
+    },
+    location: {
+      latitude: datatype.float(),
+      longitude: datatype.float(),
+      zoom: datatype.number(),
+    },
+    isFavorite: false,
+    isPremium: datatype.boolean(),
+    rating: 5
+  },
+  {
+    id: datatype.uuid(),
+    title: lorem.text(),
+    type: 'Hotel',
+    price: 12,
+    previewImage: image.imageUrl(),
+    city: {
+      name: company.companyName(),
+      location: {
+        latitude: datatype.float(),
+        longitude: datatype.float(),
+        zoom: datatype.number(),
+      }
+    },
+    location: {
+      latitude: datatype.float(),
+      longitude: datatype.float(),
+      zoom: datatype.number(),
+    },
+    isFavorite: false,
+    isPremium: datatype.boolean(),
+    rating: 1
+  }
+];

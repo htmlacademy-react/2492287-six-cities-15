@@ -17,7 +17,11 @@ export const FavoriteLocationList: FC<TFavoriteLocationPlaceProps> = ({offers, c
     <li className='favorites__locations-items' data-testid='favorite-location-list'>
       <div className='favorites__locations locations locations--current'>
         <div className='locations__item'>
-          <CityLink city={city} isActive={false} onChangeCity={handleChangeCity} />
+          <CityLink
+            city={city}
+            isActive={false}
+            onChangeCity={handleChangeCity}
+          />
         </div>
       </div>
       <OfferList

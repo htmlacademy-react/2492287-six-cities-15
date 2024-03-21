@@ -26,6 +26,7 @@ export const fetchNearOffersAction = createAsyncThunk<TOffers, string, TActionUt
   'data/fetchNearOffers',
   async (offerId, {extra: api}) => {
     const {data} = await api.get<TOffers>(`${ApiRoute.Offers}/${offerId}/nearby`);
+
     return data;
   },
 );
@@ -33,7 +34,7 @@ export const fetchNearOffersAction = createAsyncThunk<TOffers, string, TActionUt
 export const fetchFavoritesAction = createAsyncThunk<TOffers, undefined, TActionUtils>(
   'data/fetchFavorites',
   async (_arg, {extra: api}) => {
-    const {data} = await api.get<TOffers>(ApiRoute.Favorites);
+    const {data} = await api.get<TOffers>(ApiRoute.Favorite);
     return data;
   },
 );
@@ -42,7 +43,7 @@ export const setFavoriteAction = createAsyncThunk<TOffer,
   {offerId: string; status: boolean}, TActionUtils>(
     'data/setFavorite',
     async ({offerId, status}, {extra: api}) => {
-      const {data} = await api.post<TOfferFull>(`${ApiRoute.Favorites}/${offerId}/${status ? '1' : '0'}`);
+      const {data} = await api.post<TOfferFull>(`${ApiRoute.Favorite}/${offerId}/${status ? '1' : '0'}`);
       return data;
     },
   );

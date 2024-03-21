@@ -6,8 +6,10 @@ import { ReviewList } from '../review-list';
 import { useAppSelector } from '../../hooks';
 import { ReviewCreateCard } from '../review-create-card';
 import { Rating } from '../rating';
-import { getReviewsForOffer } from '../../store/review-data/selectors';
+import { getIsFetchReviewsLoading, getReviewsCount,
+  getReviewsForOffer } from '../../store/review-data/review-data.selectors';
 import { getAdultsText, getBedroomsText } from './lib';
+import { SimpleSpinner } from '../simple-spinner';
 
 export type TOfferFullCardProps = {
   offer: TOfferFull;
@@ -16,9 +18,18 @@ export type TOfferFullCardProps = {
 
 export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
   const reviews = useAppSelector(getReviewsForOffer);
+  const reviewCount = useAppSelector(getReviewsCount);
+  const isFetchReviewsLoading = useAppSelector(getIsFetchReviewsLoading);
+  const reviewsComponent = isFetchReviewsLoading
+    ? <SimpleSpinner/>
+    : <ReviewList reviewCount={reviewCount} reviews={reviews} />;
 
   return (
-    <div className='offer__container container' data-testid='offer-card-container'>
+    <div
+      className='offer__container container'
+      data-testid='offer-card-container'
+      style={{marginBottom: 10}}
+    >
       <div className='offer__wrapper'>
         {
           offer.isPremium &&
@@ -39,9 +50,9 @@ export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
             isAuth={isAuth}
           />
         </div>
-        <Rating objectType={'offer'} rating={offer.rating} isRound/>
+        <Rating objectType={'offer'} rating={offer.rating}/>
         <ul className='offer__features'>
-          <li className='offer__feature offer__feature--entire'>Apartment</li>
+          <li className='offer__feature offer__feature--entire'>{offer.type}</li>
           <li className='offer__feature offer__feature--bedrooms'>
             {getBedroomsText(offer.bedrooms)}
           </li>
@@ -64,8 +75,16 @@ export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
         <div className='offer__host'>
           <h2 className='offer__host-title'>Meet the host</h2>
           <OfferUser user={offer.host} />
+          <div className="offer__description">
+            <p className="offer__text">
+              {offer.title}
+            </p>
+            <p className="offer__text">
+              {offer.description}
+            </p>
+          </div>
         </div>
-        <ReviewList reviews={reviews} />
+        {reviewsComponent}
         {isAuth && <ReviewCreateCard />}
       </div>
     </div>
