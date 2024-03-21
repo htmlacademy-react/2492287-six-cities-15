@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { TOffer, cities } from '../../const';
 import { FavoriteLocationList } from '../favorite-location-list';
+import { FavoritesEmpty } from '../favorites-empty';
 
 export type TFavoriteLocationProps = {
   offers: TOffer[];
@@ -8,6 +9,9 @@ export type TFavoriteLocationProps = {
 
 export const FavoriteCityList: FC<TFavoriteLocationProps> = ({offers}) => {
   const offerCities = [...new Set(offers.map((offer) => offer.city.name))];
+  if (offers.length === 0){
+    return <FavoritesEmpty/>;
+  }
 
   return (
     <section className='favorites'>

@@ -1,8 +1,7 @@
 import { OfferSortType, cities } from '../../const';
-import { expectedEmptyOfferState, expectedFavorites, expectedOfferFavoritesState, expectedOfferFull, expectedOfferState } from '../../utils/mocks';
+import { expectedEmptyOfferState, expectedFavorites, expectedOfferFavoritesState, expectedOfferFull, expectedOfferState, expectedOffers } from '../../utils/mocks';
 import { changeCity, clearFavoriteOffer, setFavoritesOff, setOfferSortType } from '../action';
 import { fetchFavoritesAction, fetchNearOffersAction, fetchOfferAction, fetchOffersAction, addFavoriteAction } from '../api-actions';
-import { offers } from '../lib/mocks';
 import { offerData } from './offer-data';
 
 describe('OfferData Slice', () => {
@@ -45,10 +44,10 @@ describe('OfferData Slice', () => {
   it('should set "offers" to array with TOffer, "isOffersDataLoading" to "false" with "fetchOffersAction.fulfilled"', () => {
     const state = structuredClone(expectedEmptyOfferState);
     const expectedState = structuredClone(expectedEmptyOfferState);
-    expectedState.offers = offers;
+    expectedState.offers = expectedOffers;
     expectedState.isOffersDataLoading = false;
 
-    const result = offerData.reducer(state, fetchOffersAction.fulfilled(offers, '', undefined));
+    const result = offerData.reducer(state, fetchOffersAction.fulfilled(expectedOffers, '', undefined));
     expect(result).toEqual(expectedState);
   });
 
@@ -78,9 +77,9 @@ describe('OfferData Slice', () => {
   it('should set "nearOffers" to array with TOffer with "fetchNearOffersAction.fulfilled"', () => {
     const state = structuredClone(expectedEmptyOfferState);
     const expectedState = structuredClone(expectedEmptyOfferState);
-    expectedState.nearOffers = Array.from(offers);
+    expectedState.nearOffers = Array.from(expectedOffers);
 
-    const result = offerData.reducer(state, fetchNearOffersAction.fulfilled(offers, '', ''));
+    const result = offerData.reducer(state, fetchNearOffersAction.fulfilled(expectedOffers, '', ''));
     expect(result).toEqual(expectedState);
   });
 
@@ -102,13 +101,27 @@ describe('OfferData Slice', () => {
     expect(result.isNearOffersDataLoading).toBeFalsy();
   });
 
-  it('should set "favorites" to array TOffer, set "isFavorite" in offers from favorites with "fetchFavoritesAction.fulfilled"', () => {
+  it('should set "favorites" to array TOffer with "fetchFavoritesAction.fulfilled"', () => {
     const state = structuredClone(expectedOfferState);
     const expectedState = structuredClone(expectedOfferState);
     expectedState.favorites = expectedFavorites;
 
     const result = offerData.reducer(state, fetchFavoritesAction.fulfilled(expectedFavorites, '', undefined));
     expect(result).toEqual(expectedState);
+  });
+
+  it('should set "isFavoritesDataLoading" to true with "fetchFavoritesAction.pending"', () => {
+    const state = structuredClone(expectedOfferState);
+
+    const result = offerData.reducer(state, fetchFavoritesAction.pending);
+    expect(result.isFavoritesDataLoading).toEqual(true);
+  });
+
+  it('should set "isFavoritesDataLoading" to false with "fetchFavoritesAction.rejected"', () => {
+    const state = structuredClone(expectedOfferState);
+
+    const result = offerData.reducer(state, fetchFavoritesAction.rejected);
+    expect(result.isFavoritesDataLoading).toEqual(false);
   });
 
   it('should set "offer.isFavorite" to true, find and set offer in (offers, nearOffers) and set "isFavorite" to true, add to favorites with addtFavoriteAction.fulfilled"', () => {

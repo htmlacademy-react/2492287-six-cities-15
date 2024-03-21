@@ -80,6 +80,7 @@ export const loginAction = createAsyncThunk<TUserData, TAuthData, TActionUtils>(
 
 
     saveToken(data.token);
+    dispatch(fetchOffersAction());
     dispatch(fetchFavoritesAction());
     dispatch(redirectToRoute(AppRoute.Root));
     return data;

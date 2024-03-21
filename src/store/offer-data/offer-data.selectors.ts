@@ -11,6 +11,7 @@ export const getIsNearOffersDataLoading = (state: TState) => state[NameSpace.Off
 export const getNearOffers = (state: TState) => state[NameSpace.Offer].nearOffers;
 export const getActiveCity = (state: TState) => state[NameSpace.Offer].activeCity;
 export const getFavorites = (state: TState) => state[NameSpace.Offer].favorites;
+export const getIsFavoritesDataLoading = (state: TState) => state[NameSpace.Offer].isFavoritesDataLoading;
 export const getOfferSortType = (state: TState) => state[NameSpace.Offer].offerSortType;
 
 export const getCityOffers = createSelector(

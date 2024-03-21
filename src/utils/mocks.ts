@@ -323,3 +323,75 @@ export const expectedReview: TReviewFull = {
     isPro: false
   }
 };
+
+export const expectedOffers: TOffer[] = [
+  {
+    id: datatype.uuid(),
+    title: lorem.text(),
+    type: 'Room',
+    price: 10,
+    previewImage: image.imageUrl(),
+    city: {
+      name: company.companyName(),
+      location: {
+        latitude: datatype.float(),
+        longitude: datatype.float(),
+        zoom: datatype.number(),
+      }
+    },
+    location: {
+      latitude: datatype.float(),
+      longitude: datatype.float(),
+      zoom: datatype.number(),
+    },
+    isFavorite: false,
+    isPremium: datatype.boolean(),
+    rating: 2
+  },
+  {
+    id: datatype.uuid(),
+    title: lorem.text(),
+    type: 'Room',
+    price: 14,
+    previewImage: image.imageUrl(),
+    city: {
+      name: company.companyName(),
+      location: {
+        latitude: datatype.float(),
+        longitude: datatype.float(),
+        zoom: datatype.number(),
+      }
+    },
+    location: {
+      latitude: datatype.float(),
+      longitude: datatype.float(),
+      zoom: datatype.number(),
+    },
+    isFavorite: false,
+    isPremium: datatype.boolean(),
+    rating: 5
+  },
+  {
+    id: datatype.uuid(),
+    title: lorem.text(),
+    type: 'Hotel',
+    price: 12,
+    previewImage: image.imageUrl(),
+    city: {
+      name: company.companyName(),
+      location: {
+        latitude: datatype.float(),
+        longitude: datatype.float(),
+        zoom: datatype.number(),
+      }
+    },
+    location: {
+      latitude: datatype.float(),
+      longitude: datatype.float(),
+      zoom: datatype.number(),
+    },
+    isFavorite: false,
+    isPremium: datatype.boolean(),
+    rating: 1
+  }
+];

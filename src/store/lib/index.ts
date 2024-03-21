@@ -1,17 +1,4 @@
 import { OfferSortType, TOffer, TOffers } from '../../const';
-import { TErrorLoginDetail } from '../const';
-
-export const concatErrors = (errors: TErrorLoginDetail[]) => {
-  let result = '';
-  if (errors){
-    errors.forEach((item) => {
-      item?.messages?.forEach((mess: string) => {
-        result += `${mess}\r\n`;
-      });
-    });
-  }
-  return result;
-};
 
 export const sortOffers = (offerSortType: OfferSortType, offers: TOffer[]) => {
   switch(offerSortType){

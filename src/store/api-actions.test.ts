@@ -61,6 +61,7 @@ describe('Async actions', () => {
 
       expect(actions).toEqual([
         loginAction.pending.type,
+        fetchOffersAction.pending.type,
         fetchFavoritesAction.pending.type,
         redirectToRoute.type,
         loginAction.fulfilled.type,
