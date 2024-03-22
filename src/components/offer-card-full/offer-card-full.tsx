@@ -49,13 +49,13 @@ export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
           <ButtonFavorite
             offerId={offer.id}
             isFavorite={offer.isFavorite}
-            typeCard='offer'
+            buttonTypeClassName='offer'
             width={FavoriteButtonSize.Width}
             height={FavoriteButtonSize.Height}
             isAuth={isAuth}
           />
         </div>
-        <Rating objectType={'offer'} rating={offer.rating}/>
+        <Rating cardTypeClassName={'offer'} rating={offer.rating}/>
         <ul className='offer__features'>
           <li className='offer__feature offer__feature--entire'>{offer.type}</li>
           <li className='offer__feature offer__feature--bedrooms'>

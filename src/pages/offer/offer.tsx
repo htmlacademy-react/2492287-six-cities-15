@@ -81,7 +81,7 @@ export const Offer: FC = () => {
           city={offer.city}
           points={nearOffersForMap}
           selectedPoint={offer}
-          mapPositionType='offer'
+          mapPositionClassName='offer'
         />
       </section>
       <div className='container'>

@@ -6,7 +6,8 @@ import { TOffer } from '../../const';
 import {ButtonFavorite }from '../button-favorite';
 import { useAppSelector } from '../../hooks';
 import { getIsAuth } from '../../store/user-process/user-process-selectors';
-import { ALT_IMAGE_TEXT, FavoriteButtonSize, OfferCardType, TOfferCardType } from './const';
+import { ALT_IMAGE_TEXT, FavoriteButtonSize,
+  OfferCardType, TOfferCardType } from './const';
 import { Rating } from '../rating';
 
 export type TOfferCardProps = {
@@ -70,13 +71,13 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
           <ButtonFavorite
             offerId={offer.id}
             isFavorite={offer.isFavorite}
-            typeCard='place-card'
+            buttonTypeClassName='place-card'
             width={FavoriteButtonSize.width}
             height={FavoriteButtonSize.height}
             isAuth={isAuth}
           />
         </div>
-        <Rating objectType='place-card' rating={offer.rating} />
+        <Rating cardTypeClassName='place-card' rating={offer.rating} />
         <h2 className='place-card__name'>
           <Link to={offerLink}>{offer.title}</Link>
         </h2>

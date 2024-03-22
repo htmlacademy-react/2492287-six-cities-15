@@ -44,7 +44,7 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
           city={city}
           selectedPoint={activeOffer}
           points={offers}
-          mapPositionType='cities'
+          mapPositionClassName='cities'
         />
       </div>
     </div>

@@ -1,1 +1,1 @@
-export type TButtonType = 'offer' | 'place-card';
+export type TButtonTypeClassName = 'offer' | 'place-card';

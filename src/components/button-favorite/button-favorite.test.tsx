@@ -12,9 +12,9 @@ describe('Component: ButtonFavorite', () => {
       <ButtonFavorite
         height={10}
         width={10}
-        offerId={''}
+        offerId=''
         isFavorite={false}
-        typeCard={'offer'}
+        buttonTypeClassName='offer'
         isAuth={false}
       />
     );

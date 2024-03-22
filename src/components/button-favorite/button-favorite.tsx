@@ -6,20 +6,20 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app';
 import { getIsAddFavoriteLoading } from '../../store/offer-data/offer-data-selectors';
 import { getBookmarkClass } from './lib';
-import { TButtonType } from './const';
+import { TButtonTypeClassName } from './const';
 
 export type TButtonFavoriteProps = {
   offerId: string;
   isFavorite: boolean;
-  typeCard: TButtonType;
+  buttonTypeClassName: TButtonTypeClassName;
   width: number;
   height: number;
   isAuth: boolean;
 }
 
-export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, typeCard, width, height, isAuth}) => {
+export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, buttonTypeClassName, width, height, isAuth}) => {
   const dispatch = useAppDispatch();
-  const bookmarkClass = getBookmarkClass(isFavorite, typeCard);
+  const bookmarkClass = getBookmarkClass(isFavorite, buttonTypeClassName);
   const isAddFavoriteLoading = useAppSelector(getIsAddFavoriteLoading);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const navigate = useNavigate();
@@ -51,13 +51,13 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, t
 
   return (
     <button
-      className={`${typeCard}__bookmark-button button${bookmarkClass}`}
+      className={`${buttonTypeClassName}__bookmark-button button${bookmarkClass}`}
       type='button'
       onClick={handleButtonClick}
       data-testid='button-favorite'
     >
       <svg
-        className={`${typeCard}__bookmark-icon`}
+        className={`${buttonTypeClassName}__bookmark-icon`}
         width={width}
         height={height}
       >
