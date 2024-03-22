@@ -1,2 +1,2 @@
-export const getBedroomsText = (bedrooms: number) => `${bedrooms} ${bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}`;
-export const getAdultsText = (adults: number) => `Max ${adults} ${adults > 1 ? 'adults' : 'adult'}`;
+export const getBedroomsText = (bedrooms: number) => `${bedrooms} Bedroom${bedrooms > 1 ? 's' : ''}`;
+export const getAdultsText = (adults: number) => `Max ${adults} adult${adults > 1 ? 's' : ''}`;

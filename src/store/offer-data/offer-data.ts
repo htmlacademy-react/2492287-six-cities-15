@@ -16,6 +16,7 @@ export type TOfferState = {
   favorites: TOffers;
   isFavoritesDataLoading: boolean;
   offerSortType: OfferSortType;
+  isAddFavoriteLoading: boolean;
 }
 
 const initialState: TOfferState = {
@@ -28,7 +29,8 @@ const initialState: TOfferState = {
   isNearOffersDataLoading: false,
   favorites: [],
   isFavoritesDataLoading: false,
-  offerSortType: OfferSortType.Popular
+  offerSortType: OfferSortType.Popular,
+  isAddFavoriteLoading: false,
 };
 
 export const offerData = createSlice({
@@ -99,6 +101,13 @@ export const offerData = createSlice({
             state.favorites.splice(offerIndex, 1);
           }
         }
+        state.isAddFavoriteLoading = false;
+      })
+      .addCase(addFavoriteAction.pending, (state) => {
+        state.isAddFavoriteLoading = true;
+      })
+      .addCase(addFavoriteAction.rejected, (state) => {
+        state.isAddFavoriteLoading = false;
       })
       .addCase(setFavoritesOff, (state) => {
         state.favorites.splice(0, state.favorites.length);

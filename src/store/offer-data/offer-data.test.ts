@@ -133,6 +133,21 @@ describe('OfferData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
+  it('should set "isAddFavoriteDataLoading" to "true" with "addFavoriteAction.pending"', () => {
+    const state = structuredClone(expectedEmptyOfferState);
+    const result = offerData.reducer(state, addFavoriteAction.pending);
+
+    expect(result.isAddFavoriteLoading).toBeTruthy();
+  });
+
+  it('should set "isAddFavoriteDataLoading" to "false" with "addFavoriteAction.rejected"', () => {
+    const state = structuredClone(expectedEmptyOfferState);
+    state.isAddFavoriteLoading = true;
+    const result = offerData.reducer(state, addFavoriteAction.rejected);
+
+    expect(result.isAddFavoriteLoading).toBeFalsy();
+  });
+
   it('should set "offer.isFavorite" to false, find and set offer in (offers, nearOffers) and set "isFavorite" to false, del from favorites with "addFavoriteAction.fulfilled"', () => {
     const state = structuredClone(expectedOfferFavoritesState);
     const expectedState = structuredClone(state);

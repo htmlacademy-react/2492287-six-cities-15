@@ -7,7 +7,7 @@ import { useAppSelector } from '../../hooks';
 import { ReviewCreateCard } from '../review-create-card';
 import { Rating } from '../rating';
 import { getIsFetchReviewsLoading, getReviewsCount,
-  getReviewsForOffer } from '../../store/review-data/review-data.selectors';
+  getReviewsForOffer } from '../../store/review-data/review-data-selectors';
 import { getAdultsText, getBedroomsText } from './lib';
 import { SimpleSpinner } from '../simple-spinner';
 
@@ -15,6 +15,11 @@ export type TOfferFullCardProps = {
   offer: TOfferFull;
   isAuth: boolean;
 }
+
+const FavoriteButtonSize = {
+  Width: 31,
+  Height: 33
+} as const;
 
 export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
   const reviews = useAppSelector(getReviewsForOffer);
@@ -45,8 +50,8 @@ export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
             offerId={offer.id}
             isFavorite={offer.isFavorite}
             typeCard='offer'
-            width={31}
-            height={33}
+            width={FavoriteButtonSize.Width}
+            height={FavoriteButtonSize.Height}
             isAuth={isAuth}
           />
         </div>

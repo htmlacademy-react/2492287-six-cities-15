@@ -18,3 +18,7 @@ export const currentCustomIcon = new Icon({
 });
 
 export type TMapPositionType = 'offer' | 'cities';
+
+export const MapStyle = {
+  height: '100%',
+} as const;

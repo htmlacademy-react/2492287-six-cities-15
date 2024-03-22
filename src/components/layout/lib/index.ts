@@ -1,18 +1,24 @@
+import { AppRoute } from '../../../app';
+
+const PageClass = {
+  Page: 'page',
+  PageMain: 'page--main',
+  PageGray: 'page-gray',
+  PageLogin: 'page--login',
+  PageFavoritesEmpty: 'page--favorites-empty'
+} as const;
+
 export const getClassName = (pathname: string, favoritesCount: number): string => {
   switch(pathname){
-    case '/login': return 'page--login';
-    case '/':
+    case AppRoute.Login: return `${PageClass.Page} ${PageClass.PageGray} ${PageClass.PageLogin}`;
+    case AppRoute.Root: return `${PageClass.Page} ${PageClass.PageMain} ${PageClass.PageGray}`;
+    case AppRoute.Favorites:
       if (favoritesCount === 0) {
-        return 'page--main page--gray page__main--favorites-empty';
+        return `${PageClass.Page} ${PageClass.PageFavoritesEmpty}`;
       }
-      return 'page--gray page--main';
-    case '/favorites':
-      if (favoritesCount === 0) {
-        return 'page page--favorites-empty page__main--favorites-empty';
-      }
-      return '';
-    default: return '';
+      return PageClass.Page;
+    default: return PageClass.Page;
   }
 };
 
-export const getIsLoginPath: (pathname: string) => boolean = (pathname) => pathname === '/login';
+export const getIsLoginPath: (pathname: string) => boolean = (pathname) => pathname === AppRoute.Login.toString();

@@ -1,7 +1,7 @@
 import { AuthorizationStatus, NameSpace } from '../../const';
 import { expectedOfferState } from '../../utils/mocks';
 import { TReviewState } from '../review-data/review-data';
-import { getAuthorizationStatus, getIsAuth, getUser } from './user-process.selectors';
+import { getAuthorizationStatus, getIsAuth, getUser } from './user-process-selectors';
 import { TUserState } from './user-process';
 
 describe('GameData selectors', () => {

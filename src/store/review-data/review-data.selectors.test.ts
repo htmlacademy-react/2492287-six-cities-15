@@ -2,7 +2,7 @@ import { AuthorizationStatus, NameSpace } from '../../const';
 import { expectedOfferState } from '../../utils/mocks';
 import { TReviewState } from './review-data';
 import { TUserState } from '../user-process/user-process';
-import { getAddReviewStatus, getIsFetchReviewsLoading, getReviews, getReviewsCount, getReviewsForOffer } from './review-data.selectors';
+import { getAddReviewStatus, getIsFetchReviewsLoading, getReviews, getReviewsCount, getReviewsForOffer } from './review-data-selectors';
 
 describe('GameData selectors', () => {
   const state = {

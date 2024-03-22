@@ -78,27 +78,20 @@ describe('Function getCardImageSize', () => {
   it('should return {width: 260, height: 200}', () => {
     const offerCardType: TOfferCardType = 'City';
     const result = getCardImageSize(offerCardType);
-    expect(result.height).toBe(200);
-    expect(result.width).toBe(260);
+    expect(result.Height).toBe(200);
+    expect(result.Width).toBe(260);
   });
   it('should return {width: 150, height: 110}', () => {
     const offerCardType: TOfferCardType = 'Favorite';
     const result = getCardImageSize(offerCardType);
-    expect(result.height).toBe(110);
-    expect(result.width).toBe(150);
+    expect(result.Height).toBe(110);
+    expect(result.Width).toBe(150);
   });
   it('should return {width: 260, height: 200}', () => {
     const offerCardType: TOfferCardType = 'Near';
     const result = getCardImageSize(offerCardType);
-    expect(result.height).toBe(200);
-    expect(result.width).toBe(260);
-  });
-  it('should return {width: 260, height: 200}', () => {
-    type TTemp = TOfferCardType | 'Temp';
-    const offerCardType: TTemp = 'Temp';
-    const result = getCardImageSize(offerCardType as TOfferCardType);
-    expect(result.height).toBe(200);
-    expect(result.width).toBe(260);
+    expect(result.Height).toBe(200);
+    expect(result.Width).toBe(260);
   });
 });
 

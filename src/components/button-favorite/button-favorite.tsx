@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { addFavoriteAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SimpleSpinner } from '../simple-spinner';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app';
-import { getIsOfferDataLoading } from '../../store/offer-data/offer-data.selectors';
+import { getIsAddFavoriteLoading } from '../../store/offer-data/offer-data-selectors';
 import { getBookmarkClass } from './lib';
 import { TButtonType } from './const';
 
@@ -20,19 +20,32 @@ export type TButtonFavoriteProps = {
 export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, typeCard, width, height, isAuth}) => {
   const dispatch = useAppDispatch();
   const bookmarkClass = getBookmarkClass(isFavorite, typeCard);
-  const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
+  const isAddFavoriteLoading = useAppSelector(getIsAddFavoriteLoading);
+  const [isLoadingData, setIsLoadingData] = useState(false);
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     if (isAuth){
+      setIsLoadingData(true);
       dispatch(addFavoriteAction({offerId: offerId, status: !isFavorite}));
-
     } else {
       navigate(AppRoute.Login);
     }
   };
 
-  if (isOfferDataLoading){
+  useEffect(() => {
+    let mounted = true;
+    if (!isAddFavoriteLoading && mounted) {
+      setIsLoadingData(false);
+    }
+    return (
+      () => {
+        mounted = false;
+      }
+    );
+  }, [isAddFavoriteLoading]);
+
+  if (isLoadingData && isAddFavoriteLoading){
     return <SimpleSpinner/>;
   }
 

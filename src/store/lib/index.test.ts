@@ -2,7 +2,6 @@ import { lorem } from 'faker';
 import { setOfferFavorite, sortOffers } from '.';
 import { OfferSortType, TOffers } from '../../const';
 import { expectedOffers } from '../../utils/mocks';
-//import { errors, offers } from './mocks';
 
 describe('Function: sortOffers', () => {
   it('should return same offers', () => {

@@ -3,7 +3,7 @@ import { Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import {TCity, TOffer} from '../../const';
 import 'leaflet/dist/leaflet.css';
-import { TMapPositionType, currentCustomIcon, defaultCustomIcon } from './const';
+import { MapStyle, TMapPositionType, currentCustomIcon, defaultCustomIcon } from './const';
 
 export type TMapProps = {
   city: TCity;
@@ -17,19 +17,12 @@ export const Map: FC<TMapProps> = ({city, points, selectedPoint, mapPositionType
   const map = useMap(mapRef, city);
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted){
-      map?.panTo({lat: city.location.latitude, lng: city.location.longitude});
-      map?.setZoom(city.location.zoom);
-    }
-    return () => {
-      mounted = false;
-    };
+    map?.panTo({lat: city.location.latitude, lng: city.location.longitude});
+    map?.setZoom(city.location.zoom);
   }, [city, map]);
 
   useEffect(() => {
-    let mounted = true;
-    if (map && mounted) {
+    if (map) {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
@@ -46,7 +39,6 @@ export const Map: FC<TMapProps> = ({city, points, selectedPoint, mapPositionType
 
       return () => {
         map.removeLayer(markerLayer);
-        mounted = false;
       };
     }
 
@@ -57,7 +49,7 @@ export const Map: FC<TMapProps> = ({city, points, selectedPoint, mapPositionType
       className={`${mapType}__map map`}
       data-testid='map'
     >
-      <div style={{height: '100%'}} ref={mapRef}></div>
+      <div style={MapStyle} ref={mapRef}></div>
     </section>
   );
 };

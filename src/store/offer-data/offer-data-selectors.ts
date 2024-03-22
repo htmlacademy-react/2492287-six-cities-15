@@ -13,6 +13,7 @@ export const getActiveCity = (state: TState) => state[NameSpace.Offer].activeCit
 export const getFavorites = (state: TState) => state[NameSpace.Offer].favorites;
 export const getIsFavoritesDataLoading = (state: TState) => state[NameSpace.Offer].isFavoritesDataLoading;
 export const getOfferSortType = (state: TState) => state[NameSpace.Offer].offerSortType;
+export const getIsAddFavoriteLoading = (state: TState) => state[NameSpace.Offer].isAddFavoriteLoading;
 
 export const getCityOffers = createSelector(
   [

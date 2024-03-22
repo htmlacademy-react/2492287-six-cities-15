@@ -4,9 +4,9 @@ import { TReview } from '../../const';
 import { validateSubmit } from './lib';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addReviewAction } from '../../store/api-actions';
-import { getOffer } from '../../store/offer-data/offer-data.selectors';
-import { getAddReviewStatus } from '../../store/review-data/review-data.selectors';
-import { raitings, reviewInitialState } from './const';
+import { ratings, reviewInitialState } from './const';
+import { getOffer } from '../../store/offer-data/offer-data-selectors';
+import { getAddReviewStatus } from '../../store/review-data/review-data-selectors';
 
 export const ReviewCreateCard: FC = () => {
   const [formdata, setFormdata] = useState<TReview>(reviewInitialState);
@@ -55,7 +55,7 @@ export const ReviewCreateCard: FC = () => {
       </label>
       <div className='reviews__rating-form form__rating'>
         {
-          raitings.map((rating) => (
+          ratings.map((rating) => (
             <ReviewStar
               key={rating.value}
               checked={formdata.rating === rating.value}

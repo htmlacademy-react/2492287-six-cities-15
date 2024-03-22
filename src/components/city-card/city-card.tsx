@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks';
 import { OfferSort } from '../offer-sort';
 import { OfferList } from '../offer-list';
 import { Map } from '../../components/map';
-import { getOfferSortType, getSortedOffers } from '../../store/offer-data/offer-data.selectors';
+import { getOfferSortType, getSortedOffers } from '../../store/offer-data/offer-data-selectors';
 
 export type TCityCardProps = {
   city: TCity;
@@ -25,7 +25,7 @@ export const CityCard: FC<TCityCardProps> = ({city, offers}) => {
       <section className='cities__places places'>
         <h2 className='visually-hidden'>Places</h2>
         <b className='places__found'>
-          {sortedOffers.length} {sortedOffers.length > 1 ? 'places' : 'place'} to stay in {city.name}
+          {sortedOffers.length} {`place${sortedOffers.length > 1 ? 's' : ''}`} to stay in {city.name}
         </b>
         <OfferSort selectedSort={offerSortType}/>
         <div

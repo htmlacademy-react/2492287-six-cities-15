@@ -8,11 +8,13 @@
     display: table;
     margin: 0px auto;
     transform: scale(1.1);
+    margin: '0 auto';
+    width: 300px;
 }
 .globe {
     position: relative;  
     display: block;
-    margin: 0;
+    margin: '0 auto';
     padding: 0;
     top: 0; 
     left: 0;
@@ -76,7 +78,7 @@
 }
 
 .spinner-text {
-  font-size: 2em;
+  font-size: 1.5em;
   margin-top: 20px;
 }
  

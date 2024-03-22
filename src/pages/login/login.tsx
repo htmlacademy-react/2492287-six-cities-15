@@ -7,7 +7,7 @@ import { randomInt } from './lib';
 import { changeCity } from '../../store/action';
 import { CityLink } from '../../components/city-link';
 import { Navigate } from 'react-router-dom';
-import { getIsAuth } from '../../store/user-process/user-process.selectors';
+import { getIsAuth } from '../../store/user-process/user-process-selectors';
 import { AppRoute } from '../../app';
 
 export const Login: FC = () => {

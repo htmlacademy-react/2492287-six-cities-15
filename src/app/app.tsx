@@ -12,8 +12,8 @@ import { Layout } from '../components/layout';
 import { AuthorizationStatus } from '../const';
 import { useAppSelector } from '../hooks';
 import { Loading } from '../pages/loading';
-import { getAuthorizationStatus } from '../store/user-process/user-process.selectors';
-import { getIsOffersDataLoading } from '../store/offer-data/offer-data.selectors';
+import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
+import { getIsOffersDataLoading } from '../store/offer-data/offer-data-selectors';
 
 export const App: FC = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
