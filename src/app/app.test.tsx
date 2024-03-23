@@ -98,7 +98,8 @@ describe('Application Routing', () => {
         isNearOffersDataLoading: false,
         favorites: [],
         isFavoritesDataLoading: false,
-        offerSortType: OfferSortType.Popular
+        offerSortType: OfferSortType.Popular,
+        isAddFavoriteLoading: false,
       }
     }));
 

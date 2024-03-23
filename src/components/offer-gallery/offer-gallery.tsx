@@ -4,6 +4,8 @@ export type TOfferGalleryProps = {
   images: string[];
 }
 
+const ALT_IMAGE_TEXT = 'Photo studio';
+
 export const OfferGallery: FC<TOfferGalleryProps> = ({images}) => (
   <div className='offer__gallery-container container' data-testid='offer-gallery'>
     <div className='offer__gallery'>
@@ -16,7 +18,7 @@ export const OfferGallery: FC<TOfferGalleryProps> = ({images}) => (
           <img
             className='offer__image'
             src={imageSrc}
-            alt='Photo studio'
+            alt={ALT_IMAGE_TEXT}
           />
         </div>
       ))}

@@ -8,6 +8,9 @@ import { TLogoLocation } from './const';
 export type TLogoProps = {
   logoLocation: TLogoLocation;
 }
+
+const LOGO_IMAGE_URL = 'img/logo.svg';
+
 export const Logo: FC<TLogoProps> = ({logoLocation}) => {
   const logoClassName = getLogoClassName(logoLocation);
   const logoImgClassName = getLogoImgClassName(logoLocation);
@@ -17,7 +20,7 @@ export const Logo: FC<TLogoProps> = ({logoLocation}) => {
       <Link className={logoClassName} to={AppRoute.Root}>
         <img data-testid="logo-link"
           className={logoImgClassName}
-          src='img/logo.svg'
+          src={LOGO_IMAGE_URL}
           alt={`${APP_TITLE} logo`}
           width={logoSize.width}
           height={logoSize.height}

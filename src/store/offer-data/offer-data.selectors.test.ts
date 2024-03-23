@@ -2,7 +2,7 @@ import { AuthorizationStatus, NameSpace, cities } from '../../const';
 import { expectedOfferState } from '../../utils/mocks';
 import { TReviewState } from '../review-data/review-data';
 import { TUserState } from '../user-process/user-process';
-import { getActiveCity, getCityOffers, getFavorites, getImagesForOffer, getIsNearOffersDataLoading, getIsOfferDataLoading, getIsOffersDataLoading, getNearOffers, getNearOffersForList, getNearOffersForMap, getOffer, getOfferSortType, getOffers, getOffersCities, getSortedOffers } from './offer-data.selectors';
+import { getActiveCity, getCityOffers, getFavorites, getImagesForOffer, getIsNearOffersDataLoading, getIsOfferDataLoading, getIsOffersDataLoading, getNearOffers, getNearOffersForList, getNearOffersForMap, getOffer, getOfferSortType, getOffers, getOffersCities, getSortedOffers } from './offer-data-selectors';
 
 
 describe('GameData selectors', () => {

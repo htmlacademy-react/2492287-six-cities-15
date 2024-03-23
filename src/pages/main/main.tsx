@@ -6,13 +6,16 @@ import { changeCity } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CityCard } from '../../components/city-card';
 import { CityCardEmpty } from '../../components/city-card-empty';
-import { getActiveCity, getCityOffers } from '../../store/offer-data/offer-data.selectors';
+import { getActiveCity, getCityOffers } from '../../store/offer-data/offer-data-selectors';
 
 export const Main: FC = () => {
   const dispatch = useAppDispatch();
   const activeCity = useAppSelector(getActiveCity);
   const offers = useAppSelector(getCityOffers);
   const isEmpty = offers.length === 0;
+  const cityCardComponent = isEmpty
+    ? <CityCardEmpty city={activeCity}/>
+    : <CityCard city={activeCity} offers={offers}/>;
 
   const handleCityChange = (city: TCity) => {
     dispatch(changeCity(city));
@@ -36,11 +39,7 @@ export const Main: FC = () => {
         </section>
       </div>
       <div className='cities'>
-        {
-          isEmpty
-            ? <CityCardEmpty city={activeCity}/>
-            : <CityCard city={activeCity} offers={offers}/>
-        }
+        {cityCardComponent}
       </div>
     </main>
   );

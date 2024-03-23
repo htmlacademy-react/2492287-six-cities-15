@@ -20,7 +20,8 @@ export const expectedEmptyOfferState: TOfferState = {
   isNearOffersDataLoading: false,
   favorites: [],
   isFavoritesDataLoading: false,
-  offerSortType: OfferSortType.Popular
+  offerSortType: OfferSortType.Popular,
+  isAddFavoriteLoading: false,
 };
 
 export const expectedOfferFull: TOfferFull = {
@@ -187,7 +188,8 @@ export const expectedOfferState: TOfferState = {
   isNearOffersDataLoading: false,
   favorites: [],
   isFavoritesDataLoading: false,
-  offerSortType: OfferSortType.Popular
+  offerSortType: OfferSortType.Popular,
+  isAddFavoriteLoading: false,
 };
 
 export const expectedOfferFavoritesState: TOfferState = {
@@ -269,7 +271,8 @@ export const expectedOfferFavoritesState: TOfferState = {
     rating: 2
   }],
   isFavoritesDataLoading: false,
-  offerSortType: OfferSortType.Popular
+  offerSortType: OfferSortType.Popular,
+  isAddFavoriteLoading: false,
 };
 
 export const expectedUserData = {
@@ -301,7 +304,8 @@ export const makeFakeStore = (initialState?: Partial<TState>): TState => ({
     isNearOffersDataLoading: false,
     favorites: [],
     isFavoritesDataLoading: false,
-    offerSortType: OfferSortType.Popular
+    offerSortType: OfferSortType.Popular,
+    isAddFavoriteLoading: false,
   },
   Review: {
     reviews: [],

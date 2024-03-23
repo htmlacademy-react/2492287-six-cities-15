@@ -1,50 +1,63 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { addFavoriteAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SimpleSpinner } from '../simple-spinner';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app';
-import { getIsOfferDataLoading } from '../../store/offer-data/offer-data.selectors';
+import { getIsAddFavoriteLoading } from '../../store/offer-data/offer-data-selectors';
 import { getBookmarkClass } from './lib';
-import { TButtonType } from './const';
+import { TButtonTypeClassName } from './const';
 
 export type TButtonFavoriteProps = {
   offerId: string;
   isFavorite: boolean;
-  typeCard: TButtonType;
+  buttonTypeClassName: TButtonTypeClassName;
   width: number;
   height: number;
   isAuth: boolean;
 }
 
-export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, typeCard, width, height, isAuth}) => {
+export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, buttonTypeClassName, width, height, isAuth}) => {
   const dispatch = useAppDispatch();
-  const bookmarkClass = getBookmarkClass(isFavorite, typeCard);
-  const isOfferDataLoading = useAppSelector(getIsOfferDataLoading);
+  const bookmarkClass = getBookmarkClass(isFavorite, buttonTypeClassName);
+  const isAddFavoriteLoading = useAppSelector(getIsAddFavoriteLoading);
+  const [isLoadingData, setIsLoadingData] = useState(false);
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     if (isAuth){
+      setIsLoadingData(true);
       dispatch(addFavoriteAction({offerId: offerId, status: !isFavorite}));
-
     } else {
       navigate(AppRoute.Login);
     }
   };
 
-  if (isOfferDataLoading){
+  useEffect(() => {
+    let mounted = true;
+    if (!isAddFavoriteLoading && mounted) {
+      setIsLoadingData(false);
+    }
+    return (
+      () => {
+        mounted = false;
+      }
+    );
+  }, [isAddFavoriteLoading]);
+
+  if (isLoadingData && isAddFavoriteLoading){
     return <SimpleSpinner/>;
   }
 
   return (
     <button
-      className={`${typeCard}__bookmark-button button${bookmarkClass}`}
+      className={`${buttonTypeClassName}__bookmark-button button${bookmarkClass}`}
       type='button'
       onClick={handleButtonClick}
       data-testid='button-favorite'
     >
       <svg
-        className={`${typeCard}__bookmark-icon`}
+        className={`${buttonTypeClassName}__bookmark-icon`}
         width={width}
         height={height}
       >

@@ -12,8 +12,8 @@ import { Loading } from '../loading';
 import { OfferCardFull } from '../../components/offer-card-full';
 import { OfferGallery } from '../../components/offer-gallery/';
 import { getImagesForOffer, getIsNearOffersDataLoading, getIsOfferDataLoading, getNearOffersForList,
-  getNearOffersForMap, getOffer } from '../../store/offer-data/offer-data.selectors';
-import { getIsAuth } from '../../store/user-process/user-process.selectors';
+  getNearOffersForMap, getOffer } from '../../store/offer-data/offer-data-selectors';
+import { getIsAuth } from '../../store/user-process/user-process-selectors';
 import { clearOffer } from '../../store/action';
 import { SimpleSpinner } from '../../components/simple-spinner';
 
@@ -81,7 +81,7 @@ export const Offer: FC = () => {
           city={offer.city}
           points={nearOffersForMap}
           selectedPoint={offer}
-          mapPositionType='offer'
+          mapPositionClassName='offer'
         />
       </section>
       <div className='container'>

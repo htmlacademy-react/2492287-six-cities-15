@@ -14,7 +14,7 @@ export const ReviewCard: FC<TReviewCardProps> = ({review}) => {
     <li className='reviews__item' data-testid='review-card'>
       <ReviewUser user={review.user}/>
       <div className='reviews__info'>
-        <Rating objectType={'reviews'} rating={review.rating}/>
+        <Rating cardTypeClassName='reviews' rating={review.rating}/>
         <p className='reviews__text'>
           {review.comment}
         </p>

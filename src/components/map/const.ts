@@ -17,4 +17,8 @@ export const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-export type TMapPositionType = 'offer' | 'cities';
+export type TMapPositionClassName = 'offer' | 'cities';
+
+export const MapStyle = {
+  height: '100%',
+} as const;

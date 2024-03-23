@@ -13,7 +13,7 @@ function useMap(
   useEffect(() => {
     let mounted = true;
 
-    if (mapRef && mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef.current !== null && !isRenderedRef.current) {
 
       const instance = new Map(mapRef.current, {
         center: {

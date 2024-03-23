@@ -1,2 +1,7 @@
+import { CommentSize, RatingLimit } from '../const';
+
 export const validateSubmit = (value: string, rating: number) =>
-  value.length >= 50 && value.length <= 300 && rating >= 1 && rating <= 5;
+  value.length >= CommentSize.Min
+  && value.length <= CommentSize.Max
+  && rating >= RatingLimit.Min
+  && rating <= RatingLimit.Max;

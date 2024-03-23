@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 
 const ApiConfig = {
   BackendUrl: 'https://15.design.htmlacademy.pro/six-cities',
-  RequestTimeout: 5000
+  RequestTimeout: 5000,
+  TokenName: 'x-token'
 } as const;
 
 export const createAPI = (): AxiosInstance => {
@@ -19,7 +20,7 @@ export const createAPI = (): AxiosInstance => {
       const token = getToken();
 
       if (token && config.headers) {
-        config.headers['x-token'] = token;
+        config.headers[ApiConfig.TokenName] = token;
       }
 
       return config;

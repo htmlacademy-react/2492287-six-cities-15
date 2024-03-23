@@ -1,36 +1,37 @@
 import { AppRoute } from '../../../app';
-import { TImageSize, TOfferCardType } from '../const';
+import { CARD_INFO_CLASS, CardClassName, CardImageClassName,
+  ImageSize, OfferCardType, TImageSize, TOfferCardType } from '../const';
 
 export const getCardClassName = (offerCardType: TOfferCardType): string => {
   switch (offerCardType){
-    case 'City': return 'cities__card';
-    case 'Favorite': return 'favorites__card';
-    case 'Near': return 'near-places__card';
+    case OfferCardType.City: return CardClassName.City;
+    case OfferCardType.Favorite: return CardClassName.Favorite;
+    case OfferCardType.Near: return CardClassName.Near;
     default: return '';
   }
 };
 
 export const getCardImageClassName = (offerCardType: TOfferCardType): string => {
   switch (offerCardType){
-    case 'City': return 'cities__image';
-    case 'Favorite': return 'favorites__image-wrapper';
-    case 'Near': return 'near-places__image-wrapper';
+    case OfferCardType.City: return CardImageClassName.City;
+    case OfferCardType.Favorite: return CardImageClassName.Favorite;
+    case OfferCardType.Near: return CardImageClassName.Near;
     default: return '';
   }
 };
 
 export const getCardInfoClassName = (offerCardType: TOfferCardType): string => {
-  switch (offerCardType){
-    case 'Favorite': return 'favorites__card-info';
-    default: return '';
+  if (offerCardType === OfferCardType.Favorite){
+    return CARD_INFO_CLASS;
   }
+  return '';
 };
 
 export const getCardImageSize = (offerCardType: TOfferCardType): TImageSize => {
-  switch (offerCardType){
-    case 'Favorite': return {width: 150, height: 110};
-    default: return {width: 260, height: 200};
+  if (offerCardType === OfferCardType.Favorite){
+    return ImageSize.Small;
   }
+  return ImageSize.Large;
 };
 
 export const getOfferLinkById = (id: string) => AppRoute.Offer.replace(':id', id);

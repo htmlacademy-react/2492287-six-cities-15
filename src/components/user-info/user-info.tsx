@@ -4,8 +4,9 @@ import { AppRoute } from '../../app';
 import { TUserData } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
-import { getFavorites } from '../../store/offer-data/offer-data.selectors';
-import { getIsAuth } from '../../store/user-process/user-process.selectors';
+import { getFavorites } from '../../store/offer-data/offer-data-selectors';
+import { getIsAuth } from '../../store/user-process/user-process-selectors';
+import { AVATAR_STYLE, SignType } from './const';
 
 export type TUserInfoProps = {
   user: TUserData | null;
@@ -16,7 +17,6 @@ export const UserInfo: FC<TUserInfoProps> = ({user, location}) => {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(getFavorites);
   const isAuth = useAppSelector(getIsAuth);
-
   const linkUrl = isAuth ? location : AppRoute.Login;
 
   const handleLoginButtonClick = () => {
@@ -34,12 +34,11 @@ export const UserInfo: FC<TUserInfoProps> = ({user, location}) => {
             className='header__nav-link'
             to={AppRoute.Favorites}
           >
-
             {
               isAuth &&
               <>
                 <div className='header__avatar-wrapper user__avatar-wrapper'>
-                  <img src={user?.avatarUrl} style={{borderRadius: 20}}/>
+                  <img src={user?.avatarUrl} style={AVATAR_STYLE}/>
                 </div>
                 <span className='header__user-name user__name'>
                   {user?.email}
@@ -49,19 +48,17 @@ export const UserInfo: FC<TUserInfoProps> = ({user, location}) => {
             }
           </Link>
         </li>
-
         <li className='header__nav-item'>
           <Link
             className='header__nav-link header__nav-link--profile'
             to={linkUrl}
             onClick={handleLoginButtonClick}
           >
-            <span className={`${isAuth ? 'header__signout' : 'header__login'}`}>
-              {isAuth ? 'Sign Out' : 'Sign In'}
+            <span className={`header__${isAuth ? 'signout' : 'login'}`}>
+              {isAuth ? SignType.Out : SignType.In}
             </span>
           </Link>
         </li>
-
       </ul>
     </nav>
 
