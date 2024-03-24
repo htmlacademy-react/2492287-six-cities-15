@@ -14,3 +14,9 @@ export type TAuthData = {
   login: string;
   password: string;
 };
+
+export const SliceName = {
+  UserProcess: 'user-process',
+  OfferData: 'offer-data',
+  ReviewData: 'review-data',
+} as const;

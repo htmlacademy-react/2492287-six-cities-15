@@ -1,12 +1,13 @@
 import { datatype, image, lorem, name } from 'faker';
 import { TReviewState, reviewData } from './review-data';
 import { addReviewAction, fetchReviewsAction } from '../api-actions';
+import { FetchStatus } from './const';
 
 describe('ReviewData Slice', () => {
   it('should return initial state with empty action', () => {
     const initialState: TReviewState = {
       reviews: [],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
     const emptyAction = { type: '' };
@@ -17,7 +18,7 @@ describe('ReviewData Slice', () => {
   it('should return default initial state with empty action', () => {
     const initialState: TReviewState = {
       reviews: [],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
     const emptyAction = { type: '' };
@@ -28,7 +29,7 @@ describe('ReviewData Slice', () => {
   it('should set reviews with "fetchReviewsAction.fulfilled"', () => {
     const initialState: TReviewState = {
       reviews: [],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
 
@@ -45,7 +46,7 @@ describe('ReviewData Slice', () => {
           isPro: datatype.boolean()
         }
       }],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
 
@@ -57,7 +58,7 @@ describe('ReviewData Slice', () => {
   it('should set reviews with "fetchReviewsAction.pending"', () => {
     const initialState: TReviewState = {
       reviews: [],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
 
@@ -68,7 +69,7 @@ describe('ReviewData Slice', () => {
   it('should set reviews with "fetchReviewsAction.rejected"', () => {
     const initialState: TReviewState = {
       reviews: [],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
 
@@ -79,7 +80,7 @@ describe('ReviewData Slice', () => {
   it('should set "review" with "addReviewAction.fulfilled"', () => {
     const initialState: TReviewState = {
       reviews: [],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
 
@@ -99,7 +100,7 @@ describe('ReviewData Slice', () => {
     const expectedState: TReviewState = {
       reviews: [review],
       review: review,
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
 
@@ -111,7 +112,7 @@ describe('ReviewData Slice', () => {
   it('should set "addReviewStatus" to "loading" with "addReviewAction.pending"', () => {
     const initialState: TReviewState = {
       reviews: [],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
     const result = reviewData.reducer(initialState, addReviewAction.pending);
@@ -122,7 +123,7 @@ describe('ReviewData Slice', () => {
   it('should set "addReviewStatus" to "rejected" with "addReviewAction.rejected"', () => {
     const initialState: TReviewState = {
       reviews: [],
-      addReviewStatus: 'none',
+      addReviewStatus: FetchStatus.None,
       isFetchReviewsLoading: false
     };
     const result = reviewData.reducer(initialState, addReviewAction.rejected);

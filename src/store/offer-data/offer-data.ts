@@ -4,6 +4,7 @@ import { changeCity, clearFavoriteOffer, clearOffer, setFavoritesOff, setOfferSo
 import { fetchFavoritesAction, fetchNearOffersAction,
   fetchOfferAction, fetchOffersAction, addFavoriteAction } from '../api-actions';
 import { setOfferFavorite } from '../lib';
+import { SliceName } from '../const';
 
 export type TOfferState = {
   activeCity: TCity;
@@ -34,7 +35,7 @@ const initialState: TOfferState = {
 };
 
 export const offerData = createSlice({
-  name: 'offer',
+  name: SliceName.OfferData,
   initialState: initialState,
 
   reducers: {},

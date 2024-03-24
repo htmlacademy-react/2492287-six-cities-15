@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { getCardClassName, getCardImageClassName,
   getCardImageSize, getCardInfoClassName, getOfferLinkById } from './lib';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TOffer } from '../../const';
 import {ButtonFavorite }from '../button-favorite';
 import { useAppSelector } from '../../hooks';
@@ -23,6 +23,7 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
   const imageSize = getCardImageSize(offerCardType);
   const offerLink = getOfferLinkById(offer.id);
   const isAuth = useAppSelector(getIsAuth);
+  const navigate = useNavigate();
 
   const handleOfferMouseEnter = () => {
     if (onHover){
@@ -42,6 +43,8 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
       onMouseEnter={handleOfferMouseEnter}
       onMouseLeave={handleOfferMouseLeave}
       data-testid='offer-card'
+      onClick={() => navigate(offerLink)}
+      style={{cursor: 'pointer'}}
     >
       {
         offer.isPremium &&
@@ -50,15 +53,13 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
         </div>
       }
       <div className={`${cardImageClass} place-card__image-wrapper`}>
-        <Link to={offerLink}>
-          <img
-            className='place-card__image'
-            src={offer.previewImage}
-            width={imageSize.Width}
-            height={imageSize.Height}
-            alt={ALT_IMAGE_TEXT}
-          />
-        </Link>
+        <img
+          className='place-card__image'
+          src={offer.previewImage}
+          width={imageSize.Width}
+          height={imageSize.Height}
+          alt={ALT_IMAGE_TEXT}
+        />
       </div>
       <div className={`${cardInfoClass} place-card__info`}>
         <div className='place-card__price-wrapper'>
@@ -79,7 +80,7 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
         </div>
         <Rating cardTypeClassName='place-card' rating={offer.rating} />
         <h2 className='place-card__name'>
-          <Link to={offerLink}>{offer.title}</Link>
+          {offer.title}
         </h2>
         <p className='place-card__type'>{offer.type}</p>
       </div>

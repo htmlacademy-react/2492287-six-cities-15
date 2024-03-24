@@ -96,7 +96,6 @@ export type TReviewFulls = TReviewFull[];
 
 export enum NameSpace {
   Offer = 'Offer',
-  Favorite = 'Favorite',
   User = 'User',
   Review = 'Review'
 }

@@ -35,6 +35,7 @@ function useMap(
       }
       return () => {
         mounted = false;
+        isRenderedRef.current = true;
       };
     }
   }, [mapRef, city]);

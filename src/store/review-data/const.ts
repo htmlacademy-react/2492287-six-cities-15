@@ -1,1 +1,5 @@
-export type TFethcStatus = 'loading' |'rejected' | 'none';
+export enum FetchStatus {
+  Loading = 'loading',
+  Rejected ='rejected',
+  None = 'none',
+}
