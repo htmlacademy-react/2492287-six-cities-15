@@ -5,6 +5,7 @@ import { TOfferState } from '../store/offer-data/offer-data';
 import { ThunkDispatch } from 'redux-thunk';
 import { TState } from '../store/const';
 import { createAPI } from '../services/api';
+import { FetchStatus } from '../store/review-data/const';
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
 
@@ -309,7 +310,7 @@ export const makeFakeStore = (initialState?: Partial<TState>): TState => ({
   },
   Review: {
     reviews: [],
-    addReviewStatus: 'none',
+    addReviewStatus: FetchStatus.None,
     isFetchReviewsLoading: false
   },
   ...initialState ?? {},

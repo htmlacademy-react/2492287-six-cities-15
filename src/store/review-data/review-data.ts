@@ -1,23 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TReviewFull, TReviewFulls } from '../../const';
 import { addReviewAction, fetchReviewsAction } from '../api-actions';
-import { TFethcStatus } from './const';
+import { FetchStatus } from './const';
+import { SliceName } from '../const';
 
 export type TReviewState = {
   reviews: TReviewFulls;
   review?: TReviewFull;
-  addReviewStatus: TFethcStatus;
+  addReviewStatus: FetchStatus;
   isFetchReviewsLoading: boolean;
 }
 
 const initialState: TReviewState = {
   reviews: [],
-  addReviewStatus: 'none',
+  addReviewStatus: FetchStatus.None,
   isFetchReviewsLoading: false
 };
 
 export const reviewData = createSlice({
-  name: 'review',
+  name: SliceName.ReviewData,
   initialState: initialState,
   reducers: {},
   extraReducers(builder) {
@@ -33,15 +34,15 @@ export const reviewData = createSlice({
         state.isFetchReviewsLoading = false;
       })
       .addCase(addReviewAction.pending, (state) => {
-        state.addReviewStatus = 'loading';
+        state.addReviewStatus = FetchStatus.Loading;
       })
       .addCase(addReviewAction.fulfilled, (state, action) => {
         state.review = action.payload;
         state.reviews.push(action.payload);
-        state.addReviewStatus = 'none';
+        state.addReviewStatus = FetchStatus.None;
       })
       .addCase(addReviewAction.rejected, (state) => {
-        state.addReviewStatus = 'rejected';
+        state.addReviewStatus = FetchStatus.Rejected;
       });
   }
 });

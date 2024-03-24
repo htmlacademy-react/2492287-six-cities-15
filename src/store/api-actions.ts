@@ -4,10 +4,10 @@ import { TOffer, TOfferFull, TUserData, TReviewFull,
 import { clearFavoriteOffer, redirectToRoute, setFavoritesOff } from './action';
 import { ApiRoute, AppRoute } from '../app/routes';
 import { dropToken, saveToken } from '../services/token';
-import { TActionUtils, TAuthData } from './const';
+import { SliceName, TActionUtils, TAuthData } from './const';
 
 export const fetchOfferAction = createAsyncThunk<TOfferFull, string, TActionUtils>(
-  'data/fetchOffer',
+  `${SliceName.OfferData}/fetchOffer`,
   async (offerId, {extra: api}) => {
     const {data} = await api.get<TOfferFull>(`${ApiRoute.Offers}/${offerId}`);
     return data;
@@ -15,7 +15,7 @@ export const fetchOfferAction = createAsyncThunk<TOfferFull, string, TActionUtil
 );
 
 export const fetchOffersAction = createAsyncThunk<TOffers, undefined, TActionUtils>(
-  'data/fetchOffers',
+  `${SliceName.OfferData}/fetchOffers`,
   async (_arg, {extra: api}) => {
     const {data} = await api.get<TOffers>(ApiRoute.Offers);
     return data;
@@ -23,7 +23,7 @@ export const fetchOffersAction = createAsyncThunk<TOffers, undefined, TActionUti
 );
 
 export const fetchNearOffersAction = createAsyncThunk<TOffers, string, TActionUtils>(
-  'data/fetchNearOffers',
+  `${SliceName.OfferData}fetchNearOffers`,
   async (offerId, {extra: api}) => {
     const {data} = await api.get<TOffers>(`${ApiRoute.Offers}/${offerId}/nearby`);
     return data;
@@ -31,7 +31,7 @@ export const fetchNearOffersAction = createAsyncThunk<TOffers, string, TActionUt
 );
 
 export const fetchFavoritesAction = createAsyncThunk<TOffers, undefined, TActionUtils>(
-  'data/fetchFavorites',
+  `${SliceName.OfferData}/fetchFavorites`,
   async (_arg, {extra: api}) => {
     const {data} = await api.get<TOffers>(ApiRoute.Favorite);
     return data;
@@ -40,7 +40,7 @@ export const fetchFavoritesAction = createAsyncThunk<TOffers, undefined, TAction
 
 export const addFavoriteAction = createAsyncThunk<TOffer,
   {offerId: string; status: boolean}, TActionUtils>(
-    'data/addFavorite',
+    `${SliceName.OfferData}/addFavorite`,
     async ({offerId, status}, {extra: api}) => {
       const {data} = await api.post<TOfferFull>(`${ApiRoute.Favorite}/${offerId}/${status ? '1' : '0'}`);
       return data;
@@ -48,7 +48,7 @@ export const addFavoriteAction = createAsyncThunk<TOffer,
   );
 
 export const fetchReviewsAction = createAsyncThunk<TReviewFulls, string, TActionUtils>(
-  'data/fetchReviews',
+  `${SliceName.ReviewData}/fetchReviews`,
   async (offerId, {extra: api}) => {
     const {data} = await api.get<TReviewFull[]>(`${ApiRoute.Comments}/${offerId}`);
     return data;
@@ -56,7 +56,7 @@ export const fetchReviewsAction = createAsyncThunk<TReviewFulls, string, TAction
 );
 
 export const addReviewAction = createAsyncThunk<TReviewFull, TReview, TActionUtils>(
-  'data/addReview',
+  `${SliceName.ReviewData}/addReview`,
   async (review, {extra: api}) => {
     const {data} = await api.post<TReviewFull>(`${ApiRoute.Comments}/${review.offerId}`,
       {comment: review.comment, rating: review.rating});
@@ -65,7 +65,7 @@ export const addReviewAction = createAsyncThunk<TReviewFull, TReview, TActionUti
 );
 
 export const checkAuthAction = createAsyncThunk<TUserData, undefined, TActionUtils>(
-  'user/checkAuth',
+  `${SliceName.UserProcess}/checkAuth`,
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<TUserData>(ApiRoute.Login);
     dispatch(fetchFavoritesAction());
@@ -74,10 +74,9 @@ export const checkAuthAction = createAsyncThunk<TUserData, undefined, TActionUti
 );
 
 export const loginAction = createAsyncThunk<TUserData, TAuthData, TActionUtils>(
-  'user/login',
+  `${SliceName.UserProcess}/login`,
   async ({login: email, password}, {dispatch, extra: api}) => {
     const {data} = await api.post<TUserData>(ApiRoute.Login, {email, password});
-
 
     saveToken(data.token);
     dispatch(fetchOffersAction());
@@ -88,7 +87,7 @@ export const loginAction = createAsyncThunk<TUserData, TAuthData, TActionUtils>(
 );
 
 export const logoutAction = createAsyncThunk<void, undefined, TActionUtils>(
-  'user/logout',
+  `${SliceName.UserProcess}/logout`,
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(ApiRoute.Logout);
     dispatch(setFavoritesOff());

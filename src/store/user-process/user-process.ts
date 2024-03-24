@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, TUserData } from '../../const';
 import { requireAuthorization, saveUser } from '../action';
 import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
+import { SliceName } from '../const';
 
 export type TUserState = {
   user: TUserData | null;
@@ -14,7 +15,7 @@ const initialState: TUserState = {
 };
 
 export const userProcess = createSlice({
-  name: 'user',
+  name: SliceName.UserProcess,
   initialState: initialState,
 
   reducers: {},

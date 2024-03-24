@@ -24,7 +24,8 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, b
   const [isLoadingData, setIsLoadingData] = useState(false);
   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (isAuth){
       setIsLoadingData(true);
       dispatch(addFavoriteAction({offerId: offerId, status: !isFavorite}));

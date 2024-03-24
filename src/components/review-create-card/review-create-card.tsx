@@ -7,13 +7,14 @@ import { addReviewAction } from '../../store/api-actions';
 import { ratings, reviewInitialState } from './const';
 import { getOffer } from '../../store/offer-data/offer-data-selectors';
 import { getAddReviewStatus } from '../../store/review-data/review-data-selectors';
+import { FetchStatus } from '../../store/review-data/const';
 
 export const ReviewCreateCard: FC = () => {
   const [formdata, setFormdata] = useState<TReview>(reviewInitialState);
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
   const addReviewStatus = useAppSelector(getAddReviewStatus);
-  const isLoading = addReviewStatus === 'loading';
+  const isLoading = addReviewStatus === FetchStatus.Loading;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
@@ -37,7 +38,7 @@ export const ReviewCreateCard: FC = () => {
   };
 
   useEffect(() => {
-    if (addReviewStatus === 'none') {
+    if (addReviewStatus === FetchStatus.None) {
       setFormdata(reviewInitialState);
     }
   }, [addReviewStatus]);
