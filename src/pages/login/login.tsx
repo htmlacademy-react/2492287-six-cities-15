@@ -4,7 +4,6 @@ import { APP_TITLE, cities } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { randomInt } from './lib';
-import { changeCity } from '../../store/action';
 import { CityLink } from '../../components/city-link';
 import { Navigate } from 'react-router-dom';
 import { getIsAuth } from '../../store/user-process/user-process-selectors';
@@ -87,7 +86,6 @@ export const Login: FC = () => {
             <CityLink
               city={randomCity}
               isActive={false}
-              onChangeCity={() => dispatch(changeCity(randomCity))}
             />
           </div>
         </section>

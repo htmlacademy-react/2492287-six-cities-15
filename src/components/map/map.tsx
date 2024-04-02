@@ -3,7 +3,8 @@ import { Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import {TCity, TOffer} from '../../const';
 import 'leaflet/dist/leaflet.css';
-import { MapStyle, TMapPositionClassName, currentCustomIcon, defaultCustomIcon } from './const';
+import './style/index.css';
+import { TMapPositionClassName, currentCustomIcon, defaultCustomIcon } from './const';
 
 export type TMapProps = {
   city: TCity;
@@ -49,7 +50,7 @@ export const Map: FC<TMapProps> = ({city, points, selectedPoint, mapPositionClas
       className={`${mapPositionClassName}__map map`}
       data-testid='map'
     >
-      <div style={MapStyle} ref={mapRef}></div>
+      <div className='map_height' ref={mapRef}></div>
     </section>
   );
 };

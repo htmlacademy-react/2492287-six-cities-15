@@ -23,6 +23,18 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, b
   const isAddFavoriteLoading = useAppSelector(getIsAddFavoriteLoading);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const navigate = useNavigate();
+  const buttonComponent = isLoadingData && isAddFavoriteLoading
+    ? <SimpleSpinner/>
+    :
+    (
+      <svg
+        className={`${buttonTypeClassName}__bookmark-icon`}
+        width={width}
+        height={height}
+      >
+        <use xlinkHref='#icon-bookmark' />
+      </svg>
+    );
 
   const handleButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -46,10 +58,6 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, b
     );
   }, [isAddFavoriteLoading]);
 
-  if (isLoadingData && isAddFavoriteLoading){
-    return <SimpleSpinner/>;
-  }
-
   return (
     <button
       className={`${buttonTypeClassName}__bookmark-button button${bookmarkClass}`}
@@ -57,13 +65,7 @@ export const ButtonFavorite: FC<TButtonFavoriteProps> = ({offerId, isFavorite, b
       onClick={handleButtonClick}
       data-testid='button-favorite'
     >
-      <svg
-        className={`${buttonTypeClassName}__bookmark-icon`}
-        width={width}
-        height={height}
-      >
-        <use xlinkHref='#icon-bookmark' />
-      </svg>
+      {buttonComponent}
       <span className='visually-hidden'>{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
       <div>{isFavorite}</div>
     </button>

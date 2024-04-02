@@ -1,14 +1,15 @@
 import { FC } from 'react';
 import { Spinner } from '../../components/spinner';
 import { APP_TITLE } from '../../const';
+import './style/index.css';
 
 const MainLoadingSettings = {
   text: `${APP_TITLE} is loading...`,
-  style: {margin: 20}
+
 };
 
 export const Loading: FC = () => (
-  <div style={MainLoadingSettings.style}>
+  <div className='loading'>
     <Spinner text={MainLoadingSettings.text}/>
   </div>
 );

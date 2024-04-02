@@ -6,7 +6,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { getFavorites } from '../../store/offer-data/offer-data-selectors';
 import { getIsAuth } from '../../store/user-process/user-process-selectors';
-import { AVATAR_STYLE, SignType } from './const';
+import { SignType } from './const';
+import './style/index.css';
 
 export type TUserInfoProps = {
   user: TUserData | null;
@@ -38,7 +39,7 @@ export const UserInfo: FC<TUserInfoProps> = ({user, location}) => {
               isAuth &&
               <>
                 <div className='header__avatar-wrapper user__avatar-wrapper'>
-                  <img src={user?.avatarUrl} style={AVATAR_STYLE}/>
+                  <img src={user?.avatarUrl} className='user__avatar-border'/>
                 </div>
                 <span className='header__user-name user__name'>
                   {user?.email}

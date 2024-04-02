@@ -1,25 +1,19 @@
 import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { APP_TITLE, TCity } from '../../const';
+import { APP_TITLE } from '../../const';
 import { CityLinkList } from '../../components/city-link-list/city-link-list';
-import { changeCity } from '../../store/action';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { CityCard } from '../../components/city-card';
 import { CityCardEmpty } from '../../components/city-card-empty';
 import { getActiveCity, getCityOffers } from '../../store/offer-data/offer-data-selectors';
 
 export const Main: FC = () => {
-  const dispatch = useAppDispatch();
   const activeCity = useAppSelector(getActiveCity);
   const offers = useAppSelector(getCityOffers);
   const isEmpty = offers.length === 0;
   const cityCardComponent = isEmpty
     ? <CityCardEmpty city={activeCity}/>
     : <CityCard city={activeCity} offers={offers}/>;
-
-  const handleCityChange = (city: TCity) => {
-    dispatch(changeCity(city));
-  };
 
   return (
     <main
@@ -34,7 +28,6 @@ export const Main: FC = () => {
         <section className='locations container'>
           <CityLinkList
             activeCity={activeCity}
-            onChangeCity={handleCityChange}
           />
         </section>
       </div>
