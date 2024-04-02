@@ -4,10 +4,9 @@ import { CityLink } from '../city-link';
 
 export type TCityLinkListProps = {
   activeCity: TCity;
-  onChangeCity?: (city: TCity) => void;
 }
 
-export const CityLinkList: FC<TCityLinkListProps> = ({activeCity, onChangeCity}) => (
+export const CityLinkList: FC<TCityLinkListProps> = ({activeCity}) => (
   <ul className='locations__list tabs__list' data-testid='city-link-container'>
     {
       cities.map((city) => (
@@ -19,7 +18,6 @@ export const CityLinkList: FC<TCityLinkListProps> = ({activeCity, onChangeCity})
           <CityLink
             city={city}
             isActive={activeCity === city}
-            onChangeCity={onChangeCity}
           />
         </li>
       ))

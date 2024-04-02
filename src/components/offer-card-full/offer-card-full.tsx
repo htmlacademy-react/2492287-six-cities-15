@@ -10,6 +10,7 @@ import { getIsFetchReviewsLoading, getReviewsCount,
   getReviewsForOffer } from '../../store/review-data/review-data-selectors';
 import { getAdultsText, getBedroomsText } from './lib';
 import { SimpleSpinner } from '../simple-spinner';
+import './style/index.css';
 
 export type TOfferFullCardProps = {
   offer: TOfferFull;
@@ -31,9 +32,8 @@ export const OfferCardFull: FC<TOfferFullCardProps> = ({ offer, isAuth }) => {
 
   return (
     <div
-      className='offer__container container'
+      className='offer__container container offer__container-margin'
       data-testid='offer-card-container'
-      style={{marginBottom: 10}}
     >
       <div className='offer__wrapper'>
         {

@@ -9,6 +9,7 @@ import { getIsAuth } from '../../store/user-process/user-process-selectors';
 import { ALT_IMAGE_TEXT, FavoriteButtonSize,
   OfferCardType, TOfferCardType } from './const';
 import { Rating } from '../rating';
+import './style/index.css';
 
 export type TOfferCardProps = {
   offer: TOffer;
@@ -39,12 +40,11 @@ const OfferCard: FC<TOfferCardProps> = ({offer, onHover, offerCardType}) => {
 
   return (
     <article
-      className={`${cardClass} place-card`}
+      className={`${cardClass} place-card place_card-cursor`}
       onMouseEnter={handleOfferMouseEnter}
       onMouseLeave={handleOfferMouseLeave}
       data-testid='offer-card'
       onClick={() => navigate(offerLink)}
-      style={{cursor: 'pointer'}}
     >
       {
         offer.isPremium &&

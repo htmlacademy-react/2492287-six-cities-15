@@ -2,17 +2,17 @@ import {FC} from 'react';
 import { Link } from 'react-router-dom';
 import { TCity } from '../../const';
 import { AppRoute } from '../../app';
+import { useAppDispatch } from '../../hooks';
+import { changeCity } from '../../store/action';
 
 export type TCityLinkProps = {
   city: TCity;
   isActive: boolean;
-  onChangeCity?: (city: TCity) => void;
 }
-export const CityLink: FC<TCityLinkProps> = ({city, isActive, onChangeCity}) => {
+export const CityLink: FC<TCityLinkProps> = ({city, isActive}) => {
+  const dispatch = useAppDispatch();
   const handleLinkClick = () => {
-    if(onChangeCity){
-      return onChangeCity(city);
-    }
+    dispatch(changeCity(city));
   };
   return (
     <Link

@@ -1,25 +1,12 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus, TCity, TReviewFull, TOffer, TUserData, OfferSortType, TOffers, TReviewFulls } from '../const';
+import { AuthorizationStatus, TCity, TUserData, OfferSortType } from '../const';
 import { AppRoute } from '../app';
 
 export const changeCity = createAction<TCity>('cities/changeCity');
-export const fillOffers = createAction<TOffers>('cities/fillOffers');
-export const loadOffers = createAction<TOffers>('data/loadOffers');
 export const clearOffer = createAction('data/clearOffer');
 export const clearFavoriteOffer = createAction('data/clearFavoriteOffer');
-export const loadNearOffers = createAction<TOffers>('data/loadNearOffers');
-export const loadFavorites = createAction<TOffers>('data/loadFavorites');
-export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const redirectToRoute = createAction<AppRoute>('cities/redirectToRoute');
 export const saveUser = createAction<TUserData | null>('cities/saveUser');
-export const setOfferDataLoadingStatus = createAction<boolean>('data/setOfferDataLoadingStatus');
-export const loadReviews = createAction<TReviewFulls>('data/loadReviews');
-export const addReview = createAction<TReviewFull>('data/addComment');
 export const setFavoritesOff = createAction('data/setFavoritesOff');
 export const setOfferSortType = createAction<OfferSortType>('city/setOfferSortType');
-export const setFavoriteOffer = createAction<TOffer>('data/setFavoriteOffer');
-export const setFavoriteInOffers = createAction<TOffer>('data/setFavoriteInOffers');
-export const setFavoriteInNearOffers = createAction<TOffer>('data/setFavoriteInNearOffers');
-export const addFavorite = createAction<TOffer>('data/addFavorite');
-export const delFavorite = createAction<TOffer>('data/delFavorite');
